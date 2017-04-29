@@ -38,16 +38,17 @@ public class move : MonoBehaviour
     }
 
 
-    void OnCollisionEnter(Collision col)
+    void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "DangerZone")
         {
             Debug.Log("hit");
-            
         }
+
+       
     }
 
-    void OnCollisionStay(Collision col)
+    void OnCollisionStay2D(Collision2D col)
     {
 
 
@@ -61,7 +62,7 @@ public class move : MonoBehaviour
 
     }
 
-    void OnCollisionExit(Collision col)
+    void OnCollisionExit2D(Collision2D col)
     {
        
 
