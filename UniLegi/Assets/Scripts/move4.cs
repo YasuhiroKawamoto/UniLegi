@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class move2 : MonoBehaviour {
+public class move4 : MonoBehaviour {
 
-    //直進移動後左右に振るその後直進
+    //直進移動後少し停止を繰り返す
 
 
     //移動速度
     [SerializeField]
     private Vector2 Speed = new Vector2(0.0f, -0.01f);
     [SerializeField]
-    private Vector2 Speed2 = new Vector2(0.01f, 0.0f);
+    private Vector2 Speed2 = new Vector2(0.0f, 0.0f);
 
     private int moveFlag = 0;
 
@@ -20,7 +20,7 @@ public class move2 : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -40,38 +40,17 @@ public class move2 : MonoBehaviour {
         }
         else
         {
-            //速度加算
-            if (moveFlag == 0)
-            {
-                Positon += Speed2;
-            }
-            else
-            {
-                Positon -= Speed2;
-            }
+
+            Positon += Speed2;
         }
 
-        if (MC >= 100)
+        if (MC >= 80)
         {
             MC = 0;
-            switch (moveFlag)
-            { 
-                case 0:
-                    moveFlag = 1;
-                    break;
-                case 1:
-                    moveFlag = 0;
-                    break;
-            }
         }
-
-
-      
 
         //現在位置に速度加算後位置を代入
         transform.position = Positon;
-
-
 
     }
 
@@ -83,10 +62,6 @@ public class move2 : MonoBehaviour {
             Debug.Log("hit");
 
         }
-
-       
-
-
 
     }
 
@@ -115,8 +90,6 @@ public class move2 : MonoBehaviour {
             Speed = new Vector2(0, -0.01f);
         }
 
-
-        
 
 
     }

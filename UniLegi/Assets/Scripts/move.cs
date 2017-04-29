@@ -7,6 +7,7 @@ public class move : MonoBehaviour
     //直進移動のスクリプト
 
     //移動速度
+    [SerializeField]
     private Vector2 Speed = new Vector2(0.0f, -0.01f);
 
     private int moveFlag = 0;
