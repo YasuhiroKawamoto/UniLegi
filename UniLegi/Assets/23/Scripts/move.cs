@@ -10,7 +10,7 @@ public class move : MonoBehaviour
     [SerializeField]
     private Vector2 Speed = new Vector2(0.0f, -0.01f);
 
-    private int moveFlag = 0;
+    //private int moveFlag = 0;
   
     // Use this for initialization
     void Start()
@@ -38,16 +38,17 @@ public class move : MonoBehaviour
     }
 
 
-    void OnCollisionEnter(Collision col)
+    void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "DangerZone")
         {
             Debug.Log("hit");
-            
         }
+
+       
     }
 
-    void OnCollisionStay(Collision col)
+    void OnCollisionStay2D(Collision2D col)
     {
 
 
@@ -61,7 +62,7 @@ public class move : MonoBehaviour
 
     }
 
-    void OnCollisionExit(Collision col)
+    void OnCollisionExit2D(Collision2D col)
     {
        
 
