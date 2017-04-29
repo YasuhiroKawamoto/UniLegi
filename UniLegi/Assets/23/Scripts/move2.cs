@@ -76,7 +76,7 @@ public class move2 : MonoBehaviour {
     }
 
 
-    void OnCollisionEnter(Collision col)
+    void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "DangerZone")
         {
@@ -90,7 +90,7 @@ public class move2 : MonoBehaviour {
 
     }
 
-    void OnCollisionStay(Collision col)
+    void OnCollisionStay2D(Collision2D col)
     {
 
 
@@ -104,7 +104,7 @@ public class move2 : MonoBehaviour {
 
     }
 
-    void OnCollisionExit(Collision col)
+    void OnCollisionExit2D(Collision2D col)
     {
 
 

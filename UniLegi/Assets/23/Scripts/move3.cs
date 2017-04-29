@@ -18,6 +18,9 @@ public class move3 : MonoBehaviour {
 
     private Vector2 reverseY = new Vector2(1.0f, -1.0f);
 
+    private Vector2 Positon;
+
+
     private int moveFlag = 0;
 
     private int MC = 0;
@@ -35,7 +38,7 @@ public class move3 : MonoBehaviour {
         MC++;
 
         //現在地取得
-        Vector2 Positon = transform.position;
+        Positon = transform.position;
 
         if (MC <= 50)
         {
@@ -76,7 +79,7 @@ public class move3 : MonoBehaviour {
     }
 
 
-    void OnCollisionEnter(Collision col)
+    void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "DangerZone")
         {
@@ -84,9 +87,23 @@ public class move3 : MonoBehaviour {
 
         }
 
+
+        if (col.gameObject.tag == "OutZone")
+        {
+            switch (moveFlag)
+            {
+                case 0:
+                    moveFlag = 1;
+                    break;
+                case 1:
+                    moveFlag = 0;
+                    break;
+            }
+        }
+
     }
 
-    void OnCollisionStay(Collision col)
+    void OnCollisionStay2D(Collision2D col)
     {
 
 
@@ -100,7 +117,7 @@ public class move3 : MonoBehaviour {
 
     }
 
-    void OnCollisionExit(Collision col)
+    void OnCollisionExit2D(Collision2D col)
     {
 
 
@@ -111,7 +128,7 @@ public class move3 : MonoBehaviour {
             Speed = new Vector2(0, -0.01f);
         }
 
-
+        
 
     }
 }
