@@ -16,7 +16,7 @@ public class move3 : MonoBehaviour {
     
     private Vector2 reverseX = new Vector2(-1.0f, 1.0f);
 
-    private Vector2 reverseY = new Vector2(1.0f, -1.0f);
+    //private Vector2 reverseY = new Vector2(1.0f, -1.0f);
 
     private Vector2 Positon;
 
