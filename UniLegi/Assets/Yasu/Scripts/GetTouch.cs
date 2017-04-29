@@ -14,11 +14,20 @@ public class GetTouch : MonoBehaviour
 {
     private Vector3 touch_pos1;
     private Vector3 touch_pos2;
+    private Vector3 start_pos;
     private Vector2 start_size;
     private bool isTrigger;
 
     [SerializeField]
     private GameObject Area;
+
+    [SerializeField]
+    private SpriteRenderer hand1;
+
+    [SerializeField]
+    private SpriteRenderer hand2;
+
+
     // タップ状態
     private TAP_STATE tap_state;
     LineRenderer line;
@@ -33,8 +42,6 @@ public class GetTouch : MonoBehaviour
     void Start()
     {
 
-
-
         isTrigger = false;
 
         tap_state = TAP_STATE.NONE;
@@ -46,6 +53,8 @@ public class GetTouch : MonoBehaviour
         // タップ数などを判定
         TapSearch();
 
+
+
         switch (tap_state)
         {
             case TAP_STATE.SINGLE:
@@ -53,9 +62,10 @@ public class GetTouch : MonoBehaviour
 
                 break;
             case TAP_STATE.DOUBLE:
-                // ゲームオブジェクト「魔王の手」を動的に生成
+                // 手　スプライト
 
-                // 空のゲームオブジェクトを生成
+
+
 
                 // コライダの大きさを設定
                 Vector2 size = new Vector2(Mathf.Abs(touch_pos1.x - touch_pos2.x), 1.0f);
@@ -69,12 +79,15 @@ public class GetTouch : MonoBehaviour
 
                 Vector2 pos = new Vector2(min_x + size.x / 2.0f, min_y);
 
+                hand1.transform.position = new Vector3(touch_pos1.x, pos.y, 0);
+                hand2.transform.position = new Vector3(touch_pos1.x + size.x, pos.y, 0);
 
                 // コライダ生成
                 if (isTrigger == false)
                 {
 
                     start_size = size;
+                    start_pos = pos;
                     Area.transform.position = pos;
                     isTrigger = true;
                 }
@@ -95,6 +108,9 @@ public class GetTouch : MonoBehaviour
                 isTrigger = false;
                 Area.transform.position = new Vector3(-300, -300, -300);
                 Area.gameObject.tag = "Untagged";
+                hand1.transform.position = new Vector3(-300, -300, -300);
+                hand2.transform.position = new Vector3(-300, -300, -300);
+
 
                 break;
         }
