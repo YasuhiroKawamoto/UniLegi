@@ -16,6 +16,7 @@ public class GetTouch : MonoBehaviour
     private Vector3 touch_pos2;
     private bool isTrigger;
 
+    [SerializeField]
     private GameObject Area;
     // タップ状態
     private TAP_STATE tap_state;
@@ -24,7 +25,7 @@ public class GetTouch : MonoBehaviour
     private void Awake()
     {
         // ボックスコライダーをアタッチ
-        Area.AddComponent<BoxCollider2D>();
+        //Area.AddComponent<BoxCollider2D>();
     }
 
     // Use this for initialization
@@ -48,7 +49,7 @@ public class GetTouch : MonoBehaviour
         {
             case TAP_STATE.SINGLE:
                 // ゲームオブジェクト「魔王の指」を動的に生成
-
+                Debug.Log("hayakukaihatusitai");
                 // キャンバスの子にする
 
                 break;
@@ -76,13 +77,12 @@ public class GetTouch : MonoBehaviour
                 if (isTrigger == false)
                 {
                     Area.transform.parent = transform;
-                    Instantiate(Area);
                     isTrigger = true;
                 }
                 break;
             case TAP_STATE.NONE:
                 isTrigger = false;
-                // Destroy(Area);
+                Area.transform.position = new Vector3(-300, -300, -300);
                 
                 break;
         }
