@@ -101,7 +101,6 @@ public class tap : MonoBehaviour {
         //オブジェクトが触っている時
         if (m_flag == 1)
         {
-            z
             if (m_worldPoint.y > zone)
             {
                 //タッチしている座標に追従する
