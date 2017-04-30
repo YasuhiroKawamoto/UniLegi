@@ -10,8 +10,8 @@ public class tap : MonoBehaviour {
     //スケールの倍数
     const float rate = 6;
     //範囲
-    [SerializeField]
-    private float zone;
+    
+    const int zone=-3;
 
     //タッチ
     Touch touch;
@@ -101,7 +101,6 @@ public class tap : MonoBehaviour {
         //オブジェクトが触っている時
         if (m_flag == 1)
         {
-            z
             if (m_worldPoint.y > zone)
             {
                 //タッチしている座標に追従する
