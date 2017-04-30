@@ -10,8 +10,8 @@ public class tap : MonoBehaviour {
     //スケールの倍数
     const float rate = 6;
     //範囲
-    [SerializeField]
-    private float zone;
+    
+    const int zone=-3;
 
     //タッチ
     Touch touch;
