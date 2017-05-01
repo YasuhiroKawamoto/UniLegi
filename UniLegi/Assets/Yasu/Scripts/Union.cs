@@ -20,7 +20,9 @@ public class Union : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        this.gameObject.tag = "isPinched";
+        if (collision.gameObject.tag == "Collider")
+        {
+            this.gameObject.tag = "isPinched";
+        }
     }
-
 }
