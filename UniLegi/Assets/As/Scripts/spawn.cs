@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class spawn : MonoBehaviour {
 
+    [SerializeField]
+    private float zone;
+
     //触ったフラグ
     private int m_flag;
     //タッチ
@@ -55,27 +58,27 @@ public class spawn : MonoBehaviour {
                 }
 
             }
-            else if (touch.phase == TouchPhase.Moved)
-            {
+            //else if (touch.phase == TouchPhase.Moved)
+            //{
 
-                //タッチをした位置にオブジェクト判定
-                RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
+            //    //タッチをした位置にオブジェクト判定
+            //    RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
 
-                if (m_flag == 1)
-                {
-                    if (hit)
-                    {
+            //    if (m_flag == 1)
+            //    {
+            //        if (hit)
+            //        {
 
-                        if (hit.collider.gameObject == this.gameObject)
-                        {
-                            Debug.Log("移動");
+            //            if (hit.collider.gameObject == this.gameObject)
+            //            {
+            //                Debug.Log("移動");
                            
-                        }
+            //            }
 
-                    }
-                }
+            //        }
+            //    }
 
-            }
+            //}
             //離したとき
             else if (touch.phase == TouchPhase.Ended)
             {
@@ -87,26 +90,44 @@ public class spawn : MonoBehaviour {
                    
                     if (hit.collider.gameObject == this.gameObject)
                     {
-                        Instantiate(AsPrefab, this.transform);
-                        //生成された
-                        if(AsPrefab)
+
+                        if(m_worldPoint.y<zone)
                         {
-                            Debug.Log("沸いた");
+                            //元いた位置に戻る
+                            transform.position = savePos;
+
+                            m_flag = 0;
                         }
+                        else
+                        {
+                            AsPrefab.transform.position = m_worldPoint;
 
-                        //元いた位置に戻る
-                        transform.position=savePos;
+                            Instantiate(AsPrefab);
 
-                        m_flag = 0;
+                            //元いた位置に戻る
+                            transform.position = savePos;
+
+                            m_flag = 0;
+                        }
+                       
                     }
 
                 }
             }
 
         }
+        else
+        {
+            //元いた位置に戻る
+            transform.position = savePos;
+
+            m_flag = 0;
+        }
+
+       
 
         //1の時追従する
-        if(m_flag==1)
+        if (m_flag==1)
         {
             //タッチしている座標に追従する
             transform.position = m_worldPoint;

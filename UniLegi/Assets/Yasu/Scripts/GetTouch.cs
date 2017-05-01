@@ -79,46 +79,68 @@ public class GetTouch : MonoBehaviour
 
                 Vector2 pos = new Vector2(min_x + size.x / 2.0f, min_y);
 
-                hand1.transform.position = new Vector3(touch_pos1.x, pos.y, 0);
-                hand2.transform.position = new Vector3(touch_pos1.x + size.x, pos.y, 0);
 
                 // コライダ生成
                 if (isTrigger == false)
                 {
-
+                    hand1.transform.position = new Vector3(touch_pos1.x, pos.y, 0);
+                    hand2.transform.position = new Vector3(touch_pos1.x + size.x, pos.y, 0);
                     start_size = size;
                     start_pos = pos;
                     Area.transform.position = pos;
+
                     isTrigger = true;
                 }
 
                 if (Area.gameObject.tag == "Pinched" && size.x < 1)
                 {
                     Area.transform.position = new Vector3(-300, -300, -300);
+                    hand1.transform.position = new Vector3(-300, -300, -300);
+                    hand2.transform.position = new Vector3(-300, -300, -300);
                 }
 
                 // ピンチイン判定
                 if (size.x <= 1)
                 {
                     Area.gameObject.tag = "Pinched";
+
                 }
 
                 break;
             case TAP_STATE.NONE:
-                isTrigger = false;
                 Area.transform.position = new Vector3(-300, -300, -300);
                 Area.gameObject.tag = "Untagged";
                 hand1.transform.position = new Vector3(-300, -300, -300);
                 hand2.transform.position = new Vector3(-300, -300, -300);
+                isTrigger = false;
+
+                GameObject[] unions = GameObject.FindGameObjectsWithTag("isPinched");
+
+                foreach (GameObject union in unions)
+                {
+                    this.gameObject.tag = "Untagged";
+                }
 
 
                 break;
         }
+
+        if (Area.gameObject.tag == "Pinched")
+        {
+            GameObject[] unions = GameObject.FindGameObjectsWithTag("isPinched");
+
+            foreach(GameObject union in unions)
+            {
+                Destroy(union);
+
+            }
+        }
+
     }
 
 
 
-void TapSearch()
+    void TapSearch()
     {
         if (Input.touchCount > 0)
         {
@@ -161,6 +183,13 @@ void TapSearch()
             tap_state = TAP_STATE.NONE;
         }
     }
-}
 
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.tag == "Pinched" && this.gameObject.tag == "isPinched")
+    //    {
+    //        Destroy(this.gameObject);
+    //    }
+    //}
+}
 
