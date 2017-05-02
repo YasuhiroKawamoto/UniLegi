@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class tap : MonoBehaviour {
 
+    //Bulletのプレハブ
+    public GameObject bullet;
  
     private int m_flag;
 
@@ -13,6 +15,9 @@ public class tap : MonoBehaviour {
     
     const int zone=-3;
 
+    //元の大きさを保存
+    private Vector3 saveScale;
+
     //タッチ
     Touch touch;
 
@@ -20,10 +25,24 @@ public class tap : MonoBehaviour {
     private　Vector2 m_worldPoint;
 
     // Use this for initialization
-    void Start () {
+    IEnumerator Start () {
 
         //フラグは立たない
         m_flag = 0;
+        //大きさを保存
+        saveScale = this.transform.localScale;
+
+        //弾の複製
+        while(true)
+        {
+            //弾をプレイヤーと同じ位置に設定
+            Instantiate(bullet, transform.position, transform.rotation);
+            //何秒か待つ
+            yield return new WaitForSeconds(0.3f);
+   
+        }
+
+
 
 	}
 
@@ -33,6 +52,7 @@ public class tap : MonoBehaviour {
 
         if (Input.touchCount > 0)
         {
+
             touch = Input.GetTouch(0);
 
             m_worldPoint = Camera.main.ScreenToWorldPoint(touch.position);
@@ -75,7 +95,7 @@ public class tap : MonoBehaviour {
 
             //        }
             //    }
-               
+
             //}
             //離したとき
             else if (touch.phase == TouchPhase.Ended)
@@ -88,12 +108,12 @@ public class tap : MonoBehaviour {
                     if (hit.collider.gameObject == this.gameObject)
                     {
                         Debug.Log("離した");
-                        this.transform.localScale = new Vector2(1, 1);
+                        this.transform.localScale =saveScale;
                         m_flag = 0;
                     }
 
                 }
-                
+
             }
 
         }
@@ -106,12 +126,13 @@ public class tap : MonoBehaviour {
                 //タッチしている座標に追従する
                 transform.position = m_worldPoint;
                 //オブジェクトを倍加させる
-                this.transform.localScale = new Vector2(rate, rate);
+                this.transform.localScale = new Vector3(rate, rate,1);
             }
         }
 
 
     }
 
+    
    
 }
