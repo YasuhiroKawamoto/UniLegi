@@ -58,27 +58,6 @@ public class spawn : MonoBehaviour {
                 }
 
             }
-            //else if (touch.phase == TouchPhase.Moved)
-            //{
-
-            //    //タッチをした位置にオブジェクト判定
-            //    RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
-
-            //    if (m_flag == 1)
-            //    {
-            //        if (hit)
-            //        {
-
-            //            if (hit.collider.gameObject == this.gameObject)
-            //            {
-            //                Debug.Log("移動");
-                           
-            //            }
-
-            //        }
-            //    }
-
-            //}
             //離したとき
             else if (touch.phase == TouchPhase.Ended)
             {
@@ -122,9 +101,7 @@ public class spawn : MonoBehaviour {
             transform.position = savePos;
 
             m_flag = 0;
-        }
-
-       
+        }     
 
         //1の時追従する
         if (m_flag==1)

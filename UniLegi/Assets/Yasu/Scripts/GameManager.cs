@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class GameManager : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField,Range(1,20)]
     private int stageNumber;
 
     [SerializeField]
