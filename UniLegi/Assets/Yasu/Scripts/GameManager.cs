@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject text_cost;
 
+    Component cmp;
+
     private int m_hp;
     private int m_cost;
 
@@ -26,6 +28,8 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+
+        cmp = this.gameObject.AddComponent<GetTouch>();
         m_hp = 1000;
         m_cost = 0;
     }
@@ -41,6 +45,10 @@ public class GameManager : MonoBehaviour
        if(m_cost  < m_maxCost)
         {
             m_cost += 1;
+        }
+        else
+        {
+            Destroy(cmp);
         }
 
         text_hp.GetComponent<Text>().text = "HP:" + m_hp.ToString();
