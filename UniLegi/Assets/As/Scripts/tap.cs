@@ -17,19 +17,27 @@ public class tap : MonoBehaviour {
     //元の大きさを保存
     private Vector3 m_saveScale;
 
+  
+
+    //反転してるかどうか
+    private bool m_Invert = true;
+
     //タッチ
     Touch touch;
 
     //タッチ座標
     private　Vector2 m_worldPoint;
 
+    //tap判定
+    //[SerializeField]
+    //private float=;
+
+    //
+    private float m_Cnt;
+
 
     // Use this for initialization
     void Start () {
-
-        //Firingのコンポーネントを取得
-        //this.gameObject.AddComponent<Firing>();
-
 
         //フラグは立たない
         m_flag = 0;
@@ -80,9 +88,22 @@ public class tap : MonoBehaviour {
                     if (hit.collider.gameObject == this.gameObject)
                     {
                         Debug.Log("離した");
+
+                        if(m_Cnt < 0.5f)
+                        {
+                            Debug.Log("反転");
+                            transform.Rotate(new Vector3(180.0f, 0.0f, 0.0f));
+
+                            m_Cnt = 0.0f;
+
+                        }
+
                         this.transform.localScale = m_saveScale;
                         m_flag = 0;
                         m_canShot = true;
+
+                        m_Cnt = 0.0f;
+
                     }
 
                 }
@@ -90,6 +111,8 @@ public class tap : MonoBehaviour {
             }
 
         }
+
+        Debug.Log(m_Cnt);
 
         //オブジェクトが触っている時
         if (m_flag == 1)
@@ -102,7 +125,11 @@ public class tap : MonoBehaviour {
                 this.transform.localScale = new Vector3(rate, rate,1);
                 //撃てない
                 m_canShot = false;
+
+                m_Cnt+=0.1f;
+
             }
+
         }
 
     }
