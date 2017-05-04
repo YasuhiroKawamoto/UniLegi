@@ -84,10 +84,6 @@ public class move2 : MonoBehaviour {
 
         }
 
-       
-
-
-
     }
 
     void OnCollisionStay2D(Collision2D col)
