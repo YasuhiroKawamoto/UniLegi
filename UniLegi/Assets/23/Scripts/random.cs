@@ -5,6 +5,8 @@ using UnityEngine;
 public class random : MonoBehaviour
 {
 
+    //敵を順次ランダムなポジションで生成
+
     //敵プレハブを変数に代入
     [SerializeField]
     private GameObject Enemy;
