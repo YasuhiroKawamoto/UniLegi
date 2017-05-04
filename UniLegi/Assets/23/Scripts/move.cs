@@ -35,11 +35,7 @@ public class move : MonoBehaviour
 
 
 
-        if (transform.position.x <= 5.0f)
-        {
-
-
-        }
+    
 
 
 
