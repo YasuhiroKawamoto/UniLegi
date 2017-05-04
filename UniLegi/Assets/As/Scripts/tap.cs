@@ -71,6 +71,7 @@ public class tap : MonoBehaviour {
                     {
                         Debug.Log("タッチ");
                         m_flag = 1;
+                       this.gameObject.tag = "Untagged";
                         m_canShot = false;
                     }
 
@@ -88,8 +89,8 @@ public class tap : MonoBehaviour {
                     if (hit.collider.gameObject == this.gameObject)
                     {
                         Debug.Log("離した");
-
-                        if(m_Cnt < 0.5f)
+                        this.gameObject.tag = "Player";
+                        if (m_Cnt < 0.5f)
                         {
                             Debug.Log("反転");
                             transform.Rotate(new Vector3(180.0f, 0.0f, 0.0f));

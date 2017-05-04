@@ -7,6 +7,10 @@ public class Decision : MonoBehaviour {
     //Statesコンポーネント
     States states;
 
+   
+
+
+   
     // Use this for initialization
     void Start ()
     {
@@ -22,7 +26,13 @@ public class Decision : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		
+
+
+        if (states.getHp() <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+
 	}
 
 
@@ -31,7 +41,22 @@ public class Decision : MonoBehaviour {
         if (col.gameObject.tag == "Bullet")
         {
 
+
             Debug.Log("緋弾のアリア");
+
+            states.setDamege(col.transform.parent.GetComponent<Single>().getBulletDamage());
+
+            Destroy(col);
+
+        }
+
+        if (col.gameObject.tag == "Player")
+        {
+
+
+            Debug.Log("KILL");
+
+           
 
             Destroy(col);
 
