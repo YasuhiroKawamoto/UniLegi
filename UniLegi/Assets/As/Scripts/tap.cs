@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class tap : MonoBehaviour {
 
-    //Bulletのプレハブ
-    public GameObject bullet;
- 
+    //弾が撃てる
+    private bool m_canShot=true;
+
     private int m_flag;
 
     //スケールの倍数
-    const float rate = 6;
+    const float rate = 3;
     //範囲
-    
     const int zone=-3;
 
     //元の大きさを保存
-    private Vector3 saveScale;
+    private Vector3 m_saveScale;
 
     //タッチ
     Touch touch;
@@ -24,25 +23,18 @@ public class tap : MonoBehaviour {
     //タッチ座標
     private　Vector2 m_worldPoint;
 
+
     // Use this for initialization
-    IEnumerator Start () {
+    void Start () {
+
+        //Firingのコンポーネントを取得
+        //this.gameObject.AddComponent<Firing>();
+
 
         //フラグは立たない
         m_flag = 0;
         //大きさを保存
-        saveScale = this.transform.localScale;
-
-        //弾の複製
-        while(true)
-        {
-            //弾をプレイヤーと同じ位置に設定
-            Instantiate(bullet, transform.position, transform.rotation);
-            //何秒か待つ
-            yield return new WaitForSeconds(0.3f);
-   
-        }
-
-
+        m_saveScale = this.transform.localScale;
 
 	}
 
@@ -71,32 +63,12 @@ public class tap : MonoBehaviour {
                     {
                         Debug.Log("タッチ");
                         m_flag = 1;
+                        m_canShot = false;
                     }
 
                 }
 
             }
-            //else if (touch.phase == TouchPhase.Moved)
-            //{
-
-            //    //タッチをした位置にオブジェクト判定
-            //    RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
-
-            //    if (m_flag == 1)
-            //    {
-
-            //        if (hit)
-            //        {
-
-            //            if (hit.collider.gameObject == this.gameObject)
-            //            {
-            //                Debug.Log("移動");
-            //            }
-
-            //        }
-            //    }
-
-            //}
             //離したとき
             else if (touch.phase == TouchPhase.Ended)
             {
@@ -108,8 +80,9 @@ public class tap : MonoBehaviour {
                     if (hit.collider.gameObject == this.gameObject)
                     {
                         Debug.Log("離した");
-                        this.transform.localScale =saveScale;
+                        this.transform.localScale = m_saveScale;
                         m_flag = 0;
+                        m_canShot = true;
                     }
 
                 }
@@ -127,12 +100,17 @@ public class tap : MonoBehaviour {
                 transform.position = m_worldPoint;
                 //オブジェクトを倍加させる
                 this.transform.localScale = new Vector3(rate, rate,1);
+                //撃てない
+                m_canShot = false;
             }
         }
 
+    }
 
+    public bool getShot()
+    {
+        return m_canShot;
     }
 
     
-   
 }
