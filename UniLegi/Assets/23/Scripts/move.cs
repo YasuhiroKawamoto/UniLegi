@@ -35,11 +35,7 @@ public class move : MonoBehaviour
 
 
 
-        if (transform.position.x <= 5.0f)
-        {
-
-
-        }
+    
 
 
 
@@ -60,26 +56,14 @@ public class move : MonoBehaviour
     {
 
 
-        if (col.gameObject.tag == "DangerZone")
-        {
-
-            Debug.Log("stey");
-            Speed = new Vector2(0, 0);
-        }
+       
 
 
     }
 
     void OnCollisionExit2D(Collision2D col)
     {
-       
-
-        if (col.gameObject.tag == "DangerZone")
-        {
-            Debug.Log("out");
-
-            Speed = new Vector2(0, -0.01f);
-        }
+        
 
     }
 
