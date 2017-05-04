@@ -12,11 +12,9 @@ enum TAP_STATE
 }
 public class GetTouch : MonoBehaviour
 {
-    private Vector3 touch_pos1;
-    private Vector3 touch_pos2;
-    private Vector3 start_pos;
-    private Vector2 start_size;
-    private bool isTrigger;
+
+    [SerializeField]
+    GameObject new_unit;
 
     [SerializeField]
     private GameObject Area;
@@ -26,6 +24,16 @@ public class GetTouch : MonoBehaviour
 
     [SerializeField]
     private SpriteRenderer hand2;
+    private Vector3 touch_pos1;
+    private Vector3 touch_pos2;
+    private Vector3 start_pos;
+    private Vector2 start_size;
+    private bool isTrigger;
+    private bool canInstantiate;
+
+
+
+    private int pinch_num;
 
 
     // タップ状態
@@ -42,7 +50,11 @@ public class GetTouch : MonoBehaviour
     void Start()
     {
 
+        start_size = new Vector2(0.0f, 0.0f);
+        canInstantiate = true; 
         isTrigger = false;
+
+        pinch_num = 0;
 
         tap_state = TAP_STATE.NONE;
     }
@@ -57,10 +69,7 @@ public class GetTouch : MonoBehaviour
 
         switch (tap_state)
         {
-            case TAP_STATE.SINGLE:
-                // ゲームオブジェクト「魔王の指」を動的に生成
-
-                break;
+           
             case TAP_STATE.DOUBLE:
                 // 手　スプライト
 
@@ -69,9 +78,15 @@ public class GetTouch : MonoBehaviour
 
                 // コライダの大きさを設定
                 Vector2 size = new Vector2(Mathf.Abs(touch_pos1.x - touch_pos2.x), 1.0f);
+
+                if(start_size.x > 0.0f )
+                {
+                    size.x = Mathf.Clamp(size.x, 0.0f, start_size.x);
+                }
+
                 Area.transform.localScale = size;
 
-                Debug.Log(size);
+
 
                 // コライダの位置を設定
                 float min_x = Mathf.Min(touch_pos1.x, touch_pos2.x);
@@ -83,8 +98,12 @@ public class GetTouch : MonoBehaviour
                 // コライダ生成
                 if (isTrigger == false)
                 {
-                    hand1.transform.position = new Vector3(touch_pos1.x, pos.y, 0);
-                    hand2.transform.position = new Vector3(touch_pos1.x + size.x, pos.y, 0);
+                    if (size.x > 1)
+                    {
+                        hand1.transform.position = new Vector3(pos.x - size.x / 2.0f, pos.y, 0);
+                        hand2.transform.position = new Vector3(pos.x + size.x / 2.0f, pos.y, 0);
+                    }
+
                     start_size = size;
                     start_pos = pos;
                     Area.transform.position = pos;
@@ -92,36 +111,51 @@ public class GetTouch : MonoBehaviour
                     isTrigger = true;
                 }
 
-                if (Area.gameObject.tag == "Pinched" && size.x < 1)
+                if (Area.gameObject.tag == "Pinched" && Area.transform.localScale.x < 1)
                 {
                     Area.transform.position = new Vector3(-300, -300, -300);
-                    hand1.transform.position = new Vector3(-300, -300, -300);
-                    hand2.transform.position = new Vector3(-300, -300, -300);
+                   // hand1.transform.position = new Vector3(-300, -300, -300);
+                   // hand2.transform.position = new Vector3(-300, -300, -300);
+
+                    if(canInstantiate)
+                    {
+                        // 2体以上はさんだ時
+                        if (pinch_num >= 2)
+                        {
+                            new_unit.transform.position = new Vector3(pos.x + size.x / 2.0f, pos.y, 0.0f);
+                            new_unit.transform.localScale = new Vector3(1, 1, 1);
+                            // 新ユニットを生成
+                            Instantiate(new_unit);
+
+                            canInstantiate = false;
+                        }
+                       }
                 }
 
                 // ピンチイン判定
                 if (size.x <= 1)
                 {
                     Area.gameObject.tag = "Pinched";
-
                 }
 
                 break;
+            case TAP_STATE.SINGLE:
+                // ゲームオブジェクト「魔王の指」を動的に生成
             case TAP_STATE.NONE:
+                Area.gameObject.tag = "Collider";
                 Area.transform.position = new Vector3(-300, -300, -300);
-                Area.gameObject.tag = "Untagged";
                 hand1.transform.position = new Vector3(-300, -300, -300);
                 hand2.transform.position = new Vector3(-300, -300, -300);
                 isTrigger = false;
-
+                canInstantiate = true;
                 GameObject[] unions = GameObject.FindGameObjectsWithTag("isPinched");
 
                 foreach (GameObject union in unions)
                 {
-                    this.gameObject.tag = "Untagged";
+                    union.gameObject.tag = "Untagged";
                 }
-
-
+                pinch_num = 0;
+                start_size = new Vector2(0.0f, 0.0f);
                 break;
         }
 
@@ -129,11 +163,20 @@ public class GetTouch : MonoBehaviour
         {
             GameObject[] unions = GameObject.FindGameObjectsWithTag("isPinched");
 
-            foreach(GameObject union in unions)
+            foreach (GameObject union in unions)
             {
-                Destroy(union);
-
+                pinch_num++;
             }
+
+            if(pinch_num>1)
+            {
+                foreach (GameObject union in unions)
+                {
+                    // 既存のユニットを破壊
+                    Destroy(union);
+                }
+            }
+            
         }
 
     }

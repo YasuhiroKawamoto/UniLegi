@@ -5,6 +5,8 @@ using UnityEngine;
 public class random : MonoBehaviour
 {
 
+    //敵を順次ランダムなポジションで生成
+
     //敵プレハブを変数に代入
     [SerializeField]
     private GameObject Enemy;
@@ -19,10 +21,10 @@ public class random : MonoBehaviour
     [SerializeField]
     private int cnt = 0;
 
-
+    //敵の出現時間
     [SerializeField]
     private int SetTime;
-
+    //敵の種類
     [SerializeField]
     private int enemyNum;
 
@@ -32,8 +34,6 @@ public class random : MonoBehaviour
     {
 
         enemyNum = 0;
-
-
 
         SetTime = 200;
 
@@ -56,9 +56,10 @@ public class random : MonoBehaviour
             float z = 1.0f;
 
 
-            //オブジェクトを生産
 
 
+
+            //敵オブジェクトを生産（1から順に）
             switch (enemyNum)
                 {
                 case 0:
