@@ -29,7 +29,6 @@ public class GameManager : MonoBehaviour
     void Start ()
     {
 
-        cmp = this.gameObject.AddComponent<GetTouch>();
         m_hp = 1000;
         m_cost = 0;
     }
