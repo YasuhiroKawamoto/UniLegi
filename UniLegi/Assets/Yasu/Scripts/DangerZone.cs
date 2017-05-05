@@ -5,6 +5,7 @@ using UnityEngine;
 public class DangerZone : MonoBehaviour
 {
     public bool isHit;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -25,4 +26,8 @@ public class DangerZone : MonoBehaviour
             isHit = true;
         }
     }
+
+
+
+   
 }
