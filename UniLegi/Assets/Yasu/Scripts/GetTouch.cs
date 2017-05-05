@@ -179,7 +179,7 @@ public class GetTouch : MonoBehaviour
 
         if (Area.gameObject.tag == "Pinched")
         {
-            if(pinch_num>1)
+            if(pinch_num>1 && canInstantiate == false)
             {
                 foreach (GameObject union in unions)
                 {

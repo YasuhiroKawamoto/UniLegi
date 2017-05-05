@@ -18,8 +18,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject text_cost;
 
+    [SerializeField]
+    private GameObject text_unit;
 
-    int unitNum;
+    int m_unitNum;
 
 
     private int m_hp;
@@ -32,7 +34,7 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        unitNum = 0;
+        m_unitNum = 0;
         m_hp = 1000;
         m_cost = 0;
         m_cnt = 0;
@@ -64,10 +66,10 @@ public class GameManager : MonoBehaviour
 
         GameObject[] unions = GameObject.FindGameObjectsWithTag("Player");
 
-        unitNum = 0;
+        m_unitNum = 0;
         foreach (GameObject union in unions)
         {
-            unitNum++;
+            m_unitNum++;
         }
 
         // UIの更新
@@ -75,12 +77,17 @@ public class GameManager : MonoBehaviour
 
         text_cost.GetComponent<Text>().text = "COST:" + m_cost.ToString() + "/" + m_maxCost.ToString();
 
+        text_unit.GetComponent<Text>().text = "UNIT:" + m_unitNum.ToString() + "/" + 5;
 
         // シーン遷移
         if (m_hp < 0)
         {
             SceneManager.LoadScene("ResultScene");
         }
+    }
+    public void SetHp(int hp)
+    {
+        m_hp = hp;
     }
 
     public void SpendCost(int cost)
@@ -91,6 +98,10 @@ public class GameManager : MonoBehaviour
     public int GetCost()
     {
         return m_cost;
+    }
+    public int GetNum()
+    {
+        return m_unitNum;
     }
 
     public void RecoverCost(int cost)

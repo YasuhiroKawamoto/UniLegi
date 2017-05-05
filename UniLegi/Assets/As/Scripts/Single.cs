@@ -23,7 +23,11 @@ public class Single : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-        
+        // 子オブジェクトがなければ消滅
+        if(gameObject.transform.childCount == 0)
+        {
+            Destroy(gameObject);
+        }
 
 	}
 
