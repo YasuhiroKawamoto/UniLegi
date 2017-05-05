@@ -12,7 +12,8 @@ public class tap : MonoBehaviour {
     //スケールの倍数
     const float rate = 3;
     //範囲
-    const int zone=-3;
+    Vector3 zone;
+
 
     //元の大きさを保存
     private Vector3 m_saveScale;
@@ -38,6 +39,8 @@ public class tap : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+
+        zone = GameObject.Find("SpriteDengerZone").transform.position;
 
         //フラグは立たない
         m_flag = 0;
@@ -118,17 +121,25 @@ public class tap : MonoBehaviour {
         //オブジェクトが触っている時
         if (m_flag == 1)
         {
-            if (m_worldPoint.y > zone)
+            if (m_worldPoint.y > zone.y + 0.2f)
             {
                 //タッチしている座標に追従する
                 transform.position = m_worldPoint;
                 //オブジェクトを倍加させる
-                this.transform.localScale = new Vector3(rate, rate,1);
+                this.transform.localScale = new Vector3(rate, rate, 1);
                 //撃てない
                 m_canShot = false;
 
-                m_Cnt+=0.1f;
+                m_Cnt += 0.1f;
 
+            }
+            else
+            {
+                 this.transform.localScale = m_saveScale;
+                        m_flag = 0;
+                        m_canShot = true;
+
+                        m_Cnt = 0.0f;
             }
 
         }

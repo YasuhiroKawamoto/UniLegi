@@ -59,17 +59,7 @@ public class Decision : MonoBehaviour {
 
         }
 
-        if (col.gameObject.tag == "Player")
-        {
-
-
-            Debug.Log("KILL");
-
-           
-
-            Destroy(col);
-
-        }
+      
 
 
     }
