@@ -30,8 +30,11 @@ public class States : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
 
+        if (getHp() <= 0)
+        {
+            Destroy(gameObject);
+        }
 
 	}
 
