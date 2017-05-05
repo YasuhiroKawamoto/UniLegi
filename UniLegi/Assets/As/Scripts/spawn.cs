@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class spawn : MonoBehaviour {
+public class spawn : MonoBehaviour
+{
 
     [SerializeField]
     private float zone;
@@ -25,17 +26,19 @@ public class spawn : MonoBehaviour {
     private Vector2 savePos;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
 
         m_flag = 0;
-       
+
 
         savePos = (this.transform.position);
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
 
         if (Input.touchCount > 0)
         {
@@ -46,7 +49,7 @@ public class spawn : MonoBehaviour {
             //タッチ開始時
             if (touch.phase == TouchPhase.Began)
             {
-                
+
                 //タッチをした位置にオブジェクト判定
                 RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
 
@@ -69,10 +72,8 @@ public class spawn : MonoBehaviour {
 
                 if (hit)
                 {
-                   
                     if (hit.collider.gameObject == this.gameObject)
                     {
-
                         if (m_worldPoint.y < zone)
                         {
                             //元いた位置に戻る
@@ -82,8 +83,9 @@ public class spawn : MonoBehaviour {
                         }
                         else
                         {
-                            if (manager.GetCost() >= AsPrefab.gameObject.GetComponent<States>().getCost())
+                            if (CanInstantiate())
                             {
+
                                 AsPrefab.transform.position = m_worldPoint;
 
                                 Instantiate(AsPrefab);
@@ -97,12 +99,9 @@ public class spawn : MonoBehaviour {
                                 m_flag = 0;
                             }
                         }
-                       
                     }
-
                 }
             }
-
         }
         else
         {
@@ -110,16 +109,34 @@ public class spawn : MonoBehaviour {
             transform.position = savePos;
 
             m_flag = 0;
-        }     
+        }
 
         //1の時追従する
-        if (m_flag==1)
+        if (m_flag == 1)
         {
             //タッチしている座標に追従する
             transform.position = m_worldPoint;
 
         }
-
     }
 
+
+
+
+    bool CanInstantiate()
+    {
+        // ユニット数が5以上の時生成不可
+        if (manager.GetNum() >= 5)
+        {
+            return false;
+        }
+
+        // コストが足りているないとき生成不可
+        if (manager.GetCost() < AsPrefab.gameObject.GetComponent<States>().getCost())
+        {
+            return false;
+        }
+
+        return true;
+    }
 }
