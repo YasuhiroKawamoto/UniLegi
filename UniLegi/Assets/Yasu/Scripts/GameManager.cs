@@ -18,13 +18,14 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject text_cost;
 
-    private bool isPause;
 
     int unitNum;
 
 
     private int m_hp;
     private int m_cost;
+    private float m_cnt;
+
 
     int m_maxCost = 1000;
 
@@ -34,12 +35,14 @@ public class GameManager : MonoBehaviour
         unitNum = 0;
         m_hp = 1000;
         m_cost = 0;
-        isPause = false;
+        m_cnt = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+
         // 敵が当たったらHP減少
         if (dangerZone.GetComponent<DangerZone>().isHit)
         {
@@ -47,9 +50,14 @@ public class GameManager : MonoBehaviour
         }
 
         // コストが最大値以下ならコスト回復
-        if (m_cost < m_maxCost)
+        m_cnt++;
+        if (m_cnt > 10)
         {
-            m_cost += 1;
+            if (m_cost < m_maxCost)
+            {
+                m_cost += 1;
+            }
+            m_cnt = 0;
         }
 
         // ユニット数を制御
@@ -73,5 +81,20 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene("ResultScene");
         }
+    }
+
+    public void SpendCost(int cost)
+    {
+        m_cost -= cost;
+    }
+
+    public int GetCost()
+    {
+        return m_cost;
+    }
+
+    public void RecoverCost(int cost)
+    {
+        m_cost += cost;
     }
 }

@@ -7,6 +7,9 @@ public class spawn : MonoBehaviour {
     [SerializeField]
     private float zone;
 
+    [SerializeField]
+    private GameManager manager;
+
     //触ったフラグ
     private int m_flag;
     //タッチ
@@ -70,7 +73,7 @@ public class spawn : MonoBehaviour {
                     if (hit.collider.gameObject == this.gameObject)
                     {
 
-                        if(m_worldPoint.y<zone)
+                        if (m_worldPoint.y < zone)
                         {
                             //元いた位置に戻る
                             transform.position = savePos;
@@ -79,14 +82,20 @@ public class spawn : MonoBehaviour {
                         }
                         else
                         {
-                            AsPrefab.transform.position = m_worldPoint;
+                            if (manager.GetCost() >= AsPrefab.gameObject.GetComponent<States>().getCost())
+                            {
+                                AsPrefab.transform.position = m_worldPoint;
 
-                            Instantiate(AsPrefab);
+                                Instantiate(AsPrefab);
 
-                            //元いた位置に戻る
-                            transform.position = savePos;
+                                // コスト消費
+                                manager.SpendCost(AsPrefab.gameObject.GetComponent<States>().getCost());
 
-                            m_flag = 0;
+                                //元いた位置に戻る
+                                transform.position = savePos;
+
+                                m_flag = 0;
+                            }
                         }
                        
                     }
