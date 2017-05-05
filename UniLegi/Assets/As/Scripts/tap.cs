@@ -116,7 +116,7 @@ public class tap : MonoBehaviour {
 
         }
 
-        Debug.Log(m_Cnt);
+        
 
         //オブジェクトが触っている時
         if (m_flag == 1)

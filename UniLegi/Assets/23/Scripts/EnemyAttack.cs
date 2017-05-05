@@ -9,9 +9,11 @@ public class EnemyAttack : MonoBehaviour {
 
     Collider2D C;
 
+    Vector2 pos;
 
-   
-    
+    int rate;
+
+    int cnt;
 
     // Use this for initialization
     void Start () {
@@ -23,6 +25,10 @@ public class EnemyAttack : MonoBehaviour {
         C = this.gameObject.GetComponent<Collider2D>();
 
         C.transform.localScale = new Vector3(1.0f, states.getRenge(), 1.0f);
+
+        rate = states.getrate();
+
+        cnt = 0;
 
        
     }
@@ -39,29 +45,48 @@ public class EnemyAttack : MonoBehaviour {
 
         if (col.gameObject.tag == "Player")
         {
+            Debug.Log("接敵");
+            pos = this.gameObject.transform.parent.position;
 
-            col.GetComponent<States>().setDamege(states.getAttack());
-
-
-
+           
         }
 
 
     }
 
-    void OnCollisionStay2D(Collision2D col)
+    void OnTriggerStay2D(Collider2D col)
     {
+        
+        
+
+        if (col.gameObject.tag == "Player")
+        {
+
+            this.transform.parent.position = pos;
+
+            cnt++;
 
 
+            if (rate <= cnt / 60)
+            {
+                
+                col.GetComponent<States>().setDamege(states.getAttack());
+                Debug.Log("攻撃");
+                cnt = 0;
+            }
+         
+        }
+
+       
 
 
 
     }
 
-    void OnCollisionExit2D(Collision2D col)
+    void OnTriggerExit2D(Collider2D col)
     {
 
-
+        Debug.Log("離脱");
 
 
     }
