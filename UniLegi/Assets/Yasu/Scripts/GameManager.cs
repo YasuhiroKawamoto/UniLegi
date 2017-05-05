@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     private int stageNumber;
 
     [SerializeField]
-    private GameObject dangerZone;
+    private DangerZone dangerZone;
 
     [SerializeField]
     private GameObject text_hp;
@@ -34,8 +34,11 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+
+     
+
         m_unitNum = 0;
-        m_hp = 1000;
+       
         m_cost = 0;
         m_cnt = 0;
     }
@@ -44,12 +47,8 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
+        m_hp =dangerZone.GetHp();
 
-        // 敵が当たったらHP減少
-        if (dangerZone.GetComponent<DangerZone>().isHit)
-        {
-            m_hp--;
-        }
 
         // コストが最大値以下ならコスト回復
         m_cnt++;
@@ -85,10 +84,7 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("ResultScene");
         }
     }
-    public void SetHp(int hp)
-    {
-        m_hp = hp;
-    }
+   
 
     public void SpendCost(int cost)
     {

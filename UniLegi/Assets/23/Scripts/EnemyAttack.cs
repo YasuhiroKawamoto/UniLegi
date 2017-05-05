@@ -9,6 +9,8 @@ public class EnemyAttack : MonoBehaviour {
 
     Collider2D C;
 
+    GameManager G;
+
     Vector2 pos;
 
     int rate;
@@ -52,6 +54,15 @@ public class EnemyAttack : MonoBehaviour {
         }
 
 
+        if (col.gameObject.tag == "DangerZone")
+        {
+            Debug.Log("拠点接敵");
+            pos = this.gameObject.transform.parent.position;
+
+
+        }
+
+
     }
 
     void OnTriggerStay2D(Collider2D col)
@@ -77,7 +88,23 @@ public class EnemyAttack : MonoBehaviour {
          
         }
 
-       
+        if (col.gameObject.tag == "DangerZone")
+        {
+
+            this.transform.parent.position = pos;
+
+            cnt++;
+
+
+            if (rate <= cnt / 60)
+            {
+                col.GetComponent<DangerZone>().SetHp(col.GetComponent<DangerZone>().GetHp() - states.getAttack());
+               
+                Debug.Log("攻撃");
+                cnt = 0;
+            }
+
+        }
 
 
 
