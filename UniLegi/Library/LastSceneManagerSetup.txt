@@ -1,4 +1,8 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/Yasu/Scenes/MainScene.unity
+=======
+- path: Assets/23/Scenes/23Scene.unity
+>>>>>>> b51a46e9addc71bcfecf961822070c9f6b52d688
   isLoaded: 1
   isActive: 1

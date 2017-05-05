@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class DangerZone : MonoBehaviour
 {
-    public bool isHit;
+    [SerializeField]
+    private int m_hp = 1000;
 
 	// Use this for initialization
 	void Start ()
     {
-        isHit = false;
+       
 
     }
 	
@@ -19,15 +20,17 @@ public class DangerZone : MonoBehaviour
         
     }
 
-    void OnCollisionStay2D(Collision2D collision)
+    public void SetHp(int hp)
     {
-        if (collision.gameObject.tag == "Enemy")
-        {
-            isHit = true;
-        }
+        m_hp = hp;
+    }
+
+    public int GetHp()
+    {
+
+        return m_hp;
     }
 
 
 
-   
 }
