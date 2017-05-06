@@ -10,12 +10,18 @@ public class Single : MonoBehaviour {
     [SerializeField]
     private int m_BulletDamege = 1;
 
+    //反転して撃っているか
+    [SerializeField]
+    private bool m_InverdShot;
+
+    tap tapcm;
 
     // Use this for initialization
     void Start () {
 
         GetComponent<Rigidbody2D>().velocity = transform.up.normalized * speed;
 
+       
 	}
 	
 	// Update is called once per frame
@@ -27,13 +33,19 @@ public class Single : MonoBehaviour {
             Destroy(gameObject);
         }
 
+      
+
 	}
 
 
     public int getBulletDamage()
     {
-
         return m_BulletDamege;
+    }
+
+    public void setInvShot(bool flag)
+    {
+        m_InverdShot = flag;
     }
 
 }

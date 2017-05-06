@@ -11,11 +11,18 @@ public class TwoWay : MonoBehaviour {
     [SerializeField]
     private int m_BulletDamege = 1;
 
+    //反転して撃っているか
+    private bool m_InverdShot;
+
+    tap tap;
+
 
     // Use this for initialization
     void Start () {
         
         GetComponent<Rigidbody2D>().velocity = transform.up.normalized * m_speed;
+
+        tap = GetComponent<tap>();
 
     }
 	
@@ -36,6 +43,11 @@ public class TwoWay : MonoBehaviour {
     {
 
         return m_BulletDamege;
+    }
+
+    public bool getInvShot()
+    {
+        return m_InverdShot;
     }
 
 }
