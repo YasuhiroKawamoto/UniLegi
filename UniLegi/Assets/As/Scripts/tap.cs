@@ -6,8 +6,8 @@ public class tap : MonoBehaviour {
 
     //弾が撃てる
     private bool m_canShot=true;
-
-    private int m_flag;
+    //動いてるかどうか
+    private　bool m_moveFlag;
 
     //スケールの倍数
     const float rate = 3;
@@ -43,7 +43,7 @@ public class tap : MonoBehaviour {
         zone = GameObject.Find("SpriteDengerZone").transform.position;
 
         //フラグは立たない
-        m_flag = 0;
+        m_moveFlag = false;
         //大きさを保存
         m_saveScale = this.transform.localScale;
 
@@ -73,7 +73,7 @@ public class tap : MonoBehaviour {
                     if (hit.collider.gameObject == this.gameObject)
                     {
                         Debug.Log("タッチ");
-                        m_flag = 1;
+                        m_moveFlag = true;
                        this.gameObject.tag = "Untagged";
                         m_canShot = false;
                     }
@@ -89,7 +89,7 @@ public class tap : MonoBehaviour {
 
                 if (hit)
                 {
-                    if (hit.collider.gameObject == this.gameObject)
+                    if (hit.collider.gameObject == this.gameObject && hit.collider.gameObject.tag!="isPinched")
                     {
                         Debug.Log("離した");
                         this.gameObject.tag = "Player";
@@ -103,7 +103,7 @@ public class tap : MonoBehaviour {
                         }
 
                         this.transform.localScale = m_saveScale;
-                        m_flag = 0;
+                        m_moveFlag = false;
                         m_canShot = true;
 
                         m_Cnt = 0.0f;
@@ -119,7 +119,7 @@ public class tap : MonoBehaviour {
         
 
         //オブジェクトが触っている時
-        if (m_flag == 1)
+        if (m_moveFlag == true)
         {
             if (m_worldPoint.y > zone.y + 0.2f)
             {
@@ -136,7 +136,7 @@ public class tap : MonoBehaviour {
             else
             {
                  this.transform.localScale = m_saveScale;
-                        m_flag = 0;
+                        m_moveFlag = false;
                         m_canShot = true;
 
                         m_Cnt = 0.0f;
@@ -151,5 +151,10 @@ public class tap : MonoBehaviour {
         return m_canShot;
     }
 
+    //動いてるかどうかのフラグを渡す
+    public bool getMove()
+    {
+        return m_moveFlag;
+    }
     
 }
