@@ -23,9 +23,6 @@ public class Decision : MonoBehaviour {
         manager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
 
-
-
-
     }
 	
 	// Update is called once per frame
@@ -53,7 +50,6 @@ public class Decision : MonoBehaviour {
             Debug.Log("緋弾のアリア");
 
             states.setDamege(col.transform.parent.GetComponent<Single>().getBulletDamage());
-
 
             Destroy(col);
 
