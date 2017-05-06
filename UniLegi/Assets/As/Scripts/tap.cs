@@ -70,19 +70,22 @@ public class tap : MonoBehaviour {
 
                 if (hit)
                 {
-                    if (hit.collider.gameObject == this.gameObject)
+                    if (Input.touchCount == 1)
                     {
-                        Debug.Log("タッチ");
-                        m_moveFlag = true;
-                       this.gameObject.tag = "Untagged";
-                        m_canShot = false;
-                    }
 
+                        if (hit.collider.gameObject == this.gameObject)
+                        {
+                            Debug.Log("タッチ");
+                            m_moveFlag = true;
+                            this.gameObject.tag = "Untagged";
+                            m_canShot = false;
+                        }
+                    }
                 }
 
             }
             //離したとき
-            else if (touch.phase == TouchPhase.Ended)
+            else if (touch.phase == TouchPhase.Ended && m_moveFlag)
             {
                 //タッチをした位置にオブジェクト判定
                 RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
@@ -156,5 +159,6 @@ public class tap : MonoBehaviour {
     {
         return m_moveFlag;
     }
-    
+
+
 }
