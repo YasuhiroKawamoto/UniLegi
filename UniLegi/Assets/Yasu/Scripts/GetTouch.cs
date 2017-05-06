@@ -49,7 +49,7 @@ public class GetTouch : MonoBehaviour
     {
 
         start_size = new Vector2(0.0f, 0.0f);
-        canInstantiate = true; 
+        canInstantiate = true;
         isTrigger = false;
 
         pinch_num = 0;
@@ -68,17 +68,13 @@ public class GetTouch : MonoBehaviour
 
         switch (tap_state)
         {
-           
+
             case TAP_STATE.DOUBLE:
-                // 手　スプライト
-
-
-
 
                 // コライダの大きさを設定
                 Vector2 size = new Vector2(Mathf.Abs(touch_pos1.x - touch_pos2.x), 1.0f);
 
-                if(start_size.x > 0.0f )
+                if (start_size.x > 0.0f)
                 {
                     size.x = Mathf.Clamp(size.x, 0.0f, start_size.x);
                 }
@@ -126,7 +122,7 @@ public class GetTouch : MonoBehaviour
                             // コストが足りているとき
                             if (manager.GetCost() >= new_unit.gameObject.GetComponent<States>().getCost())
                             {
-                                new_unit.transform.position = new Vector3(pos.x + size.x / 2.0f, pos.y, 0.0f);
+                                new_unit.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y/2.0f, 0.0f);
                                 new_unit.transform.localScale = new Vector3(1, 1, 1);
                                 new_unit.tag = "isPinched";
 
@@ -150,7 +146,7 @@ public class GetTouch : MonoBehaviour
 
                 break;
             case TAP_STATE.SINGLE:
-                // ゲームオブジェクト「魔王の指」を動的に生成
+            // ゲームオブジェクト「魔王の指」を動的に生成
             case TAP_STATE.NONE:
                 Area.gameObject.tag = "Collider";
                 Area.transform.position = new Vector3(-300, -300, -300);
@@ -172,6 +168,7 @@ public class GetTouch : MonoBehaviour
 
 
 
+
         pinch_num = 0;
         // 判定エリア内のユニット数をカウント
         foreach (GameObject union in unions)
@@ -181,7 +178,7 @@ public class GetTouch : MonoBehaviour
 
         if (Area.gameObject.tag == "Pinched")
         {
-            if(pinch_num>1 && canInstantiate == false)
+            if (pinch_num > 1 && canInstantiate == false)
             {
                 foreach (GameObject union in unions)
                 {
@@ -189,9 +186,8 @@ public class GetTouch : MonoBehaviour
                     Destroy(union);
                 }
             }
-            
-        }
 
+        }
     }
 
 
@@ -217,7 +213,7 @@ public class GetTouch : MonoBehaviour
                 }
 
                 // 2点タップの時
-                else if (Input.touchCount == 2)
+                else if (tap_state != TAP_STATE.SINGLE && Input.touchCount == 2)
                 {
                     touch_pos1 = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
                     Debug.Log(touch_pos1);
@@ -248,4 +244,3 @@ public class GetTouch : MonoBehaviour
     //    }
     //}
 }
-
