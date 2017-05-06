@@ -128,6 +128,7 @@ public class GetTouch : MonoBehaviour
                             {
                                 new_unit.transform.position = new Vector3(pos.x + size.x / 2.0f, pos.y, 0.0f);
                                 new_unit.transform.localScale = new Vector3(1, 1, 1);
+                                new_unit.tag = "isPinched";
 
                                 // 新ユニットを生成
                                 Instantiate(new_unit);
@@ -155,6 +156,7 @@ public class GetTouch : MonoBehaviour
                 Area.transform.position = new Vector3(-300, -300, -300);
                 hand1.transform.position = new Vector3(-300, -300, -300);
                 hand2.transform.position = new Vector3(-300, -300, -300);
+                new_unit.tag = "Player";
                 isTrigger = false;
                 canInstantiate = true;
                 unions = GameObject.FindGameObjectsWithTag("isPinched");

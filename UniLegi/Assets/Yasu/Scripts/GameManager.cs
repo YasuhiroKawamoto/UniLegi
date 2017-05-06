@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 
         m_unitNum = 0;
        
-        m_cost = 0;
+        m_cost = 1000;
         m_cnt = 0;
     }
 
