@@ -22,9 +22,15 @@ public class States : MonoBehaviour {
     [SerializeField]
     private int m_FireRate = 5;
 
+    //能力タイプ
+    [SerializeField]
+    private int m_AbilitieType = 1;
 
-	// Use this for initialization
-	void Start () {
+   
+
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -65,6 +71,12 @@ public class States : MonoBehaviour {
     public int getCost()
     {
         return m_Cost;
+    }
+
+
+    public int getAbilitieType()
+    {
+        return m_AbilitieType;
     }
 
 
