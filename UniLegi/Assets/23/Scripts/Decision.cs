@@ -7,6 +7,12 @@ public class Decision : MonoBehaviour {
     //Statesコンポーネント
     States states;
 
+    [SerializeField]
+    private GameManager manager;
+   
+
+
+   
     // Use this for initialization
     void Start ()
     {
@@ -14,7 +20,10 @@ public class Decision : MonoBehaviour {
         //Statesコンポーネントの取得
         states = GetComponent<States>();
 
-       
+        manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+
+
 
 
     }
@@ -22,7 +31,16 @@ public class Decision : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		
+
+
+        if (states.getHp() <= 0)
+        {
+            // コスト回復
+            manager.RecoverCost(states.getCost());
+
+            Destroy(this.gameObject);
+        }
+
 	}
 
 
@@ -31,11 +49,17 @@ public class Decision : MonoBehaviour {
         if (col.gameObject.tag == "Bullet")
         {
 
+
             Debug.Log("緋弾のアリア");
+
+            states.setDamege(col.transform.parent.GetComponent<Single>().getBulletDamage());
+
 
             Destroy(col);
 
         }
+
+      
 
 
     }

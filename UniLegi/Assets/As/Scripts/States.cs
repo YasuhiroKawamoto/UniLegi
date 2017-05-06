@@ -30,8 +30,11 @@ public class States : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
 
+        if (getHp() <= 0)
+        {
+            Destroy(gameObject);
+        }
 
 	}
 
@@ -40,5 +43,35 @@ public class States : MonoBehaviour {
     {
         return m_FireRate;
     }
+
+    public int getHp()
+    {
+        return m_Hp;
+    }
+
+
+    public int getAttack()
+    {
+        return m_Attack;
+    }
+
+
+    public float getRenge()
+    {
+        return m_Range;
+    }
+
+
+    public int getCost()
+    {
+        return m_Cost;
+    }
+
+
+    public void setDamege(int Damege)
+    {
+         m_Hp -= Damege;
+    }
+
 
 }

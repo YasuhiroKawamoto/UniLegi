@@ -24,6 +24,8 @@ public class GetTouch : MonoBehaviour
 
     [SerializeField]
     private SpriteRenderer hand2;
+
+
     private Vector3 touch_pos1;
     private Vector3 touch_pos2;
     private Vector3 start_pos;
@@ -32,19 +34,15 @@ public class GetTouch : MonoBehaviour
     private bool canInstantiate;
 
 
+    [SerializeField]
+    private GameManager manager;
+
 
     private int pinch_num;
 
 
     // タップ状態
     private TAP_STATE tap_state;
-    LineRenderer line;
-
-    private void Awake()
-    {
-        // ボックスコライダーをアタッチ
-        //Area.AddComponent<BoxCollider2D>();
-    }
 
     // Use this for initialization
     void Start()
@@ -65,6 +63,7 @@ public class GetTouch : MonoBehaviour
         // タップ数などを判定
         TapSearch();
 
+        GameObject[] unions = GameObject.FindGameObjectsWithTag("isPinched");
 
 
         switch (tap_state)
@@ -111,25 +110,35 @@ public class GetTouch : MonoBehaviour
                     isTrigger = true;
                 }
 
+
+                // 合体
                 if (Area.gameObject.tag == "Pinched" && Area.transform.localScale.x < 1)
                 {
                     Area.transform.position = new Vector3(-300, -300, -300);
-                   // hand1.transform.position = new Vector3(-300, -300, -300);
-                   // hand2.transform.position = new Vector3(-300, -300, -300);
+                    // hand1.transform.position = new Vector3(-300, -300, -300);
+                    // hand2.transform.position = new Vector3(-300, -300, -300);
 
-                    if(canInstantiate)
+                    if (canInstantiate)
                     {
                         // 2体以上はさんだ時
                         if (pinch_num >= 2)
                         {
-                            new_unit.transform.position = new Vector3(pos.x + size.x / 2.0f, pos.y, 0.0f);
-                            new_unit.transform.localScale = new Vector3(1, 1, 1);
-                            // 新ユニットを生成
-                            Instantiate(new_unit);
+                            // コストが足りているとき
+                            if (manager.GetCost() >= new_unit.gameObject.GetComponent<States>().getCost())
+                            {
+                                new_unit.transform.position = new Vector3(pos.x + size.x / 2.0f, pos.y, 0.0f);
+                                new_unit.transform.localScale = new Vector3(1, 1, 1);
 
-                            canInstantiate = false;
+                                // 新ユニットを生成
+                                Instantiate(new_unit);
+
+                                // コスト消費
+                                manager.SpendCost(new_unit.gameObject.GetComponent<States>().getCost());
+
+                                canInstantiate = false;
+                            }
                         }
-                       }
+                    }
                 }
 
                 // ピンチイン判定
@@ -148,27 +157,29 @@ public class GetTouch : MonoBehaviour
                 hand2.transform.position = new Vector3(-300, -300, -300);
                 isTrigger = false;
                 canInstantiate = true;
-                GameObject[] unions = GameObject.FindGameObjectsWithTag("isPinched");
+                unions = GameObject.FindGameObjectsWithTag("isPinched");
 
                 foreach (GameObject union in unions)
                 {
-                    union.gameObject.tag = "Untagged";
+                    union.gameObject.tag = "Player";
                 }
                 pinch_num = 0;
                 start_size = new Vector2(0.0f, 0.0f);
                 break;
         }
 
+
+
+        pinch_num = 0;
+        // 判定エリア内のユニット数をカウント
+        foreach (GameObject union in unions)
+        {
+            pinch_num++;
+        }
+
         if (Area.gameObject.tag == "Pinched")
         {
-            GameObject[] unions = GameObject.FindGameObjectsWithTag("isPinched");
-
-            foreach (GameObject union in unions)
-            {
-                pinch_num++;
-            }
-
-            if(pinch_num>1)
+            if(pinch_num>1 && canInstantiate == false)
             {
                 foreach (GameObject union in unions)
                 {
