@@ -17,6 +17,9 @@ public class GetTouch : MonoBehaviour
     GameObject new_unit;
 
     [SerializeField]
+    GameObject effect;
+
+    [SerializeField]
     private GameObject Area;
 
     [SerializeField]
@@ -40,6 +43,10 @@ public class GetTouch : MonoBehaviour
 
     private int pinch_num;
 
+    private float delay;
+    private bool isWaiting;
+
+
 
     // タップ状態
     private TAP_STATE tap_state;
@@ -51,6 +58,7 @@ public class GetTouch : MonoBehaviour
         start_size = new Vector2(0.0f, 0.0f);
         canInstantiate = true;
         isTrigger = false;
+        isWaiting = false;
 
         pinch_num = 0;
 
@@ -122,12 +130,20 @@ public class GetTouch : MonoBehaviour
                             // コストが足りているとき
                             if (manager.GetCost() >= new_unit.gameObject.GetComponent<States>().getCost())
                             {
+                                // 合体ユニット設定
                                 new_unit.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y/2.0f, 0.0f);
                                 new_unit.transform.localScale = new Vector3(1, 1, 1);
                                 new_unit.tag = "isPinched";
 
-                                // 新ユニットを生成
-                                Instantiate(new_unit);
+                                // エフェクト設定
+                                effect.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
+                                effect.transform.localScale = new Vector3(1, 1, 1);
+
+                                // エフェクト発生
+                                Instantiate(effect);
+                                delay = 30;
+                                isWaiting = true;
+
 
                                 // コスト消費
                                 manager.SpendCost(new_unit.gameObject.GetComponent<States>().getCost());
@@ -137,6 +153,8 @@ public class GetTouch : MonoBehaviour
                         }
                     }
                 }
+
+
 
                 // ピンチイン判定
                 if (size.x <= 1)
@@ -166,6 +184,18 @@ public class GetTouch : MonoBehaviour
                 break;
         }
 
+        // ユニット生成
+        if (isWaiting)
+        {
+            delay--;
+
+
+            if (delay < 0)
+            {
+                Instantiate(new_unit);
+                isWaiting = false;
+            }
+        }
 
 
 
