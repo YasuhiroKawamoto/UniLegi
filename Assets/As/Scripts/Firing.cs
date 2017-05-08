@@ -15,8 +15,6 @@ public class Firing : MonoBehaviour {
     private int m_Delay;
     //カウント
     private int m_Cnt = 0;
-    //反転フラグ
-    private bool m_InverdFlag;
 
 
     //Use this for initialization
@@ -32,11 +30,6 @@ public class Firing : MonoBehaviour {
     void Update()
     {
         tap = GetComponent<tap>();
-
-        //反転フラグを受け取る
-        m_InverdFlag = tap.getInvert();
-
-        bullet.GetComponent<Single>().setInvShot(m_InverdFlag);
 
         m_Cnt ++;
 

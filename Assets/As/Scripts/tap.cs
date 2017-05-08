@@ -21,7 +21,7 @@ public class tap : MonoBehaviour {
   
 
     //反転してるかどうか
-    private bool m_Invert = false;
+    private bool m_Invert = true;
 
     //タッチ
     Touch touch;
@@ -98,8 +98,6 @@ public class tap : MonoBehaviour {
                         this.gameObject.tag = "Player";
                         if (m_Cnt < 0.5f)
                         {
-                            m_Invert = !m_Invert; 
-
                             Debug.Log("反転");
                             transform.Rotate(new Vector3(180.0f, 0.0f, 0.0f));
 
@@ -162,10 +160,5 @@ public class tap : MonoBehaviour {
         return m_moveFlag;
     }
 
-    //反転してるかどうかのフラグを渡す
-    public bool getInvert()
-    {
-        return m_Invert;
-    }
 
 }

@@ -22,23 +22,14 @@ public class States : MonoBehaviour {
     [SerializeField]
     private int m_FireRate = 5;
 
-    //能力タイプ
-    //1　正面無効
-    //2  
-    [SerializeField]
-    private int m_AbilitieType = 1;
 
-   
-
-
-    // Use this for initialization
-    void Start () {
+	// Use this for initialization
+	void Start () {
 		
 	}
 	
 	// Update is called once per frame
-	void Update ()
-    {
+	void Update () {
 
         if (getHp() <= 0)
         {
@@ -74,12 +65,6 @@ public class States : MonoBehaviour {
     public int getCost()
     {
         return m_Cost;
-    }
-
-
-    public int getAbilitieType()
-    {
-        return m_AbilitieType;
     }
 
 

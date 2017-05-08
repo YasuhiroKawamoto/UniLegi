@@ -23,6 +23,9 @@ public class Decision : MonoBehaviour {
         manager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
 
+
+
+
     }
 	
 	// Update is called once per frame
@@ -47,26 +50,10 @@ public class Decision : MonoBehaviour {
         {
 
 
-            //Debug.Log("緋弾のアリア");
+            Debug.Log("緋弾のアリア");
 
+            states.setDamege(col.transform.parent.GetComponent<Single>().getBulletDamage());
 
-            if (states.getAbilitieType() == 1 )
-            {
-
-                if (col.transform.parent.GetComponent<Single>().getInvShot() == true)
-                {
-                    Debug.Log("背面攻撃成功");
-                    states.setDamege(col.transform.parent.GetComponent<Single>().getBulletDamage());
-                }
-                else
-                {
-                    Debug.Log("無効");
-                }
-            }
-            else
-            {
-                states.setDamege(col.transform.parent.GetComponent<Single>().getBulletDamage());
-            }
 
             Destroy(col);
 
