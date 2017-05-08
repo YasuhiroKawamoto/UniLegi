@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Firing : MonoBehaviour {
 
-    //tapコンポーネント
-    tap tap;
+    //Tapコンポーネント
+    Tap tap;
 
+    //Shot shot;
+    
     //Statesコンポーネント
     States states;
     //Bulletのプレハブ
@@ -15,6 +17,9 @@ public class Firing : MonoBehaviour {
     private int m_Delay;
     //カウント
     private int m_Cnt = 0;
+
+    //反転
+    private bool m_Flag;
 
 
     //Use this for initialization
@@ -29,9 +34,16 @@ public class Firing : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        tap = GetComponent<tap>();
+       
+
+        tap = GetComponent<Tap>();
 
         m_Cnt ++;
+
+        m_Flag = tap.getInverd();
+
+
+        bullet.GetComponentInChildren<Bullet>().setInverdFlag(m_Flag);
 
         if (tap.getShot() == true)
         {
@@ -49,6 +61,6 @@ public class Firing : MonoBehaviour {
 
     }
 
-    
+  
 
 }

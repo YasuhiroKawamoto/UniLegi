@@ -22,11 +22,11 @@ public class EnemyAttack : MonoBehaviour {
         states = this.gameObject.transform.parent.GetComponent<States>();
 
       this.gameObject.transform.position =  new Vector3 (this.gameObject.transform.parent.position.x,
-          (this.gameObject.transform.parent.position.y-(this.gameObject.transform.parent.localScale.y/2)), this.gameObject.transform.parent.position.z);
+          (this.gameObject.transform.parent.position.y-0.2f), this.gameObject.transform.parent.position.z);
 
         C = this.gameObject.GetComponent<Collider2D>();
 
-        C.transform.localScale = new Vector3(1.0f, states.getRenge(), 1.0f);
+        C.transform.localScale = new Vector3(1.0f, states.getRenge(), 0.0f);
 
         rate = states.getrate();
 
