@@ -2,43 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class tap : MonoBehaviour {
+public class Tap : MonoBehaviour {
 
     //弾が撃てる
-    private bool m_canShot=true;
+    private bool m_canShot = true;
     //動いてるかどうか
-    private　bool m_moveFlag;
+    private bool m_moveFlag;
 
     //スケールの倍数
     const float rate = 3;
     //範囲
     Vector3 zone;
 
-
     //元の大きさを保存
     private Vector3 m_saveScale;
 
-  
-
     //反転してるかどうか
-    private bool m_Invert = true;
+    private bool m_Invert = false;
 
     //タッチ
     Touch touch;
 
     //タッチ座標
-    private　Vector2 m_worldPoint;
+    private Vector2 m_worldPoint;
 
-    //tap判定
-    //[SerializeField]
-    //private float=;
-
-    //
     private float m_Cnt;
 
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
 
         zone = GameObject.Find("SpriteDengerZone").transform.position;
 
@@ -47,7 +40,7 @@ public class tap : MonoBehaviour {
         //大きさを保存
         m_saveScale = this.transform.localScale;
 
-	}
+    }
 
     // Update is called once per frame
     void Update()
@@ -92,12 +85,14 @@ public class tap : MonoBehaviour {
 
                 if (hit)
                 {
-                    if (hit.collider.gameObject == this.gameObject && hit.collider.gameObject.tag!="isPinched")
+                    if (hit.collider.gameObject == this.gameObject && hit.collider.gameObject.tag != "isPinched")
                     {
                         Debug.Log("離した");
                         this.gameObject.tag = "Player";
                         if (m_Cnt < 0.5f)
                         {
+                            m_Invert = !m_Invert;
+
                             Debug.Log("反転");
                             transform.Rotate(new Vector3(180.0f, 0.0f, 0.0f));
 
@@ -119,7 +114,6 @@ public class tap : MonoBehaviour {
 
         }
 
-        
 
         //オブジェクトが触っている時
         if (m_moveFlag == true)
@@ -138,11 +132,11 @@ public class tap : MonoBehaviour {
             }
             else
             {
-                 this.transform.localScale = m_saveScale;
-                        m_moveFlag = false;
-                        m_canShot = true;
+                this.transform.localScale = m_saveScale;
+                m_moveFlag = false;
+                m_canShot = true;
 
-                        m_Cnt = 0.0f;
+                m_Cnt = 0.0f;
             }
 
         }
@@ -159,6 +153,10 @@ public class tap : MonoBehaviour {
     {
         return m_moveFlag;
     }
-
+    //反転してるか同課のフラグ
+    public bool getInverd()
+    {
+        return m_Invert;
+    }
 
 }
