@@ -22,7 +22,7 @@ public class EnemyAttack : MonoBehaviour {
         states = this.gameObject.transform.parent.GetComponent<States>();
 
       this.gameObject.transform.position =  new Vector3 (this.gameObject.transform.parent.position.x,
-          this.gameObject.transform.parent.position.y, this.gameObject.transform.parent.position.z);
+          (this.gameObject.transform.parent.position.y-0.2f), this.gameObject.transform.parent.position.z);
 
         C = this.gameObject.GetComponent<Collider2D>();
 

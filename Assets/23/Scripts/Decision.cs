@@ -52,7 +52,7 @@ public class Decision : MonoBehaviour {
 
             Debug.Log("緋弾のアリア");
 
-            states.setDamege(col.transform.parent.GetComponent<Single>().getBulletDamage());
+            states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());
 
 
             Destroy(col);
