@@ -54,7 +54,6 @@ public class Decision : MonoBehaviour {
 
             states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());
 
-
             Destroy(col);
 
         }
@@ -64,11 +63,21 @@ public class Decision : MonoBehaviour {
 
     }
 
-    void OnCollisionStay2D(Collision2D col)
+    void OnTriggerStay2D(Collider2D col)
     {
 
+        if (col.gameObject.tag == "Bullet")
+        {
 
-     
+
+            Debug.Log("緋弾のアリアAA");
+
+            states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());
+
+            Destroy(col);
+
+        }
+
 
 
     }
