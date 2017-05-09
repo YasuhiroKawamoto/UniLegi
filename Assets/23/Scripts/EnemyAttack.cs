@@ -78,7 +78,7 @@ public class EnemyAttack : MonoBehaviour {
         {
 
             this.transform.parent.position = pos;
-
+            this.transform.parent.GetComponent<move2>().setMoveFlag(false);
             cnt++;
 
 

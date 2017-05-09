@@ -20,8 +20,9 @@ public class move3 : MonoBehaviour {
 
     private Vector2 Positon;
 
+    private bool ReversFlag = false;
 
-    private int moveFlag = 0;
+    private bool moveFlag = true;
 
     private int MC = 0;
 
@@ -35,47 +36,53 @@ public class move3 : MonoBehaviour {
     void Update()
     {
 
-        MC++;
-
         //現在地取得
         Positon = transform.position;
 
-        if (MC <= 50)
+        if (moveFlag == true)
         {
-            //速度加算
-            Positon += Speed;
+            MC++;
 
-        }
-        else
-        {
-            if (moveFlag == 0)
+       
+
+        
+
+            if (MC <= 50)
             {
-                Positon += Speed2;
+                //速度加算
+                Positon += Speed;
+
             }
             else
             {
-                Positon +=  (Vector2.Scale(Speed2,reverseX) );
+                if (ReversFlag == false)
+                {
+                    Positon += Speed2;
+                }
+                else
+                {
+                    Positon += (Vector2.Scale(Speed2, reverseX));
+                }
             }
-        }
 
-        if (MC >= 80)
-        {
-            MC = 0;
-
-            switch (moveFlag)
+            if (MC >= 80)
             {
-                case 0:
-                    moveFlag = 1;
-                    break;
-                case 1:
-                    moveFlag = 0;
-                    break;
+                MC = 0;
+
+                switch (ReversFlag)
+                {
+                    case true:
+                        ReversFlag = false;
+                        break;
+                    case false:
+                        ReversFlag = true;
+                        break;
+                }
             }
+
+            //現在位置に速度加算後位置を代入
+            transform.position = Positon;
         }
-
-        //現在位置に速度加算後位置を代入
-        transform.position = Positon;
-
     }
 
 
@@ -90,13 +97,13 @@ public class move3 : MonoBehaviour {
 
         if (col.gameObject.tag == "OutZone")
         {
-            switch (moveFlag)
+            switch (ReversFlag)
             {
-                case 0:
-                    moveFlag = 1;
+                case true:
+                    ReversFlag = false;
                     break;
-                case 1:
-                    moveFlag = 0;
+                case false:
+                    ReversFlag = true;
                     break;
             }
         }
@@ -129,6 +136,12 @@ public class move3 : MonoBehaviour {
         }
 
         
+
+    }
+
+    public void setMoveFlag(bool F)
+    {
+        moveFlag = F;
 
     }
 }

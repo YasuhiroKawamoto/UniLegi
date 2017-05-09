@@ -15,7 +15,9 @@ public class move2 : MonoBehaviour {
 
     private Vector2 reverseX = new Vector2(-1.0f, 1.0f);
 
-    private int moveFlag = 0;
+    private bool ReversFlag = false;
+
+    private bool moveFlag = true;
 
     private int MC = 0;
 
@@ -29,51 +31,58 @@ public class move2 : MonoBehaviour {
     void Update()
     {
 
-        MC++;
-
         //現在地取得
         Vector2 Positon = transform.position;
 
-        if (MC <= 50)
+        if (moveFlag == true)
         {
-            //速度加算
-            Positon += Speed;
+            MC++;
 
-        }
-        else
-        {
-            //速度加算
-            if (moveFlag == 0)
+        
+
+
+       
+
+            if (MC <= 50)
             {
-                Positon += Speed2;
+                //速度加算
+                Positon += Speed;
+
             }
             else
             {
-                Positon += (Vector2.Scale(Speed2, reverseX));
+                //速度加算
+                if (ReversFlag == false)
+                {
+                    Positon += Speed2;
+                }
+                else
+                {
+                    Positon += (Vector2.Scale(Speed2, reverseX));
+                }
             }
-        }
 
-        if (MC >= 100)
-        {
-            MC = 0;
-            switch (moveFlag)
-            { 
-                case 0:
-                    moveFlag = 1;
-                    break;
-                case 1:
-                    moveFlag = 0;
-                    break;
+            if (MC >= 100)
+            {
+                MC = 0;
+                switch (ReversFlag)
+                {
+                    case true:
+                        ReversFlag = false;
+                        break;
+                    case false:
+                        ReversFlag = true;
+                        break;
+                }
             }
+
+
+
+
+            //現在位置に速度加算後位置を代入
+            transform.position = Positon;
+
         }
-
-
-      
-
-        //現在位置に速度加算後位置を代入
-        transform.position = Positon;
-
-
 
     }
 
@@ -116,6 +125,13 @@ public class move2 : MonoBehaviour {
 
         
 
+
+    }
+
+
+    public void setMoveFlag(bool F)
+    {
+        moveFlag = F;
 
     }
 }
