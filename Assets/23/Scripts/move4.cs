@@ -13,7 +13,9 @@ public class move4 : MonoBehaviour {
     [SerializeField]
     private Vector2 Speed2 = new Vector2(0.0f, 0.0f);
 
-    private int moveFlag = 0;
+    private bool ReversFlag = false;
+
+    private bool moveFlag = true;
 
     private int MC = 0;
 
@@ -27,31 +29,35 @@ public class move4 : MonoBehaviour {
     void Update()
     {
 
-        MC++;
-
         //現在地取得
         Vector2 Positon = transform.position;
 
-        if (MC <= 50)
+        if (moveFlag == true)
         {
-            //速度加算
-            Positon += Speed;
+            MC++;
 
+           
+
+            if (MC <= 50)
+            {
+                //速度加算
+                Positon += Speed;
+
+            }
+            else
+            {
+
+                Positon += Speed2;
+            }
+
+            if (MC >= 80)
+            {
+                MC = 0;
+            }
+
+            //現在位置に速度加算後位置を代入
+            transform.position = Positon;
         }
-        else
-        {
-
-            Positon += Speed2;
-        }
-
-        if (MC >= 80)
-        {
-            MC = 0;
-        }
-
-        //現在位置に速度加算後位置を代入
-        transform.position = Positon;
-
     }
 
 
@@ -93,4 +99,11 @@ public class move4 : MonoBehaviour {
 
 
     }
+
+    public void setMoveFlag(bool F)
+    {
+        moveFlag = F;
+
+    }
+
 }
