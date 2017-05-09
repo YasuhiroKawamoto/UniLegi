@@ -93,6 +93,7 @@ public class EnemyAttack : MonoBehaviour {
                 {
                     Instantiate(effect);
                 }
+
                 Debug.Log("攻撃");
                 cnt = 0;
             }
