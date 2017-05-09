@@ -168,7 +168,7 @@ public class GetTouch : MonoBehaviour
                 Area.transform.position = new Vector3(-300, -300, -300);
                 hand1.transform.position = new Vector3(-300, -300, -300);
                 hand2.transform.position = new Vector3(-300, -300, -300);
-                newUnit.tag = "Player";
+                //newUnit.tag = "Player";
                 isTrigger = false;
                 canInstantiate = true;
                 unions = GameObject.FindGameObjectsWithTag("isPinched");

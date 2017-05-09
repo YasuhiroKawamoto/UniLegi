@@ -31,11 +31,11 @@ public class Union : MonoBehaviour
         foreach (GameObject union in unions)
         {
             States state = union.GetComponent<States>();
-<<<<<<< HEAD
+
             //typeIDs.Add(state.m_typeId);
-=======
-          //  typeIDs.Add(state.m_typeId);
->>>>>>> 2e36635e034ead928e0b05eeecfb6a56965428e5
+
+       
+
         }
 
         //newState.m_typeId = FindIndexMost(typeIDs);
