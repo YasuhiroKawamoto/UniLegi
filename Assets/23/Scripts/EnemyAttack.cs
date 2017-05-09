@@ -9,9 +9,13 @@ public class EnemyAttack : MonoBehaviour {
 
     Collider2D C;
 
-    GameManager G;
+    
 
     Vector2 pos;
+
+
+    [SerializeField]
+    GameObject effect;
 
     int rate;
 
@@ -82,6 +86,13 @@ public class EnemyAttack : MonoBehaviour {
             {
                 
                 col.GetComponent<States>().setDamege(states.getAttack());
+
+                effect.transform.position = col.transform.position;
+
+                if (effect != null)
+                {
+                    Instantiate(effect);
+                }
                 Debug.Log("攻撃");
                 cnt = 0;
             }
@@ -99,7 +110,15 @@ public class EnemyAttack : MonoBehaviour {
             if (rate <= cnt / 60)
             {
                 col.GetComponent<DangerZone>().SetHp(col.GetComponent<DangerZone>().GetHp() - states.getAttack());
-               
+
+
+                effect.transform.position = new Vector3(this.gameObject.transform.position.x, col.transform.position.y, 0);
+
+                if (effect != null)
+                {
+                    Instantiate(effect);
+                }
+
                 Debug.Log("攻撃");
                 cnt = 0;
             }

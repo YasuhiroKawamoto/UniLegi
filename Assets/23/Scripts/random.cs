@@ -23,20 +23,19 @@ public class random : MonoBehaviour
 
     //敵の出現時間
     [SerializeField]
-    private int SetTime;
+    private int SetTime = 200;
     //敵の種類
     [SerializeField]
-    private int enemyNum;
+    private int enemyNum = 0;
 
 
     // Use this for initialization
     void Start()
     {
 
-        enemyNum = 0;
+        
 
-        SetTime = 200;
-
+       
 
     }
 
