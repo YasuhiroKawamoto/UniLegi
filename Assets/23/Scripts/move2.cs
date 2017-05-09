@@ -13,6 +13,8 @@ public class move2 : MonoBehaviour {
     [SerializeField]
     private Vector2 Speed2 = new Vector2(0.01f, 0.0f);
 
+    private Vector2 reverseX = new Vector2(-1.0f, 1.0f);
+
     private int moveFlag = 0;
 
     private int MC = 0;
@@ -47,7 +49,7 @@ public class move2 : MonoBehaviour {
             }
             else
             {
-                Positon -= Speed2;
+                Positon += (Vector2.Scale(Speed2, reverseX));
             }
         }
 

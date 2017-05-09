@@ -23,7 +23,7 @@ public class Emitter : MonoBehaviour {
         {
 
             // Waveを作成する
-            GameObject wave = (GameObject)Instantiate(waves[currentWave], transform.position, Quaternion.identity);
+            GameObject wave = (GameObject)Instantiate(waves[currentWave], this.transform.position, Quaternion.identity);
 
             // WaveをEmitterの子要素にする
             wave.transform.parent = transform;
