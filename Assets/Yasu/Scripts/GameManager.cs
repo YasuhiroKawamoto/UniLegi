@@ -23,12 +23,14 @@ public class GameManager : MonoBehaviour
 
     int m_unitNum;
 
-
+    [SerializeField]
     private int m_hp;
+    [SerializeField]
     private int m_cost;
+
     private float m_cnt;
 
-
+    [SerializeField]
     int m_maxCost = 1000;
 
     // Use this for initialization
