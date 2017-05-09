@@ -22,16 +22,20 @@ public class States : MonoBehaviour {
     [SerializeField]
     private int m_FireRate = 5;
 
-    public int moveType { get; set; }
+    [SerializeField]
+    private int moveType;
 
     //種族データ
-    public int m_typeId { get; set; }
+    [SerializeField]
+    private int m_typeId;
 
     //種族値
-    public int m_typePoint { get; set; }
+    [SerializeField]
+    private int m_typePoint;
 
     // アビリティタイプ
-    public int m_abilityType { get; set; }
+    [SerializeField]
+    private int m_abilityType;
 
     // Use this for initialization
     void Start () {
