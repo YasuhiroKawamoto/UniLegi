@@ -13,8 +13,8 @@ enum TAP_STATE
 public class GetTouch : MonoBehaviour
 {
 
-    [SerializeField]
-    GameObject new_unit;
+    
+   public GameObject newUnit { get; set; }
 
     [SerializeField]
     GameObject effect;
@@ -119,8 +119,6 @@ public class GetTouch : MonoBehaviour
                 if (Area.gameObject.tag == "Pinched" && Area.transform.localScale.x < 1)
                 {
                     Area.transform.position = new Vector3(-300, -300, -300);
-                    // hand1.transform.position = new Vector3(-300, -300, -300);
-                    // hand2.transform.position = new Vector3(-300, -300, -300);
 
                     if (canInstantiate)
                     {
@@ -128,12 +126,12 @@ public class GetTouch : MonoBehaviour
                         if (pinch_num >= 2)
                         {
                             // コストが足りているとき
-                            if (manager.GetCost() >= new_unit.gameObject.GetComponent<States>().getCost())
+                            if (manager.GetCost() >= newUnit.gameObject.GetComponent<States>().getCost())
                             {
                                 // 合体ユニット設定
-                                new_unit.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y/2.0f, 0.0f);
-                                new_unit.transform.localScale = new Vector3(1, 1, 1);
-                                new_unit.tag = "isPinched";
+                                newUnit.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y/2.0f, 0.0f);
+                                newUnit.transform.localScale = new Vector3(1, 1, 1);
+                                newUnit.tag = "isPinched";
 
                                 // エフェクト設定
                                 effect.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
@@ -146,7 +144,7 @@ public class GetTouch : MonoBehaviour
 
 
                                 // コスト消費
-                                manager.SpendCost(new_unit.gameObject.GetComponent<States>().getCost());
+                                manager.SpendCost(newUnit.gameObject.GetComponent<States>().getCost());
 
                                 canInstantiate = false;
                             }
@@ -170,7 +168,7 @@ public class GetTouch : MonoBehaviour
                 Area.transform.position = new Vector3(-300, -300, -300);
                 hand1.transform.position = new Vector3(-300, -300, -300);
                 hand2.transform.position = new Vector3(-300, -300, -300);
-                new_unit.tag = "Player";
+                newUnit.tag = "Player";
                 isTrigger = false;
                 canInstantiate = true;
                 unions = GameObject.FindGameObjectsWithTag("isPinched");
@@ -192,7 +190,7 @@ public class GetTouch : MonoBehaviour
 
             if (delay < 0)
             {
-                Instantiate(new_unit);
+                Instantiate(newUnit);
                 isWaiting = false;
             }
         }
