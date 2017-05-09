@@ -34,13 +34,13 @@ public class Mover: MonoBehaviour {
         if (moveFlag == true)
         {
             MC++;
-            if (this.gameObject.GetComponent<States>().     == 1)
+            if (this.gameObject.GetComponent<States>().moveType == 1)
             {
                 //速度加算
                 Positon += Speed;
 
             }
-            if (this.gameObject.GetComponent<States>(). == 2)
+            if (this.gameObject.GetComponent<States>().moveType == 2)
             {
                 if (MC <= 50)
                 {
@@ -69,7 +69,7 @@ public class Mover: MonoBehaviour {
                 }
 
             }
-            if (this.gameObject.GetComponent<States>().== 3)
+            if (this.gameObject.GetComponent<States>().moveType == 3)
             {
                 if (moveFlag == true)
                 {
@@ -114,7 +114,7 @@ public class Mover: MonoBehaviour {
 
                 }
             }
-            if (this.gameObject.GetComponent<States>().  == 4)
+            if (this.gameObject.GetComponent<States>().moveType == 4)
             {
                 if (moveFlag == true)
                 {
