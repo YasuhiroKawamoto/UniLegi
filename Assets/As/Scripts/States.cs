@@ -22,6 +22,7 @@ public class States : MonoBehaviour {
     [SerializeField]
     private int m_FireRate = 5;
 
+    // 移動タイプ
     [SerializeField]
     private int moveType;
 
@@ -87,4 +88,24 @@ public class States : MonoBehaviour {
     {
          m_Hp -= Damege;
     }
+
+    public int GetMoveType()
+    {
+        return moveType;
+    }
+    public int GetTypeId()
+    {
+        return m_typeId;
+    }
+    public int GetTypePoint()
+    {
+        return m_typePoint;
+    }
+    public int GetAbilityType()
+    {
+        return m_abilityType;
+    }
 }
+
+
+
