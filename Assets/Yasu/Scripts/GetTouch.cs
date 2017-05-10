@@ -154,6 +154,7 @@ public class GetTouch : MonoBehaviour
 
 
 
+
                 // ピンチイン判定
                 if (size.x <= 1)
                 {
