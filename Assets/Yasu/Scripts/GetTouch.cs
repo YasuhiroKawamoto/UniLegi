@@ -13,8 +13,8 @@ enum TAP_STATE
 public class GetTouch : MonoBehaviour
 {
 
-    
-   public GameObject newUnit { get; set; }
+    [SerializeField]
+    public GameObject newUnit;
 
     [SerializeField]
     GameObject effect;

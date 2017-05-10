@@ -24,7 +24,7 @@ public class Union : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject[] unions = GameObject.FindGameObjectsWithTag("Player");
-        States newState = newUnit.GetComponent<States>();
+        // States newState = newUnit.GetComponent<States>();
 
         List<int> typeIDs = new List<int>();
 

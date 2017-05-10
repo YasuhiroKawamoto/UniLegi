@@ -51,7 +51,7 @@ public class EnemyAttack : MonoBehaviour {
         {
             Debug.Log("接敵");
             pos = this.gameObject.transform.parent.position;
-            this.transform.parent.GetComponent<Mover>().setMoveFlag(false);
+            //this.transform.parent.GetComponent<Mover>().setMoveFlag(false);
 
 
         }
@@ -61,7 +61,7 @@ public class EnemyAttack : MonoBehaviour {
         {
             Debug.Log("拠点接敵");
             pos = this.gameObject.transform.parent.position;
-            this.transform.parent.GetComponent<Mover>().setMoveFlag(false);
+            //this.transform.parent.GetComponent<Mover>().setMoveFlag(false);
            
             
         }
@@ -134,7 +134,7 @@ public class EnemyAttack : MonoBehaviour {
     {
 
 
-        this.transform.parent.GetComponent<Mover>().setMoveFlag(true);
+        //this.transform.parent.GetComponent<Mover>().setMoveFlag(true);
         Debug.Log("離脱");
 
 
