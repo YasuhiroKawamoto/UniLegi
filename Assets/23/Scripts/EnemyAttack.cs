@@ -137,11 +137,10 @@ public class EnemyAttack : MonoBehaviour {
     void OnTriggerExit2D(Collider2D col)
     {
 
-<<<<<<< HEAD
-        pos = new Vector2(0, 0);
-=======
 
->>>>>>> fdd8c999e7ca9990ffe7ff989d9a5a1cee4bc8f0
+        pos = new Vector2(0, 0);
+
+
         //this.transform.parent.GetComponent<Mover>().setMoveFlag(true);
         Debug.Log("離脱");
 
