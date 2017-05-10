@@ -9,15 +9,33 @@ public class Bullet : MonoBehaviour {
     [SerializeField]
     private int m_BulletDamege = 1;
     [SerializeField]
-    private bool m_flag=true;
+    private bool m_flag=false;
     Tap tap;
+    [SerializeField]
+    private float m_dir = 90;
+
 
 
     // Use this for initialization
     void Start () {
 
-        GetComponent<Rigidbody2D>().velocity = transform.up.normalized * speed;
-        
+        Vector2 v;
+
+        if (m_flag == false)
+        {
+            v.x = Mathf.Cos(Mathf.Deg2Rad * m_dir) * speed;
+            v.y = Mathf.Sin(Mathf.Deg2Rad * m_dir) * speed;
+            GetComponent<Rigidbody2D>().velocity = v;
+        }
+        else if (m_flag == true)
+        {
+            v.x = Mathf.Cos(Mathf.Deg2Rad * m_dir) * speed;
+            v.y = Mathf.Sin(Mathf.Deg2Rad * m_dir) * speed;
+            GetComponent<Rigidbody2D>().velocity -= v;
+        }
+        //GetComponent<Rigidbody2D>().velocity = transform.up.normalized * speed;
+
+
 
     }
 

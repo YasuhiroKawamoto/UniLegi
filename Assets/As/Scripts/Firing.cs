@@ -18,6 +18,8 @@ public class Firing : MonoBehaviour {
     //カウント
     private int m_Cnt = 0;
 
+    int hoge;
+
     //反転
     private bool m_Flag;
 
@@ -42,8 +44,17 @@ public class Firing : MonoBehaviour {
 
         m_Flag = tap.getInverd();
 
+        Transform Children = bullet.GetComponentInChildren<Transform>();
 
-        bullet.GetComponentInChildren<Bullet>().setInverdFlag(m_Flag);
+        hoge = 0;
+        foreach (Transform ob in Children)
+        {
+            ob.GetComponentInChildren<Bullet>().setInverdFlag(m_Flag);
+            hoge++;
+            Debug.Log("hoge" + hoge);
+        }
+
+
 
         if (tap.getShot() == true)
         {
