@@ -9,8 +9,6 @@ public class EnemyAttack : MonoBehaviour {
 
     Collider2D C;
 
-    
-
     Vector2 pos;
 
 
@@ -53,8 +51,9 @@ public class EnemyAttack : MonoBehaviour {
         {
             Debug.Log("接敵");
             pos = this.gameObject.transform.parent.position;
+            this.transform.parent.GetComponent<Mover>().setMoveFlag(false);
 
-           
+
         }
 
 
@@ -62,8 +61,9 @@ public class EnemyAttack : MonoBehaviour {
         {
             Debug.Log("拠点接敵");
             pos = this.gameObject.transform.parent.position;
-
-
+            this.transform.parent.GetComponent<Mover>().setMoveFlag(false);
+           
+            
         }
 
 
@@ -77,7 +77,7 @@ public class EnemyAttack : MonoBehaviour {
         if (col.gameObject.tag == "Player")
         {
 
-            this.transform.parent.position = pos;
+            this.gameObject.transform.parent.position = pos ;
 
             cnt++;
 
@@ -93,6 +93,7 @@ public class EnemyAttack : MonoBehaviour {
                 {
                     Instantiate(effect);
                 }
+
                 Debug.Log("攻撃");
                 cnt = 0;
             }
@@ -102,7 +103,7 @@ public class EnemyAttack : MonoBehaviour {
         if (col.gameObject.tag == "DangerZone")
         {
 
-            this.transform.parent.position = pos;
+            this.gameObject.transform.parent.position = pos;
 
             cnt++;
 
@@ -132,6 +133,8 @@ public class EnemyAttack : MonoBehaviour {
     void OnTriggerExit2D(Collider2D col)
     {
 
+
+        this.transform.parent.GetComponent<Mover>().setMoveFlag(true);
         Debug.Log("離脱");
 
 

@@ -22,15 +22,31 @@ public class States : MonoBehaviour {
     [SerializeField]
     private int m_FireRate = 5;
 
+    // 移動タイプ
+    [SerializeField]
+    private int moveType;
 
-	// Use this for initialization
-	void Start () {
+    //種族データ
+    [SerializeField]
+    private int m_typeId;
+
+    //種族値
+    [SerializeField]
+    private int m_typePoint;
+
+    // アビリティタイプ
+    [SerializeField]
+    private int m_abilityType;
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
+        // HP0以下で消滅
         if (getHp() <= 0)
         {
             Destroy(gameObject);
@@ -73,5 +89,23 @@ public class States : MonoBehaviour {
          m_Hp -= Damege;
     }
 
-
+    public int GetMoveType()
+    {
+        return moveType;
+    }
+    public int GetTypeId()
+    {
+        return m_typeId;
+    }
+    public int GetTypePoint()
+    {
+        return m_typePoint;
+    }
+    public int GetAbilityType()
+    {
+        return m_abilityType;
+    }
 }
+
+
+
