@@ -50,8 +50,14 @@ public class Mover : MonoBehaviour
                 }
                 else
                 {
-                    //速度加算
-                    Positon += (Vector2.Scale(Speed2, reverseX)); 
+                    if (ReversFlag == false)
+                    {
+                        Positon += Speed2;
+                    }
+                    else
+                    {
+                        Positon += (Vector2.Scale(Speed2, reverseX));
+                    }
                 }
 
 
@@ -131,7 +137,7 @@ public class Mover : MonoBehaviour
                         Positon += Speed2;
                     }
 
-                    if (MC >= 80)
+                    if (MC >= 100)
                     {
                         MC = 0;
                     }
