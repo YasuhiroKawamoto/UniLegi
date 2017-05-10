@@ -22,12 +22,18 @@ public class Mover : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (this.gameObject.GetComponent<States>().GetMoveType() ==  5)
+        {
+            this.gameObject.GetComponent<States>().SetMoveType(Random.Range(1, 4));
+        }
+
 
         //現在地取得
         Vector2 Positon = transform.position;
@@ -43,6 +49,12 @@ public class Mover : MonoBehaviour
             }
             else if (this.gameObject.GetComponent<States>().GetMoveType() == 2)
             {
+                Speed = new Vector2(0.0f, -0.01f);
+
+                Speed2 = new Vector2(0.03f, -0.01f);
+
+
+      
                 if (MC <= 50)
                 {
                     //速度加算
@@ -78,6 +90,11 @@ public class Mover : MonoBehaviour
             }
             else if (this.gameObject.GetComponent<States>().GetMoveType() == 3)
             {
+                Speed = new Vector2(0.0f, -0.02f);
+
+                Speed2 = new Vector2(0.04f, 0.01f);
+
+
                 if (moveFlag == true)
                 {
                     MC++;
@@ -143,10 +160,11 @@ public class Mover : MonoBehaviour
                     }
 
                 }
-               
+
             }
-          
+
         }
+      
 
         //現在位置に速度加算後位置を代入
         transform.position = Positon;
