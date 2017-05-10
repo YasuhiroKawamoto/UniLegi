@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mover: MonoBehaviour {
+public class Mover : MonoBehaviour
+{
 
     //移動速度
     [SerializeField]
-    private Vector2 Speed = new Vector2(0.0f, -0.01f);
+    private Vector2 Speed = new Vector2(0.0f, -0.03f);
     [SerializeField]
-    private Vector2 Speed2 = new Vector2(0.0f, 0.0f);
+    private Vector2 Speed2 = new Vector2(0.03f, 0.0f);
 
     private Vector2 reverseX = new Vector2(-1.0f, 1.0f);
 
@@ -34,13 +35,13 @@ public class Mover: MonoBehaviour {
         if (moveFlag == true)
         {
             MC++;
-            if (this.gameObject.GetComponent<States>().moveType == 1)
+            if (this.gameObject.GetComponent<States>().GetMoveType() == 1)
             {
                 //速度加算
                 Positon += Speed;
 
             }
-            if (this.gameObject.GetComponent<States>().moveType == 2)
+            else if (this.gameObject.GetComponent<States>().GetMoveType() == 2)
             {
                 if (MC <= 50)
                 {
@@ -50,7 +51,7 @@ public class Mover: MonoBehaviour {
                 else
                 {
                     //速度加算
-                    Positon += Speed2;
+                    Positon += (Vector2.Scale(Speed2, reverseX)); 
                 }
 
 
@@ -69,15 +70,11 @@ public class Mover: MonoBehaviour {
                 }
 
             }
-            if (this.gameObject.GetComponent<States>().moveType == 3)
+            else if (this.gameObject.GetComponent<States>().GetMoveType() == 3)
             {
                 if (moveFlag == true)
                 {
                     MC++;
-
-
-
-
 
                     if (MC <= 50)
                     {
@@ -114,7 +111,7 @@ public class Mover: MonoBehaviour {
 
                 }
             }
-            if (this.gameObject.GetComponent<States>().moveType == 4)
+            else if (this.gameObject.GetComponent<States>().GetMoveType() == 4)
             {
                 if (moveFlag == true)
                 {
@@ -140,10 +137,13 @@ public class Mover: MonoBehaviour {
                     }
 
                 }
-                //現在位置に速度加算後位置を代入
-                transform.position = Positon;
+               
             }
+          
         }
+
+        //現在位置に速度加算後位置を代入
+        transform.position = Positon;
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -182,4 +182,5 @@ public class Mover: MonoBehaviour {
     {
         moveFlag = F;
     }
+
 }
