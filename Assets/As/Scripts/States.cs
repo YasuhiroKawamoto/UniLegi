@@ -93,6 +93,11 @@ public class States : MonoBehaviour {
     {
         return moveType;
     }
+
+    public void SetMoveType(int type)
+    {
+        moveType = type;
+    }
     public int GetTypeId()
     {
         return m_typeId;

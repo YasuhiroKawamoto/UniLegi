@@ -76,9 +76,10 @@ public class EnemyAttack : MonoBehaviour {
 
         if (col.gameObject.tag == "Player")
         {
-
-            this.gameObject.transform.parent.position = pos ;
-
+            if (pos != new Vector2(0, 0))
+            {
+                this.gameObject.transform.parent.position = pos;
+            }
             cnt++;
 
 
@@ -103,7 +104,10 @@ public class EnemyAttack : MonoBehaviour {
         if (col.gameObject.tag == "DangerZone")
         {
 
-            this.gameObject.transform.parent.position = pos;
+            if (pos != new Vector2(0, 0))
+            {
+                this.gameObject.transform.parent.position = pos;
+            }
 
             cnt++;
 
@@ -132,6 +136,9 @@ public class EnemyAttack : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D col)
     {
+
+
+        pos = new Vector2(0, 0);
 
 
         //this.transform.parent.GetComponent<Mover>().setMoveFlag(true);
