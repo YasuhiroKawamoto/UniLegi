@@ -16,6 +16,13 @@ public class GetTouch : MonoBehaviour
     [SerializeField]
     public GameObject newUnit;
 
+
+    [SerializeField]
+    public GameObject Unit1;
+
+    [SerializeField]
+    public GameObject Unit2;
+
     [SerializeField]
     GameObject effect;
 
@@ -45,6 +52,8 @@ public class GetTouch : MonoBehaviour
 
     private float delay;
     private bool isWaiting;
+
+    int tmpId = 0;
 
 
 
@@ -125,6 +134,7 @@ public class GetTouch : MonoBehaviour
                         // 2体以上はさんだ時
                         if (pinch_num >= 2)
                         {
+                            tmpId = newUnit.GetComponent<States>().GetTypeId();
                             // コストが足りているとき
                             if (manager.GetCost() >= newUnit.gameObject.GetComponent<States>().getCost())
                             {
@@ -133,13 +143,15 @@ public class GetTouch : MonoBehaviour
                                 newUnit.transform.localScale = new Vector3(1, 1, 1);
                                 newUnit.tag = "isPinched";
 
+
+
                                 // エフェクト設定
                                 effect.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
                                 effect.transform.localScale = new Vector3(1, 1, 1);
 
                                 // エフェクト発生
                                 Instantiate(effect);
-                                delay = 30;
+
                                 isWaiting = true;
 
 
@@ -188,13 +200,26 @@ public class GetTouch : MonoBehaviour
         {
             delay--;
 
-
-            if (delay < 0)
-            {
-                Instantiate(newUnit);
-                isWaiting = false;
-            }
         }
+        if (delay < 0)
+        {
+            if (tmpId == 1)
+            {
+                Unit1.transform.position = newUnit.transform.position;
+                Instantiate(Unit1);
+                isWaiting = false;
+                delay = 30;
+            }
+            if (tmpId == 2)
+            {
+                Unit2.transform.position = newUnit.transform.position;
+                Instantiate(Unit2);
+                isWaiting = false;
+                delay = 30;
+            }
+
+        }
+        
 
 
 
