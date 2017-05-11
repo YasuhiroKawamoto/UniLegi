@@ -26,7 +26,7 @@ public class Union : MonoBehaviour
         GameObject[] unions = GameObject.FindGameObjectsWithTag("Player");
         // States newState = newUnit.GetComponent<States>();
 
-        List<int> typeIDs = new List<int>();
+        //List<int> typeIDs = new List<int>();
 
         foreach (GameObject union in unions)
         {
@@ -39,7 +39,6 @@ public class Union : MonoBehaviour
         }
 
         //newState.m_typeId = FindIndexMost(typeIDs);
-
 
         //newState.m_typeId = typeIDs.
 

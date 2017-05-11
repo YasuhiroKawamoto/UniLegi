@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     int m_unitNum;
 
     [SerializeField]
-    private int m_hp = 1000;
+    private int m_hp;
     [SerializeField]
     private int m_cost;
 
