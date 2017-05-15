@@ -40,9 +40,8 @@ public class Union : MonoBehaviour
         // Attakをset
         newState.SetAtk(CalcAtk(unions));
 
-<<<<<<< HEAD
         //List<int> typeIDs = new List<int>();
-=======
+
         // スプライトを設定
        // newUnit.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("GD_Slime(Red)");
 
@@ -55,7 +54,7 @@ public class Union : MonoBehaviour
     private int CalcId(GameObject[] unions)
     {
         List<int> typeIDs = new List<int>();
->>>>>>> 664272f4467d2e7f47a37c7ae4a8f0edcaa28d1e
+
 
         foreach (GameObject union in unions)
         {
@@ -96,15 +95,15 @@ public class Union : MonoBehaviour
     {
         List<int> hps = new List<int>();
 
-<<<<<<< HEAD
+
         //newState.m_typeId = typeIDs.
-=======
+
         int sum = 0;
 
         foreach (GameObject union in unions)
         {
             States state = union.GetComponent<States>();
->>>>>>> 664272f4467d2e7f47a37c7ae4a8f0edcaa28d1e
+
 
             hps.Add(state.getHp());
         }
