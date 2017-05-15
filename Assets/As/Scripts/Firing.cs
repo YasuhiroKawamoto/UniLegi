@@ -46,12 +46,12 @@ public class Firing : MonoBehaviour {
 
         Transform Children = bullet.GetComponentInChildren<Transform>();
 
-        hoge = 0;
+        //hoge = 0;
         foreach (Transform ob in Children)
         {
             ob.GetComponentInChildren<Bullet>().setInverdFlag(m_Flag);
-            hoge++;
-            Debug.Log("hoge" + hoge);
+            //hoge++;
+            //Debug.Log("hoge" + hoge);
         }
 
 
