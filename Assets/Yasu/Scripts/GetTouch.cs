@@ -13,8 +13,9 @@ enum TAP_STATE
 public class GetTouch : MonoBehaviour
 {
 
-    
-   public GameObject newUnit { get; set; }
+    [SerializeField]
+    public GameObject newUnit;
+
 
     [SerializeField]
     GameObject effect;
@@ -45,6 +46,8 @@ public class GetTouch : MonoBehaviour
 
     private float delay;
     private bool isWaiting;
+
+    int tmpId = 0;
 
 
 
@@ -125,13 +128,14 @@ public class GetTouch : MonoBehaviour
                         // 2体以上はさんだ時
                         if (pinch_num >= 2)
                         {
+                            tmpId = newUnit.GetComponent<States>().GetTypeId();
                             // コストが足りているとき
                             if (manager.GetCost() >= newUnit.gameObject.GetComponent<States>().getCost())
                             {
                                 // 合体ユニット設定
                                 newUnit.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y/2.0f, 0.0f);
                                 newUnit.transform.localScale = new Vector3(1, 1, 1);
-                                newUnit.tag = "isPinched";
+                                //newUnit.tag = "isPinched";
 
                                 // エフェクト設定
                                 effect.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
@@ -139,7 +143,7 @@ public class GetTouch : MonoBehaviour
 
                                 // エフェクト発生
                                 Instantiate(effect);
-                                delay = 30;
+                                
                                 isWaiting = true;
 
 
@@ -188,13 +192,17 @@ public class GetTouch : MonoBehaviour
         {
             delay--;
 
-
-            if (delay < 0)
-            {
-                Instantiate(newUnit);
-                isWaiting = false;
-            }
         }
+        if (delay < 0)
+        {
+
+            Instantiate(newUnit);
+            isWaiting = false;
+            delay = 30;
+            Debug.Log("gattai!");
+
+        }
+
 
 
 

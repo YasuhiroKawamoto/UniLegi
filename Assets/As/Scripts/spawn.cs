@@ -23,7 +23,8 @@ public class spawn : MonoBehaviour
     private float posx;
     private float posy;
 
-    private Vector2 savePos;
+    private Vector3 savePos;
+    Vector3 tmpPos;
 
     // Use this for initialization
     void Start()
@@ -32,7 +33,10 @@ public class spawn : MonoBehaviour
         m_flag = 0;
 
 
-        savePos = (this.transform.position);
+        tmpPos = (this.transform.position);
+        tmpPos.z = -1;
+
+        savePos = tmpPos;
 
     }
 
@@ -116,6 +120,10 @@ public class spawn : MonoBehaviour
         {
             //タッチしている座標に追従する
             transform.position = m_worldPoint;
+
+            tmpPos = transform.position;
+            tmpPos.z = -1;
+            transform.position = tmpPos;
 
         }
     }

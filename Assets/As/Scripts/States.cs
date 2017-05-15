@@ -93,9 +93,26 @@ public class States : MonoBehaviour {
     {
         return moveType;
     }
+
+    public void SetMoveType(int type)
+    {
+        moveType = type;
+    }
     public int GetTypeId()
     {
         return m_typeId;
+    }
+    public void SetTypeId(int id)
+    {
+        m_typeId = id;
+    }
+    public void SetHp(int hp)
+    {
+        m_Hp = hp;
+    }
+    public void SetAtk(int atk)
+    {
+        m_Attack = atk;
     }
     public int GetTypePoint()
     {

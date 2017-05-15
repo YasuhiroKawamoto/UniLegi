@@ -5,6 +5,13 @@ using UnityEngine;
 public class Mover : MonoBehaviour
 {
 
+
+    [SerializeField]
+    private float farstMoveTime;
+
+    [SerializeField]
+    private float secondMoveTime;
+
     //移動速度
     [SerializeField]
     private Vector2 Speed = new Vector2(0.0f, -0.03f);
@@ -17,45 +24,61 @@ public class Mover : MonoBehaviour
 
     private bool moveFlag = true;
 
-    private int MC = 0;
+    private float MC = 0;
+
+    Rigidbody2D RB;
 
     // Use this for initialization
     void Start()
     {
 
+        RB = this.gameObject.GetComponent<Rigidbody2D>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        //現在地取得
-        Vector2 Positon = transform.position;
-
-        if (moveFlag == true)
+        if (this.gameObject.GetComponent<States>().GetMoveType() ==  5)
         {
-            MC++;
+            this.gameObject.GetComponent<States>().SetMoveType(Random.Range(1, 4));
+        }
+
+
+        if (moveFlag == true)//フラグがtrueの時のみ動く
+        {
+            MC += Time.deltaTime;
+
             if (this.gameObject.GetComponent<States>().GetMoveType() == 1)
             {
                 //速度加算
-                Positon += Speed;
+                RB.velocity = Speed;
 
             }
             else if (this.gameObject.GetComponent<States>().GetMoveType() == 2)
             {
-                if (MC <= 50)
+
+
+                if (MC <= farstMoveTime)
                 {
                     //速度加算
-                    Positon += Speed;
+                    RB.velocity = Speed;
                 }
                 else
                 {
-                    //速度加算
-                    Positon += (Vector2.Scale(Speed2, reverseX)); 
+                    if (ReversFlag == false)
+                    {
+                        RB.velocity = Speed2;
+                    }
+                    else
+                    {
+                        RB.velocity = (Vector2.Scale(Speed2, reverseX));
+                    }
                 }
 
 
-                if (MC >= 100)
+                if (MC >= secondMoveTime)
                 {
                     MC = 0;
                     switch (ReversFlag)
@@ -72,111 +95,101 @@ public class Mover : MonoBehaviour
             }
             else if (this.gameObject.GetComponent<States>().GetMoveType() == 3)
             {
-                if (moveFlag == true)
+
+
+
+
+
+                if (MC <= farstMoveTime)
                 {
-                    MC++;
+                    //速度加算
+                    RB.velocity = Speed;
 
-                    if (MC <= 50)
+                }
+                else
+                {
+                    if (ReversFlag == false)
                     {
-                        //速度加算
-                        Positon += Speed;
-
+                        RB.velocity = Speed2;
                     }
                     else
                     {
-                        if (ReversFlag == false)
-                        {
-                            Positon += Speed2;
-                        }
-                        else
-                        {
-                            Positon += (Vector2.Scale(Speed2, reverseX));
-                        }
+                        RB.velocity = (Vector2.Scale(Speed2, reverseX));
                     }
-
-                    if (MC >= 80)
-                    {
-                        MC = 0;
-
-                        switch (ReversFlag)
-                        {
-                            case true:
-                                ReversFlag = false;
-                                break;
-                            case false:
-                                ReversFlag = true;
-                                break;
-                        }
-                    }
-
                 }
+
+                if (MC >= secondMoveTime)
+                {
+                    MC = 0;
+
+                    switch (ReversFlag)
+                    {
+                        case true:
+                            ReversFlag = false;
+                            break;
+                        case false:
+                            ReversFlag = true;
+                            break;
+                    }
+                }
+
+
             }
             else if (this.gameObject.GetComponent<States>().GetMoveType() == 4)
             {
-                if (moveFlag == true)
+                if (MC <= farstMoveTime)
                 {
-                    MC++;
-
-
-
-                    if (MC <= 50)
-                    {
-                        //速度加算
-                        Positon += Speed;
-
-                    }
-                    else
-                    {
-                        //速度加算
-                        Positon += Speed2;
-                    }
-
-                    if (MC >= 80)
-                    {
-                        MC = 0;
-                    }
+                    //速度加算
+                    RB.velocity = Speed;
 
                 }
-               
+                else
+                {
+                    //速度加算
+                    RB.velocity = Speed2;
+                }
+
+                if (MC >= secondMoveTime)
+                {
+                    MC = 0;
+                }
             }
-          
+            else
+            {
+                MC = 0.0f;
+            }
+
         }
-
-        //現在位置に速度加算後位置を代入
-        transform.position = Positon;
-    }
-
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "DangerZone")
+        else if(moveFlag == false)//フラグがfalseなら動かない
         {
-            Debug.Log("hit");
-
+            RB.velocity = new Vector3(0,0,0);
         }
-
+       
     }
 
-    void OnCollisionStay2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "DangerZone")
-        {
-
-            Debug.Log("stey");
-            Speed = new Vector2(0, 0);
-        }
 
 
-    }
+    //void OnCollisionStay2D(Collision2D col)
+    //{
+    //    if (col.gameObject.tag == "DangerZone")
+    //    {
 
-    void OnCollisionExit2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "DangerZone")
-        {
-            Debug.Log("out");
+    //        Debug.Log("stey");
+    //        Speed = new Vector2(0, 0);
+    //    }
 
-            Speed = new Vector2(0, -0.01f);
-        }
-    }
+
+    //}
+
+    //void OnCollisionExit2D(Collision2D col)
+    //{
+    //    if (col.gameObject.tag == "DangerZone")
+    //    {
+    //        Debug.Log("out");
+
+    //        Speed = new Vector2(0, -0.01f);
+    //    }
+    //}
 
     public void setMoveFlag(bool F)
     {

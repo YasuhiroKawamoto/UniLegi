@@ -9,7 +9,7 @@ public class Tap : MonoBehaviour {
     //動いてるかどうか
     private bool m_moveFlag;
     //スケールの倍数
-    const float rate = 3;
+    const float rate = 1.5f                 ;
     //範囲
     Vector3 zone;
     //元の大きさを保存
@@ -64,8 +64,8 @@ public class Tap : MonoBehaviour {
                             //移動フラグをtrueにし弾を打てないようにする
                             Debug.Log("タッチ");
                             m_moveFlag = true;
-                            this.gameObject.tag = "Untagged";
-                            m_canShot = false;
+                            this.gameObject.tag = "HavingPlayer";
+                           m_canShot = false;
                         }
                     }
                 }
@@ -83,7 +83,9 @@ public class Tap : MonoBehaviour {
                     {
                         Debug.Log("離した");
                         this.gameObject.tag = "Player";
+
                         //タップの時
+
                         if (m_Cnt < 0.5f)
                         {
                             //反転の切り替え

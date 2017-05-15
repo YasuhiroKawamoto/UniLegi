@@ -11,13 +11,16 @@ public class EnemyAttack : MonoBehaviour {
 
     Vector2 pos;
 
+    GameObject target;
 
     [SerializeField]
     GameObject effect;
 
-    int rate;
+   private float rate;
 
-    int cnt;
+   private float cnt;
+
+    private bool AttackFlag;
 
     // Use this for initialization
     void Start () {
@@ -34,110 +37,86 @@ public class EnemyAttack : MonoBehaviour {
 
         cnt = 0;
 
+        AttackFlag = false;
+
        
     }
 
     // Update is called once per frame
     void Update () {
+
+
+
+        if (AttackFlag)//攻撃フラグがONであれば
+        {
+            cnt += Time.deltaTime;
+
+            if (rate <= cnt)//攻撃間隔にカウントが到達
+            {
+
+                if (target.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
+                {
+                    target.GetComponent<States>().setDamege(states.getAttack());//ダメージ判定
+
+                    effect.transform.position = target.transform.position;//エフェクトの位置を設定
+                }
+                else if (target.gameObject.tag == "DangerZone")//接触オブジェクトタグがDangerZone
+                {
+                    target.GetComponent<DangerZone>().SetHp(target.GetComponent<DangerZone>().GetHp() - states.getAttack());//ダメージ判定
+
+                    effect.transform.position = new Vector3(this.gameObject.transform.position.x, target.transform.position.y);//エフェクト位置設定
+                }
+              
+
+                if (effect != null)//エフェクトスロットに設定してある場合
+                {
+                    Instantiate(effect);//エフェクト生成
+                }
+
+                Debug.Log("攻撃");
+                cnt = 0;//カウントリセット
+            }
+        }
        
     }
 
 
     void OnTriggerEnter2D(Collider2D col)
     {
-       
 
-        if (col.gameObject.tag == "Player")
+        
+
+        if (col.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
         {
+            AttackFlag = true;//攻撃フラグON
             Debug.Log("接敵");
-            pos = this.gameObject.transform.parent.position;
-            this.transform.parent.GetComponent<Mover>().setMoveFlag(false);
-
-
+            target = col.gameObject;//接触オブジェクトを攻撃対象に指定
+            this.transform.parent.GetComponent<Mover>().setMoveFlag(false);//移動を止める
         }
 
-
-        if (col.gameObject.tag == "DangerZone")
+        if (col.gameObject.tag == "DangerZone")//接触オブジェクトがDangerZone
         {
+            AttackFlag = true;//攻撃フラグON
             Debug.Log("拠点接敵");
-            pos = this.gameObject.transform.parent.position;
-            this.transform.parent.GetComponent<Mover>().setMoveFlag(false);
-           
-            
+            target = col.gameObject;//接触オブジェクトを攻撃対象に指定
+            this.transform.parent.GetComponent<Mover>().setMoveFlag(false);//移動を止める
         }
 
-
+        if (col.gameObject.tag == "HavingPlayer")//接触オブジェクトタグがHavingPlayer
+        {
+            this.transform.parent.GetComponent<Mover>().setMoveFlag(false);//移動を止める
+        }
     }
 
     void OnTriggerStay2D(Collider2D col)
     {
-        
-        
-
-        if (col.gameObject.tag == "Player")
-        {
-
-            this.gameObject.transform.parent.position = pos ;
-
-            cnt++;
-
-
-            if (rate <= cnt / 60)
-            {
-                
-                col.GetComponent<States>().setDamege(states.getAttack());
-
-                effect.transform.position = col.transform.position;
-
-                if (effect != null)
-                {
-                    Instantiate(effect);
-                }
-
-                Debug.Log("攻撃");
-                cnt = 0;
-            }
-         
-        }
-
-        if (col.gameObject.tag == "DangerZone")
-        {
-
-            this.gameObject.transform.parent.position = pos;
-
-            cnt++;
-
-
-            if (rate <= cnt / 60)
-            {
-                col.GetComponent<DangerZone>().SetHp(col.GetComponent<DangerZone>().GetHp() - states.getAttack());
-
-
-                effect.transform.position = new Vector3(this.gameObject.transform.position.x, col.transform.position.y, 0);
-
-                if (effect != null)
-                {
-                    Instantiate(effect);
-                }
-
-                Debug.Log("攻撃");
-                cnt = 0;
-            }
-
-        }
-
-
-
     }
 
     void OnTriggerExit2D(Collider2D col)
     {
-
-
-        this.transform.parent.GetComponent<Mover>().setMoveFlag(true);
+        AttackFlag = false;//攻撃フラグOFF
+        this.transform.parent.GetComponent<Mover>().setMoveFlag(true);//移動を開始
         Debug.Log("離脱");
-
-
     }
 
 }

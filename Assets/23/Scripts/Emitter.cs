@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
+
 
 public class Emitter : MonoBehaviour {
 
@@ -40,13 +42,9 @@ public class Emitter : MonoBehaviour {
             // 格納されているWaveを全て実行したらcurrentWaveを0にする（最初から -> ループ）
             if (waves.Length <= ++currentWave)
             {
-                currentWave = 0;
+                SceneManager.LoadScene("ClearScene");
             }
 
         }
     }
-
-
-
-
 }
