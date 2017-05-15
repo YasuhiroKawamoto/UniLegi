@@ -26,26 +26,28 @@ public class Union : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameObject[] unions = GameObject.FindGameObjectsWithTag("isPinched");
-        States newState = newUnit.GetComponent<States>();
-        Sprite sprite = newUnit.GetComponent<SpriteRenderer>().sprite;
-
-
-        // Idをset
-        newState.SetTypeId(CalcId(unions));
-
-        // Hpをset    
-        newState.SetHp(10);
-
-        // Attakをset
-        newState.SetAtk(CalcAtk(unions));
-
-        // スプライトを設定
-       // newUnit.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("GD_Slime(Red)");
-
         if (collision.gameObject.tag == "Collider")
         {
+
             this.gameObject.tag = "isPinched";
+
+            GameObject[] unions = GameObject.FindGameObjectsWithTag("isPinched");
+            States newState = newUnit.GetComponent<States>();
+
+
+            // Idをset
+            newState.SetTypeId(CalcId(unions));
+
+            // Hpをset    
+            newState.SetHp(CalcHp(unions));
+
+            // Attakをset
+            newState.SetAtk(CalcAtk(unions));
+
+            // スプライトを設定
+            newUnit.GetComponent<SpriteRenderer>().sprite = GetSpr();
+
+
         }
     }
 
@@ -63,9 +65,8 @@ public class Union : MonoBehaviour
         // 最頻値をIDとしてリターン
         return Mode(typeIDs);
     }
-    private Sprite GetSpr(GameObject[] unions)
-    {
-
+    private Sprite GetSpr()
+    { 
         Sprite sprite;
         if(newUnit.GetComponent<States>().GetTypeId() == 1)
         {
@@ -78,14 +79,7 @@ public class Union : MonoBehaviour
             sprite = Resources.Load<Sprite>("GD_Kerberos(Purple)");
             return sprite;
         }
-        //foreach (GameObject union in unions)
-        //{
-        //    if(union.GetComponent<States>().GetTypeId() == newUnit.GetComponent<States>().GetTypeId())
-        //    {
-        //        sprite = union.GetComponent<SpriteRenderer>().sprite;
-        //        return sprite;
-        //    }
-        //}
+
         return null;
     }
     private int CalcHp(GameObject[] unions)
@@ -98,12 +92,9 @@ public class Union : MonoBehaviour
         {
             States state = union.GetComponent<States>();
 
-            hps.Add(state.getHp());
+            sum += state.getHp();
         }
-        foreach (int hp in hps)
-        {
-            sum += hp;
-        }
+
 
         // hpリターン
         return sum;
@@ -114,17 +105,21 @@ public class Union : MonoBehaviour
     {
         List<int> atks = new List<int>();
 
-        int atk = 0;
+        int sum = 0;
 
         foreach (GameObject union in unions)
         {
             States state = union.GetComponent<States>();
 
-            atk += state.getAttack();
+            atks.Add(state.getAttack());
+        }
+        foreach (int atk in atks)
+        {
+            sum += atk;
         }
 
-        // 最頻値をIDとしてリターン
-        return atk;
+        // hpリターン
+        return sum;
     }
     int Mode(List<int> intList)
     {

@@ -18,12 +18,6 @@ public class GetTouch : MonoBehaviour
 
 
     [SerializeField]
-    public GameObject Unit1;
-
-    [SerializeField]
-    public GameObject Unit2;
-
-    [SerializeField]
     GameObject effect;
 
     [SerializeField]
@@ -141,9 +135,7 @@ public class GetTouch : MonoBehaviour
                                 // 合体ユニット設定
                                 newUnit.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y/2.0f, 0.0f);
                                 newUnit.transform.localScale = new Vector3(1, 1, 1);
-                                newUnit.tag = "isPinched";
-
-
+                                //newUnit.tag = "isPinched";
 
                                 // エフェクト設定
                                 effect.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
@@ -151,7 +143,7 @@ public class GetTouch : MonoBehaviour
 
                                 // エフェクト発生
                                 Instantiate(effect);
-
+                                
                                 isWaiting = true;
 
 
@@ -203,23 +195,14 @@ public class GetTouch : MonoBehaviour
         }
         if (delay < 0)
         {
-            if (tmpId == 1)
-            {
-                Unit1.transform.position = newUnit.transform.position;
-                Instantiate(Unit1);
-                isWaiting = false;
-                delay = 30;
-            }
-            if (tmpId == 2)
-            {
-                Unit2.transform.position = newUnit.transform.position;
-                Instantiate(Unit2);
-                isWaiting = false;
-                delay = 30;
-            }
+
+            Instantiate(newUnit);
+            isWaiting = false;
+            delay = 30;
+            Debug.Log("gattai!");
 
         }
-        
+
 
 
 

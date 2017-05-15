@@ -170,37 +170,29 @@ public class Mover : MonoBehaviour
         transform.position = Positon;
     }
 
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "DangerZone")
-        {
-            Debug.Log("hit");
-
-        }
-
-    }
-
-    void OnCollisionStay2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "DangerZone")
-        {
-
-            Debug.Log("stey");
-            Speed = new Vector2(0, 0);
-        }
 
 
-    }
+    //void OnCollisionStay2D(Collision2D col)
+    //{
+    //    if (col.gameObject.tag == "DangerZone")
+    //    {
 
-    void OnCollisionExit2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "DangerZone")
-        {
-            Debug.Log("out");
+    //        Debug.Log("stey");
+    //        Speed = new Vector2(0, 0);
+    //    }
 
-            Speed = new Vector2(0, -0.01f);
-        }
-    }
+
+    //}
+
+    //void OnCollisionExit2D(Collision2D col)
+    //{
+    //    if (col.gameObject.tag == "DangerZone")
+    //    {
+    //        Debug.Log("out");
+
+    //        Speed = new Vector2(0, -0.01f);
+    //    }
+    //}
 
     public void setMoveFlag(bool F)
     {

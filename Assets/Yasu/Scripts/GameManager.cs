@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     int m_unitNum;
 
     [SerializeField]
-    private int m_hp = 1000;
+    private int m_hp;
     [SerializeField]
     private int m_cost;
 
@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        Time.timeScale = 1;
         m_hp =dangerZone.GetHp();
 
 
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
         {
             if (m_cost < m_maxCost)
             {
-                m_cost += 1;
+                m_cost += (int)Time.timeScale;
             }
             m_cnt = 0;
         }
