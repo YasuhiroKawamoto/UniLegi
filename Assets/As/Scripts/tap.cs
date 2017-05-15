@@ -8,44 +8,37 @@ public class Tap : MonoBehaviour {
     private bool m_canShot = true;
     //動いてるかどうか
     private bool m_moveFlag;
-
     //スケールの倍数
     const float rate = 3;
     //範囲
     Vector3 zone;
-
     //元の大きさを保存
     private Vector3 m_saveScale;
-
     //反転してるかどうか
     private bool m_Invert = false;
-
     //タッチ
     Touch touch;
-
     //タッチ座標
     private Vector2 m_worldPoint;
-
+    //オブジェクトを触っている時間
     private float m_Cnt;
 
 
     // Use this for initialization
     void Start()
     {
-
         zone = GameObject.Find("SpriteDengerZone").transform.position;
 
         //フラグは立たない
         m_moveFlag = false;
         //大きさを保存
         m_saveScale = this.transform.localScale;
-
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        //タッチされたら
         if (Input.touchCount > 0)
         {
 
@@ -56,11 +49,11 @@ public class Tap : MonoBehaviour {
             //タッチ開始時
             if (touch.phase == TouchPhase.Began)
             {
-                //Debug.Log("お");
 
                 //タッチをした位置にオブジェクト判定
                 RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
 
+                //オブジェクトにあたっていたら
                 if (hit)
                 {
                     if (Input.touchCount == 1)
@@ -68,6 +61,7 @@ public class Tap : MonoBehaviour {
 
                         if (hit.collider.gameObject == this.gameObject)
                         {
+                            //移動フラグをtrueにし弾を打てないようにする
                             Debug.Log("タッチ");
                             m_moveFlag = true;
                             this.gameObject.tag = "Untagged";
@@ -89,8 +83,10 @@ public class Tap : MonoBehaviour {
                     {
                         Debug.Log("離した");
                         this.gameObject.tag = "Player";
+                        //タップの時
                         if (m_Cnt < 0.5f)
                         {
+                            //反転の切り替え
                             m_Invert = !m_Invert;
 
                             Debug.Log("反転");
@@ -153,7 +149,7 @@ public class Tap : MonoBehaviour {
     {
         return m_moveFlag;
     }
-    //反転してるか同課のフラグ
+    //反転してるかどうかのフラグ
     public bool getInverd()
     {
         return m_Invert;
