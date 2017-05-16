@@ -8,11 +8,19 @@ using UnityEngine.SceneManagement;
 public class SceneButton : UIBehaviour
 {
     [SerializeField]
+    int stageNumber;
+
+    [SerializeField]
     string seneName;
+
+    GameObject SeneData;
+
 
     protected override void Start()
     {
         base.Start();
+
+        SeneData = GameObject.Find("SceneData");
 
         // Buttonクリック時、OnClickメソッドを呼び出す
         GetComponent<Button>().onClick.AddListener(OnClick);
@@ -20,8 +28,11 @@ public class SceneButton : UIBehaviour
 
     void OnClick()
     {
+        SeneData.GetComponent<SceneDataManager>().SetStage(stageNumber);
 
         // 「GameScene」シーンに遷移する
         SceneManager.LoadScene(seneName);
+
     }
+
 }

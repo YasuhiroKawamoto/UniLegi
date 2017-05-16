@@ -12,9 +12,10 @@ public class Firing : MonoBehaviour {
     //Statesコンポーネント
     States states;
     //Bulletのプレハブ
-    public GameObject bullet;
+    [SerializeField]
+    private GameObject bullet;
     //Delay
-    private int m_Delay;
+    private float m_Delay;
     //カウント
     private int m_Cnt = 0;
 
@@ -73,5 +74,8 @@ public class Firing : MonoBehaviour {
     }
 
   
-
+    public void SetBullet(GameObject _bullet)
+    {
+        bullet = _bullet;
+    }
 }

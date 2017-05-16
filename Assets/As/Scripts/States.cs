@@ -20,7 +20,7 @@ public class States : MonoBehaviour {
     private float m_Range;
     //攻撃間隔
     [SerializeField]
-    private int m_FireRate = 5;
+    private float m_FireRate = 5.0f;
 
     // 移動タイプ
     [SerializeField]
@@ -55,7 +55,7 @@ public class States : MonoBehaviour {
 	}
 
     //
-    public int getrate()
+    public float getrate()
     {
         return m_FireRate;
     }
@@ -92,6 +92,11 @@ public class States : MonoBehaviour {
     public int GetMoveType()
     {
         return moveType;
+    }
+
+    public void SetFireRate(float rate)
+    {
+        m_FireRate = rate;
     }
 
     public void SetMoveType(int type)
