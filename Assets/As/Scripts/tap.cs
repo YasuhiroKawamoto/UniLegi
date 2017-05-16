@@ -38,80 +38,82 @@ public class Tap : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        //タッチされたら
-        if (Input.touchCount > 0)
-        {
-
-            touch = Input.GetTouch(0);
-
-            m_worldPoint = Camera.main.ScreenToWorldPoint(touch.position);
-
-            //タッチ開始時
-            if (touch.phase == TouchPhase.Began)
+        if (Time.timeScale != 0)
+            //タッチされたら
+            if (Input.touchCount > 0)
             {
 
-                //タッチをした位置にオブジェクト判定
-                RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
+                touch = Input.GetTouch(0);
 
-                //オブジェクトにあたっていたら
-                if (hit)
+                m_worldPoint = Camera.main.ScreenToWorldPoint(touch.position);
+
+                //タッチ開始時
+                if (touch.phase == TouchPhase.Began)
                 {
-                    if (Input.touchCount == 1)
-                    {
 
-                        if (hit.collider.gameObject == this.gameObject)
+                    //タッチをした位置にオブジェクト判定
+                    RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
+
+                    //オブジェクトにあたっていたら
+                    if (hit)
+                    {
+                        if (Input.touchCount == 1)
                         {
-                            //移動フラグをtrueにし弾を打てないようにする
-                            Debug.Log("タッチ");
-                            m_moveFlag = true;
-                            this.gameObject.tag = "HavingPlayer";
-                           m_canShot = false;
+
+                            if (hit.collider.gameObject == this.gameObject)
+                            {
+                                //移動フラグをtrueにし弾を打てないようにする
+                                Debug.Log("タッチ");
+                                m_moveFlag = true;
+                                this.gameObject.tag = "HavingPlayer";
+                                m_canShot = false;
+                            }
                         }
                     }
+
                 }
-
-            }
-            //離したとき
-            else if (touch.phase == TouchPhase.Ended && m_moveFlag)
-            {
-                //タッチをした位置にオブジェクト判定
-                RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
-
-                if (hit)
+                //離したとき
+                else if (touch.phase == TouchPhase.Ended && m_moveFlag)
                 {
-                    if (hit.collider.gameObject == this.gameObject && hit.collider.gameObject.tag != "isPinched")
+                    //タッチをした位置にオブジェクト判定
+                    RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
+
+                    if (hit)
                     {
-                        Debug.Log("離した");
-                        this.gameObject.tag = "Player";
-
-                        //タップの時
-
-                        if (m_Cnt < 0.5f)
+                        if (hit.collider.gameObject == this.gameObject && hit.collider.gameObject.tag != "isPinched")
                         {
-                            //反転の切り替え
-                            m_Invert = !m_Invert;
+                            Debug.Log("離した");
+                            this.gameObject.tag = "Player";
 
-                            Debug.Log("反転");
-                            transform.Rotate(new Vector3(180.0f, 0.0f, 0.0f));
+                            //タップの時
+
+                            if (m_Cnt < 0.5f)
+                            {
+                                //反転の切り替え
+                                m_Invert = !m_Invert;
+
+                                Debug.Log("反転");
+                                transform.Rotate(new Vector3(180.0f, 0.0f, 0.0f));
+
+                                m_Cnt = 0.0f;
+
+                            }
+
+                            this.transform.localScale = m_saveScale;
+                            m_moveFlag = false;
+
+                            m_canShot = true;
 
                             m_Cnt = 0.0f;
 
                         }
 
-                        this.transform.localScale = m_saveScale;
-                        m_moveFlag = false;
-                        m_canShot = true;
-
-                        m_Cnt = 0.0f;
-
                     }
 
                 }
 
             }
-
-        }
-
+    
 
         //オブジェクトが触っている時
         if (m_moveFlag == true)
@@ -128,11 +130,14 @@ public class Tap : MonoBehaviour {
                 m_Cnt += 0.1f;
 
             }
-            else
+            else 
             {
                 this.transform.localScale = m_saveScale;
                 m_moveFlag = false;
+
+
                 m_canShot = true;
+               
 
                 m_Cnt = 0.0f;
             }
