@@ -1,29 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class Pause : MonoBehaviour {
+
+
+public class Pause : MonoBehaviour
+{
     private bool isPause;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         isPause = false;
 
+        // Buttonクリック時、OnClickメソッドを呼び出す
+        GetComponent<Button>().onClick.AddListener(OnTap);
     }
 
     // Update is called once per frame
-    void Update () {
-        if (Input.touchCount > 0)
-        {
-            if (Input.GetTouch(0).phase == TouchPhase.Began)
-            {
-                isPause = !isPause;
-            }
-        }
+    void OnTap()
+    {
+
+        isPause = !isPause;
+    }
+
+    void Update()
+    {
 
         if (isPause)
         {
-            Time.timeScale = 0;
+            Time.timeScale = 0;     
         }
         else
         {
