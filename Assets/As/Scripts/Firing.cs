@@ -37,11 +37,9 @@ public class Firing : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-       
+
 
         tap = GetComponent<Tap>();
-
-        m_Cnt ++;
 
         m_Flag = tap.getInverd();
 
@@ -56,21 +54,22 @@ public class Firing : MonoBehaviour {
         }
 
 
-
-        if (tap.getShot() == true)
+        if (Time.timeScale != 0)
         {
-            if (m_Delay < m_Cnt)
+            m_Cnt++;
+            if (tap.getShot() == true)
             {
-                //弾をプレイヤーと同じ位置に設定
-                Instantiate(bullet, transform.position, transform.rotation);
-                //リセット
-                m_Cnt = 0;
+                if (m_Delay < m_Cnt)
+                {
 
+                    //弾をプレイヤーと同じ位置に設定
+                    Instantiate(bullet, transform.position, transform.rotation);
+                    //リセット
+                    m_Cnt = 0;
+                }
             }
-            
+
         }
-
-
     }
 
   
