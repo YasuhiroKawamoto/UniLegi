@@ -58,6 +58,13 @@ public class Tap : MonoBehaviour {
                     {
                         if (Input.touchCount == 1)
                         {
+<<<<<<< HEAD
+                            Debug.Log("タッチ");
+                            m_moveFlag = true;
+                            this.gameObject.tag = "HavingPlayer";
+                            this.gameObject.layer = 12;
+                            m_canShot = false;
+=======
 
                             if (hit.collider.gameObject == this.gameObject)
                             {
@@ -67,6 +74,7 @@ public class Tap : MonoBehaviour {
                                 this.gameObject.tag = "HavingPlayer";
                                 m_canShot = false;
                             }
+>>>>>>> 28dfdc27534e38a41e56cf6c9ec01cce2270d638
                         }
                     }
 
@@ -74,12 +82,21 @@ public class Tap : MonoBehaviour {
                 //離したとき
                 else if (touch.phase == TouchPhase.Ended && m_moveFlag)
                 {
+<<<<<<< HEAD
+                    if (hit.collider.gameObject == this.gameObject && hit.collider.gameObject.tag != "isPinched")
+                    {
+                        Debug.Log("離した");
+                        this.gameObject.tag = "Player";
+                        this.gameObject.layer = 0;
+                        if (m_Cnt < 0.5f)
+=======
                     //タッチをした位置にオブジェクト判定
                     RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
 
                     if (hit)
                     {
                         if (hit.collider.gameObject == this.gameObject && hit.collider.gameObject.tag != "isPinched")
+>>>>>>> 28dfdc27534e38a41e56cf6c9ec01cce2270d638
                         {
                             Debug.Log("離した");
                             this.gameObject.tag = "Player";
@@ -159,6 +176,11 @@ public class Tap : MonoBehaviour {
     public bool getInverd()
     {
         return m_Invert;
+    }
+
+    public void setInverd(bool flag)
+    {
+        m_Invert = flag;
     }
 
 }
