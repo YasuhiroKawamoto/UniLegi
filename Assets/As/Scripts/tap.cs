@@ -71,7 +71,8 @@ public class Tap : MonoBehaviour {
                             Debug.Log("タッチ");
                             m_moveFlag = true;
                             this.gameObject.tag = "HavingPlayer";
-                           m_canShot = false;
+                            this.gameObject.layer = 12;
+                            m_canShot = false;
                         }
                     }
                 }
@@ -89,7 +90,7 @@ public class Tap : MonoBehaviour {
                     {
                         Debug.Log("離した");
                         this.gameObject.tag = "Player";
-
+                        this.gameObject.layer = 0;
                         if (m_Cnt < 0.5f)
                         {
                             m_Invert = !m_Invert;
@@ -158,6 +159,11 @@ public class Tap : MonoBehaviour {
     public bool getInverd()
     {
         return m_Invert;
+    }
+
+    public void setInverd(bool flag)
+    {
+        m_Invert = flag;
     }
 
 }

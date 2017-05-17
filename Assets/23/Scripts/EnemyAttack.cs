@@ -110,13 +110,26 @@ public class EnemyAttack : MonoBehaviour {
 
     void OnTriggerStay2D(Collider2D col)
     {
+
+        if (col.gameObject.tag == "DangerZone")//接触オブジェクトタグがPlayer
+        {
+            AttackFlag = true;//攻撃フラグON
+            Debug.Log("接敵");
+            target = col.gameObject;//接触オブジェクトを攻撃対象に指定
+            this.transform.parent.GetComponent<Mover>().setMoveFlag(false);//移動を止める
+        }
+
+
     }
 
     void OnTriggerExit2D(Collider2D col)
     {
-        AttackFlag = false;//攻撃フラグOFF
-        this.transform.parent.GetComponent<Mover>().setMoveFlag(true);//移動を開始
-        Debug.Log("離脱");
+        if (col.gameObject.tag == "DangerZone" || col.gameObject.tag == "Player" || col.gameObject.tag == "HavingPlayer")
+            {
+            AttackFlag = false;//攻撃フラグOFF
+            this.transform.parent.GetComponent<Mover>().setMoveFlag(true);//移動を開始
+            Debug.Log("離脱");
+        }
     }
 
 }
