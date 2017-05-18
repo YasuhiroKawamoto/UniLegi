@@ -37,6 +37,9 @@ public class States : MonoBehaviour {
     // アビリティタイプ
     [SerializeField]
     private int m_abilityType;
+    //クールタイプ
+    [SerializeField]
+    private int m_CoolTime = 0;
 
     // Use this for initialization
     void Start () {
@@ -122,6 +125,12 @@ public class States : MonoBehaviour {
     {
         return m_abilityType;
     }
+
+    public int GetCoolTime()
+    {
+        return m_CoolTime;
+    }
+
 }
 
 

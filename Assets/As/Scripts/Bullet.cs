@@ -40,9 +40,6 @@ public class Bullet : MonoBehaviour {
             v.y = Mathf.Sin(Mathf.Deg2Rad * m_dir) * speed;
             GetComponent<Rigidbody2D>().velocity -= v;
         }
-        //GetComponent<Rigidbody2D>().velocity = transform.up.normalized * speed;
-
-
 
     }
 
@@ -67,6 +64,9 @@ public class Bullet : MonoBehaviour {
     {
         return m_flag;
     }
-
+    public void getAttack(int attack)
+    {
+        m_BulletDamege = attack;
+    }
 
 }
