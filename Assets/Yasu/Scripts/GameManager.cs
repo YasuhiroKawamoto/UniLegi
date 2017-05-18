@@ -43,7 +43,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Time.timeScale = 1;
         m_hp =dangerZone.GetHp();
 
 
@@ -53,7 +52,7 @@ public class GameManager : MonoBehaviour
         {
             if (m_cost < m_maxCost)
             {
-                m_cost += (int)Time.timeScale;
+                m_cost += (int)Time.timeScale * 10;
             }
             m_cnt = 0;
         }
@@ -91,6 +90,16 @@ public class GameManager : MonoBehaviour
     public int GetCost()
     {
         return m_cost;
+    }
+
+    public int GetMaxCost()
+    {
+        return m_maxCost;
+    }
+
+    public int GetHp()
+    {
+        return m_hp;
     }
     public int GetNum()
     {

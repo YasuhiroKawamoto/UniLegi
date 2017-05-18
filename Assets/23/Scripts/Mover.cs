@@ -7,26 +7,26 @@ public class Mover : MonoBehaviour
 
 
     [SerializeField]
-    private float farstMoveTime;
+    private float farstMoveTime;//第一指定時間
 
     [SerializeField]
-    private float secondMoveTime;
+    private float secondMoveTime;//第二指定時間
 
     //移動速度
     [SerializeField]
-    private Vector2 Speed = new Vector2(0.0f, -0.03f);
+    private Vector2 Speed = new Vector2(0.0f, -0.03f);//速度１
     [SerializeField]
-    private Vector2 Speed2 = new Vector2(0.03f, 0.0f);
+    private Vector2 Speed2 = new Vector2(0.03f, 0.0f);//速度２
 
-    private Vector2 reverseX = new Vector2(-1.0f, 1.0f);
+    private Vector2 reverseX = new Vector2(-1.0f, 1.0f);//X反転ベクトル
 
-    private bool ReversFlag = false;
+    private bool ReversFlag = false;//左右反転フラグ
 
-    private bool moveFlag = true;
+    private bool moveFlag = true;//移動フラグ
 
-    private float MC = 0;
+    private float MC = 0;//移動用カウント
 
-    Rigidbody2D RB;
+    Rigidbody2D RB;//リジットボディ
 
     // Use this for initialization
     void Start()
@@ -40,48 +40,88 @@ public class Mover : MonoBehaviour
     void Update()
     {
 
-        if (this.gameObject.GetComponent<States>().GetMoveType() ==  5)
+        if (this.gameObject.GetComponent<States>().GetMoveType() ==  5)//ランダム指定タイプだった場合
         {
-            this.gameObject.GetComponent<States>().SetMoveType(Random.Range(1, 4));
+            this.gameObject.GetComponent<States>().SetMoveType(Random.Range(1, 4));//移動タイプをランダムにする
         }
 
 
         if (moveFlag == true)//フラグがtrueの時のみ動く
         {
-            MC += Time.deltaTime;
+            MC += Time.deltaTime;//経過時間取得
 
-            if (this.gameObject.GetComponent<States>().GetMoveType() == 1)
+            if (this.gameObject.GetComponent<States>().GetMoveType() == 1)//移動タイプ１の場合
             {
                 //速度加算
                 RB.velocity = Speed;
 
             }
-            else if (this.gameObject.GetComponent<States>().GetMoveType() == 2)
+            else if (this.gameObject.GetComponent<States>().GetMoveType() == 2)//移動タイプ2の場合
             {
 
 
-                if (MC <= farstMoveTime)
+                if (MC <= farstMoveTime)//第一指定時間に到達する前
                 {
-                    //速度加算
-                    RB.velocity = Speed;
+               
+                    RB.velocity = Speed; //速度加算
                 }
-                else
+                else//第一指定時間に到達後、第二指定時間到達まで
                 {
                     if (ReversFlag == false)
                     {
-                        RB.velocity = Speed2;
+                  
+                        RB.velocity = Speed2; //速度加算
                     }
                     else
                     {
-                        RB.velocity = (Vector2.Scale(Speed2, reverseX));
+                        RB.velocity = (Vector2.Scale(Speed2, reverseX)); //速度加算
                     }
                 }
 
 
-                if (MC >= secondMoveTime)
+                if (MC >= secondMoveTime)//第2指定時間に到達
                 {
-                    MC = 0;
-                    switch (ReversFlag)
+              
+                    switch (ReversFlag)//反転フラグ反転
+                    {
+                        case true:
+                            ReversFlag = false;
+                            break;
+                        case false:
+                            ReversFlag = true;
+                            break;
+                    }
+
+                    MC = 0.0f;//カウントリセット
+                }
+
+            }
+            else if (this.gameObject.GetComponent<States>().GetMoveType() == 3)//移動タイプ3の場合
+            {
+
+                if (MC <= farstMoveTime)//第一指定時間に到達する前
+                {
+                  
+                    RB.velocity = Speed; //速度加算
+
+                }
+                else//第一指定時間に到達後、第二指定時間到達まで
+                {
+                    if (ReversFlag == false)
+                    {
+                        RB.velocity = Speed2; //速度加算
+                    }
+                    else
+                    {
+                        RB.velocity = (Vector2.Scale(Speed2, reverseX)); //速度加算
+                    }
+                }
+
+                if (MC >= secondMoveTime)//第2指定時間に到達
+                {
+                    MC = 0.0f;//カウントリセット
+
+                    switch (ReversFlag)//反転フラグ反転
                     {
                         case true:
                             ReversFlag = false;
@@ -92,105 +132,42 @@ public class Mover : MonoBehaviour
                     }
                 }
 
-            }
-            else if (this.gameObject.GetComponent<States>().GetMoveType() == 3)
-            {
-
-
-
-
-
-                if (MC <= farstMoveTime)
-                {
-                    //速度加算
-                    RB.velocity = Speed;
-
-                }
-                else
-                {
-                    if (ReversFlag == false)
-                    {
-                        RB.velocity = Speed2;
-                    }
-                    else
-                    {
-                        RB.velocity = (Vector2.Scale(Speed2, reverseX));
-                    }
-                }
-
-                if (MC >= secondMoveTime)
-                {
-                    MC = 0;
-
-                    switch (ReversFlag)
-                    {
-                        case true:
-                            ReversFlag = false;
-                            break;
-                        case false:
-                            ReversFlag = true;
-                            break;
-                    }
-                }
-
 
             }
-            else if (this.gameObject.GetComponent<States>().GetMoveType() == 4)
+            else if (this.gameObject.GetComponent<States>().GetMoveType() == 4)//移動タイプ4の場合
             {
-                if (MC <= farstMoveTime)
+                if (MC <= farstMoveTime)//第一指定時間に到達する前
                 {
-                    //速度加算
-                    RB.velocity = Speed;
+                   
+                    RB.velocity = Speed;//速度加算
 
                 }
-                else
+                else//第一指定時間に到達後、第二指定時間到達まで
                 {
-                    //速度加算
-                    RB.velocity = Speed2;
+              
+                    RB.velocity = Speed2;//速度加算
                 }
 
-                if (MC >= secondMoveTime)
+                if (MC >= secondMoveTime)//第2指定時間に到達
                 {
-                    MC = 0;
+                    MC = 0.0f;//カウントリセット
                 }
             }
             else
             {
-                MC = 0.0f;
+                MC = 0.0f;//カウントリセット
             }
 
         }
         else if(moveFlag == false)//フラグがfalseなら動かない
         {
-            RB.velocity = new Vector3(0,0,0);
+            RB.velocity = new Vector3(0,0,0);//停止
         }
        
     }
 
-
-
-    //void OnCollisionStay2D(Collision2D col)
-    //{
-    //    if (col.gameObject.tag == "DangerZone")
-    //    {
-
-    //        Debug.Log("stey");
-    //        Speed = new Vector2(0, 0);
-    //    }
-
-
-    //}
-
-    //void OnCollisionExit2D(Collision2D col)
-    //{
-    //    if (col.gameObject.tag == "DangerZone")
-    //    {
-    //        Debug.Log("out");
-
-    //        Speed = new Vector2(0, -0.01f);
-    //    }
-    //}
-
+    //移動フラグセット関数
+    //引数（bool型　true or false）
     public void setMoveFlag(bool F)
     {
         moveFlag = F;

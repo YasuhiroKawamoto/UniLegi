@@ -9,17 +9,29 @@ public class Union : MonoBehaviour
 
     bool isattached = false;
 
+    [SerializeField]
+    GameObject BulletPattern1;
+    [SerializeField]
+    GameObject BulletPattern2;
+    [SerializeField]
+    GameObject BulletPattern3;
+    [SerializeField]
+    GameObject BulletPattern4;
+    [SerializeField]
+    GameObject BulletPattern5;
+
+    GameObject newBullet;
+
+
     // Use this for initialization
     void Start()
     {
         newUnit = GameObject.Find("Player").GetComponent<GetTouch>().newUnit;
-    
     }
 
     // Update is called once per frame
     void Update()
     {
-        //newUnit = GameObject.Find("isPinched").GetComponent<GetTouch>().newUnit;
     }
 
 
@@ -47,10 +59,9 @@ public class Union : MonoBehaviour
             // スプライトを設定
             newUnit.GetComponent<SpriteRenderer>().sprite = GetSpr();
 
-        //List<int> typeIDs = new List<int>();
-
-        // スプライトを設定
-       // newUnit.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("GD_Slime(Red)");
+            // 弾の設定
+            SelectBullet();
+            newUnit.GetComponent<Firing>().SetBullet(newBullet);
 
         }
     }
@@ -58,7 +69,7 @@ public class Union : MonoBehaviour
     private int CalcId(GameObject[] unions)
     {
         List<int> typeIDs = new List<int>();
-
+        int returnID = 0;
 
         foreach (GameObject union in unions)
         {
@@ -67,19 +78,28 @@ public class Union : MonoBehaviour
             typeIDs.Add(state.GetTypeId());
         }
 
-        // 最頻値をIDとしてリターン
-        return Mode(typeIDs);
+        // 最頻値が0のとき(最頻値が複数ある時)
+        if(Mode(typeIDs) == 0)
+        {
+            returnID = Max(typeIDs) + 1;
+        }
+        else
+        {
+            returnID = Mode(typeIDs) + 1;
+        }
+
+        return returnID;
     }
     private Sprite GetSpr()
     { 
         Sprite sprite;
-        if(newUnit.GetComponent<States>().GetTypeId() == 1)
+        if(newUnit.GetComponent<States>().GetTypeId() == 2)
         {
             sprite = Resources.Load<Sprite>("GD_Slime(Red)");
             return sprite;
         }
 
-        if (newUnit.GetComponent<States>().GetTypeId() == 2)
+        if (newUnit.GetComponent<States>().GetTypeId() == 4)
         {
             sprite = Resources.Load<Sprite>("GD_Kerberos(Purple)");
             return sprite;
@@ -105,7 +125,6 @@ public class Union : MonoBehaviour
         foreach (int hp in hps)
         {
             sum += hp;
-
         }
 
 
@@ -134,6 +153,41 @@ public class Union : MonoBehaviour
         // hpリターン
         return sum;
     }
+
+    void SelectBullet()
+    {
+        int typeId = newUnit.GetComponent<States>().GetTypeId();
+        if (typeId == 1)
+        {
+            newBullet = newUnit.GetComponent<Union>().BulletPattern1;
+        }
+        if(typeId == 2)
+        {
+            newBullet = newUnit.GetComponent<Union>().BulletPattern1;
+            newUnit.GetComponent<States>().SetFireRate(2);
+        }
+
+        if (typeId == 3)
+        {
+            newBullet = newUnit.GetComponent<Union>().BulletPattern2;
+        }
+        if (typeId == 4)
+        {
+            newBullet = newUnit.GetComponent<Union>().BulletPattern3;
+            newUnit.GetComponent<States>().SetFireRate(7);
+
+
+        }
+        //if ()
+        //{
+        //    bulletPattern = BulletPattern4;
+        //}
+        //if ()
+        //{
+        //    bulletPattern = BulletPattern5;
+        //}
+    }
+
     int Mode(List<int> intList)
     {
         int id = 0;
@@ -156,6 +210,20 @@ public class Union : MonoBehaviour
             }
         }
         return id;
+    }
+
+    int Max(List<int> intList)
+    {
+        int max = 0;
+        for (int i = 0; i < intList.Count; i++)
+        {
+            if (intList[i] > max)
+            {
+                max = intList[i];
+            }
+        }
+
+        return max; 
     }
 
     public GameObject GetNewUnit()
