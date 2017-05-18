@@ -11,7 +11,7 @@ public class Firing : MonoBehaviour {
     //Bulletのプレハブ
     public GameObject bullet;
     //Delay
-    private int m_Delay;
+    private float m_Delay;
     //カウント
     private int m_Cnt = 0;
     //反転
@@ -24,9 +24,8 @@ public class Firing : MonoBehaviour {
     //リロードフラグ
     private bool m_Reload = false;
     //装填時間
-    private int m_LoadTime = 0;
+    private float m_LoadTime = 0.0f;
     //装填終わり
-    [SerializeField]
     private int m_LoadFinish = 0;
     private int m_Attack;
 
@@ -65,17 +64,21 @@ public class Firing : MonoBehaviour {
         {
             if (m_Delay < m_Cnt)
             {
+                if(Time.timeScale != 0)
+                {
+
                 //弾をプレイヤーと同じ位置に設定
                 Instantiate(bullet, transform.position, transform.rotation);
                 //弾を数える
                 m_Cartridge++;
                 //リセット
                 m_Cnt = 0;
+                }
             } 
         }
 
         //リロード
-        if(m_Cartridge > m_Ammo)
+        if(m_Cartridge >= m_Ammo)
         {
             m_Reload = true;
         }
@@ -83,7 +86,7 @@ public class Firing : MonoBehaviour {
         //リロードに入ったらカウントを数える
         if(m_Reload == true)
         {
-            m_LoadTime++;
+            m_LoadTime += Time.deltaTime;
         }
         //リロードが終わったらフラグをfalseにする
         if(m_LoadTime > m_LoadFinish)
@@ -96,5 +99,9 @@ public class Firing : MonoBehaviour {
 
     }
 
+    public void SetBullet(GameObject bullet)
+    {
+        this.bullet = bullet;
+    }
   
 }
