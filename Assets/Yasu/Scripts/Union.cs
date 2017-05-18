@@ -174,6 +174,9 @@ public class Union : MonoBehaviour
         if (typeId == 4)
         {
             newBullet = newUnit.GetComponent<Union>().BulletPattern3;
+            newUnit.GetComponent<States>().SetFireRate(7);
+
+
         }
         //if ()
         //{

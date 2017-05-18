@@ -11,13 +11,13 @@ public class UIManager : MonoBehaviour {
     GameObject hpGreen;
 
     [SerializeField]
-    GameObject costGage;
-
-    [SerializeField]
     GameObject hpRed;
 
     [SerializeField]
     GameManager manager;
+
+    [SerializeField]
+    GameObject costGage;
 
     // ゲージの表示割合
     float rate;
@@ -52,7 +52,7 @@ public class UIManager : MonoBehaviour {
         rate = Lerp(startRate, targetRate, timeStep);
 
 
-        if (startRate != targetRate)
+        //if (startRate != targetRate)
         {
             hpRed.GetComponent<Image>().fillAmount = rate;
         }
