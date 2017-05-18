@@ -16,14 +16,16 @@ public class random : MonoBehaviour
     private GameObject Enemy3;
     [SerializeField]
     private GameObject Enemy4;
+    [SerializeField]
+    private GameObject Enemy5;
 
     //出現時間の為のカウント
     [SerializeField]
-    private int cnt = 0;
+    private float cnt = 0;
 
     //敵の出現時間
     [SerializeField]
-    private int SetTime = 200;
+    private float SetTime = 2;
     //敵の種類
     [SerializeField]
     private int enemyNum = 0;
@@ -41,7 +43,7 @@ public class random : MonoBehaviour
 
     void Update()
     {
-        cnt++;
+        cnt += Time.deltaTime;
 
 
 
@@ -77,13 +79,17 @@ public class random : MonoBehaviour
                     Instantiate(Enemy4, new Vector3(x, y, z), Quaternion.identity);
                     enemyNum++;
                     break;
+                case 4:
+                    Instantiate(Enemy5, new Vector3(x, y, z), Quaternion.identity);
+                    enemyNum++;
+                    break;
 
             }
             
             cnt = 0;
             
 
-            if (enemyNum >= 4)
+            if (enemyNum >= 5)
             {
                 enemyNum = 0;
             }
