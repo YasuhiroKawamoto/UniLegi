@@ -40,6 +40,7 @@ public class EnemyHP : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+
         m_autoMoveTime = Time.time;
     }
 
@@ -47,8 +48,6 @@ public class EnemyHP : MonoBehaviour
     void Update()
     {
         float timeStep = (Time.time - m_autoMoveTime) / followTime;
-
-        gameObject.GetComponent<States>().getHp();
 
         if (hpGreen != null && hpRed != null)
         {

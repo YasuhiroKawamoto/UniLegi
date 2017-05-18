@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField, Range(1, 20)]
+    [SerializeField, Range(1, 3)]
     private int stageNumber;
 
     [SerializeField]
@@ -82,6 +82,8 @@ public class GameManager : MonoBehaviour
     }
    
 
+
+
     public void SpendCost(int cost)
     {
         m_cost -= cost;
@@ -104,6 +106,15 @@ public class GameManager : MonoBehaviour
     public int GetNum()
     {
         return m_unitNum;
+    }
+
+    public int GetStageNumber()
+    {
+        return stageNumber;
+    }
+    public void SetStageNumber(int stageNum)
+    {
+        stageNumber = stageNum;
     }
 
     public void RecoverCost(int cost)
