@@ -17,7 +17,6 @@ public class Firing : MonoBehaviour {
     //反転
     private bool m_Flag;
     //弾薬
-    [SerializeField]
     private int m_Ammo = 0;
     //薬莢
     private int m_Cartridge = 0;
@@ -38,6 +37,7 @@ public class Firing : MonoBehaviour {
         m_Delay = states.getrate();
         m_LoadFinish = states.GetCoolTime();
         m_Attack = states.getAttack();
+        m_Ammo = states.GetAmmo();
 
     }
 
