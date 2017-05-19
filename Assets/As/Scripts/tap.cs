@@ -108,8 +108,6 @@ public class Tap : MonoBehaviour {
                     }
                 }
             }
-         
-
 
             //オブジェクトが触っている時
             if (m_moveFlag == true)

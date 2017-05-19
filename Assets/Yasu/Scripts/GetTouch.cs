@@ -76,7 +76,6 @@ public class GetTouch : MonoBehaviour
 
         GameObject[] unions = GameObject.FindGameObjectsWithTag("isPinched");
 
-
         switch (tap_state)
         {
 

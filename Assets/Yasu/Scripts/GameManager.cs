@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     int m_unitNum;
 
+    private float m_gameSpeed;
+
     [SerializeField]
     private int m_hp;
     [SerializeField]
@@ -36,6 +38,7 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        m_gameSpeed = 1;
         m_unitNum = 0;
         m_cnt = 0;
     }
@@ -120,5 +123,15 @@ public class GameManager : MonoBehaviour
     public void RecoverCost(int cost)
     {
         m_cost += cost;
+    }
+
+    public float GetSpd()
+    {
+        return m_gameSpeed;
+    }
+
+    public void SetSpd(float spd)
+    {
+        m_gameSpeed = spd;
     }
 }
