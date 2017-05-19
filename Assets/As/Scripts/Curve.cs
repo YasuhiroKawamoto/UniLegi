@@ -26,7 +26,7 @@ public class Curve : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //transform.localScale += m_scale;
+        transform.localScale += m_scale;
 	}
 
     //スタート地点を設定する
