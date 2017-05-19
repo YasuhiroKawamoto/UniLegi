@@ -40,6 +40,9 @@ public class States : MonoBehaviour {
     //クールタイプ
     [SerializeField]
     private int m_CoolTime = 0;
+    //弾薬
+    [SerializeField]
+    private int m_ammo = 0;
 
     // Use this for initialization
     void Start () {
@@ -134,6 +137,12 @@ public class States : MonoBehaviour {
     public int GetCoolTime()
     {
         return m_CoolTime;
+    }
+
+    //弾薬所持数の私
+    public int GetAmmo()
+    {
+        return m_ammo;
     }
 
 }

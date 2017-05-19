@@ -13,14 +13,14 @@ public class SceneButton : UIBehaviour
     [SerializeField]
     string seneName;
 
-    GameObject SeneData;
+    GameObject SceneData;
 
 
     protected override void Start()
     {
         base.Start();
 
-        SeneData = GameObject.Find("SceneData");
+        SceneData = GameObject.Find("SceneData");
 
         // Buttonクリック時、OnClickメソッドを呼び出す
         GetComponent<Button>().onClick.AddListener(OnClick);
@@ -28,7 +28,8 @@ public class SceneButton : UIBehaviour
 
     void OnClick()
     {
-        SeneData.GetComponent<SceneDataManager>().SetStage(stageNumber);
+        if(SceneData != null)
+        SceneData.GetComponent<SceneDataManager>().SetStage(stageNumber);
 
         // 「GameScene」シーンに遷移する
         SceneManager.LoadScene(seneName);

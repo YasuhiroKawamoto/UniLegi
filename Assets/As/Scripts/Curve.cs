@@ -26,8 +26,12 @@ public class Curve : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //transform.localScale += m_scale;
-	}
+        transform.localScale += m_scale;
+        if(transform.localScale.x > 16)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     //スタート地点を設定する
     public void setStartPos(Vector3 startPos)
