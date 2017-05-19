@@ -9,11 +9,13 @@ using UnityEngine.EventSystems;
 public class Pause : MonoBehaviour
 {
     private bool isPause;
-
+    [SerializeField]
+    GameManager manager;
     // Use this for initialization
     void Start()
     {
         isPause = false;
+
 
         // Buttonクリック時、OnClickメソッドを呼び出す
         GetComponent<Button>().onClick.AddListener(OnTap);
@@ -28,14 +30,14 @@ public class Pause : MonoBehaviour
 
     void Update()
     {
-
+        
         if (isPause)
         {
-            Time.timeScale = 0;     
+            Time.timeScale = 0;
         }
         else
         {
-            Time.timeScale = 1;
+            Time.timeScale = manager.GetSpd();
         }
     }
 }
