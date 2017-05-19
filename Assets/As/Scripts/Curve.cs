@@ -11,10 +11,7 @@ public class Curve : MonoBehaviour {
     private Vector3 m_startPos;
     //終点
     private Vector3 m_endPos;
-    //始点のベクトル
-    private Vector3 m_startVec;
-    //終点のベクトル
-    private Vector3 m_endVec;
+
     //差分
     [SerializeField]
     private Vector3 m_pos = new Vector3(5.0f, 0, 0);
@@ -27,7 +24,12 @@ public class Curve : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         transform.localScale += m_scale;
-	}
+
+        if(transform.localScale.x > 16)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     //スタート地点を設定する
     public void setStartPos(Vector3 startPos)

@@ -76,7 +76,6 @@ public class GetTouch : MonoBehaviour
 
         GameObject[] unions = GameObject.FindGameObjectsWithTag("isPinched");
 
-
         switch (tap_state)
         {
 
@@ -253,7 +252,6 @@ public class GetTouch : MonoBehaviour
                 else if (tap_state != TAP_STATE.SINGLE && Input.touchCount == 2)
                 {
                     touch_pos1 = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
-                    Debug.Log(touch_pos1);
 
                     touch_pos2 = Camera.main.ScreenToWorldPoint(Input.touches[1].position);
                     tap_state = TAP_STATE.DOUBLE;

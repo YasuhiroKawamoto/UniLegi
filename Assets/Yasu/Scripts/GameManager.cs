@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField, Range(1, 20)]
+    [SerializeField, Range(1, 3)]
     private int stageNumber;
 
     [SerializeField]
@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     int m_unitNum;
 
+    private float m_gameSpeed;
+
     [SerializeField]
     private int m_hp;
     [SerializeField]
@@ -36,6 +38,7 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        m_gameSpeed = 1;
         m_unitNum = 0;
         m_cnt = 0;
     }
@@ -82,6 +85,8 @@ public class GameManager : MonoBehaviour
     }
    
 
+
+
     public void SpendCost(int cost)
     {
         m_cost -= cost;
@@ -106,8 +111,27 @@ public class GameManager : MonoBehaviour
         return m_unitNum;
     }
 
+    public int GetStageNumber()
+    {
+        return stageNumber;
+    }
+    public void SetStageNumber(int stageNum)
+    {
+        stageNumber = stageNum;
+    }
+
     public void RecoverCost(int cost)
     {
         m_cost += cost;
+    }
+
+    public float GetSpd()
+    {
+        return m_gameSpeed;
+    }
+
+    public void SetSpd(float spd)
+    {
+        m_gameSpeed = spd;
     }
 }
