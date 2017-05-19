@@ -25,7 +25,7 @@ public class Near : MonoBehaviour {
         //経過時間を取得
         searchTime += Time.deltaTime;
 
-        if (searchTime >= 0.5f)
+        if (searchTime >= 0.2f)
         {
             //最も近かったオブジェクトを取得
             nearObject = serchTag(gameObject, "Enemy");
