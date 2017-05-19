@@ -10,15 +10,18 @@ public class BossAttack : MonoBehaviour {
     Collider2D C;
 
     Vector2 pos;
+    private List<GameObject> target;
+       
 
-    GameObject[] target;
-
+   
     [SerializeField]
     GameObject effect;
 
     private float rate;
 
     private float cnt;
+
+    private int PlayerCnt;
 
     private bool AttackFlag;
 
@@ -38,7 +41,12 @@ public class BossAttack : MonoBehaviour {
 
         cnt = 0;
 
+
+        PlayerCnt = 0;
+
         AttackFlag = false;
+
+        target = new List<GameObject>();
 
 
     }
@@ -48,7 +56,7 @@ public class BossAttack : MonoBehaviour {
     {
 
 
-        target = GameObject.FindGameObjectsWithTag("Player");
+        
 
       
 
@@ -59,9 +67,8 @@ public class BossAttack : MonoBehaviour {
 
             if (rate <= cnt)//攻撃間隔にカウントが到達
             {
-                foreach (GameObject obj in target)
+                foreach (GameObject obj in target)//配列内のユニとに対して
                 {
-
 
                     if (obj.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
                     {
@@ -102,10 +109,12 @@ public class BossAttack : MonoBehaviour {
 
             if (col.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
             {
-                AttackFlag = true;//攻撃フラグON
+            target.Add(col.gameObject);
+
+            AttackFlag = true;//攻撃フラグON
                 Debug.Log("接敵");
               
-                this.transform.parent.GetComponent<Mover>().setMoveFlag(false);//移動を止める
+                
             }
 
             if (col.gameObject.tag == "DangerZone")//接触オブジェクトがDangerZone
@@ -141,6 +150,7 @@ public class BossAttack : MonoBehaviour {
     {
         if (col.gameObject.tag == "DangerZone" || col.gameObject.tag == "Player" || col.gameObject.tag == "HavingPlayer")
         {
+            target.Clear();
             AttackFlag = false;//攻撃フラグOFF
             this.transform.parent.GetComponent<Mover>().setMoveFlag(true);//移動を開始
             Debug.Log("離脱");
