@@ -24,6 +24,7 @@ public class Curve : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         transform.localScale += m_scale;
+
         if(transform.localScale.x > 16)
         {
             Destroy(gameObject);
