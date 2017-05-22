@@ -10,6 +10,8 @@ public class Firing : MonoBehaviour {
     States states;
     //Bulletのプレハブ
     public GameObject bullet;
+    //照準マークのプレハブ
+    public GameObject aim;
     //Delay
     private float m_Delay;
     //カウント
@@ -27,6 +29,10 @@ public class Firing : MonoBehaviour {
     //装填終わり
     private int m_LoadFinish = 0;
     private int m_Attack;
+    //範囲
+    private Vector3 m_aim =new Vector3(0.0f,0.5f,0.0f);
+    //Aimフラグ
+    private bool m_AimFlag = false;
 
 
     //Use this for initialization
@@ -50,6 +56,28 @@ public class Firing : MonoBehaviour {
         m_Cnt ++;
 
         m_Flag = tap.getInverd();
+
+        if(m_Flag==false)
+        {
+            m_AimFlag = false;
+        }
+        else if(m_Flag==true)
+        {
+            m_AimFlag = true;
+        }
+
+        //照準マークを作成
+        if (m_AimFlag == false && m_Flag == false)
+        {
+            Debug.Log("上");
+            Instantiate(aim, transform.position + m_aim, transform.rotation);
+            m_AimFlag = true;
+        }
+        else if(m_AimFlag == true && m_Flag == true)
+        {
+            Instantiate(aim, transform.position - m_aim, transform.rotation);
+            m_AimFlag = false;
+        }
 
         Transform Children = bullet.GetComponentInChildren<Transform>();
 
