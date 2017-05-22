@@ -55,19 +55,13 @@ public class BossAttack : MonoBehaviour {
     void Update()
     {
 
-
-        
-
-      
-
-
         if (AttackFlag)//攻撃フラグがONであれば
         {
             cnt += Time.deltaTime;
 
             if (rate <= cnt)//攻撃間隔にカウントが到達
             {
-                foreach (GameObject obj in target)//配列内のユニとに対して
+                foreach (GameObject obj in target)//範囲内ユニットに対して
                 {
 
                     if (obj.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
@@ -94,13 +88,11 @@ public class BossAttack : MonoBehaviour {
                     }
 
                 }
-                
 
                 Debug.Log("攻撃");
                 cnt = 0;//カウントリセット
             }
         }
-
     }
 
 
@@ -113,13 +105,13 @@ public class BossAttack : MonoBehaviour {
 
             AttackFlag = true;//攻撃フラグON
                 Debug.Log("接敵");
-              
-                
+        
             }
 
             if (col.gameObject.tag == "DangerZone")//接触オブジェクトがDangerZone
             {
-                AttackFlag = true;//攻撃フラグON
+            target.Add(col.gameObject);
+            AttackFlag = true;//攻撃フラグON
                 Debug.Log("拠点接敵");
               
                 this.transform.parent.GetComponent<Mover>().setMoveFlag(false);//移動を止める
@@ -142,7 +134,6 @@ public class BossAttack : MonoBehaviour {
            
             this.transform.parent.GetComponent<Mover>().setMoveFlag(false);//移動を止める
         }
-
 
     }
 
