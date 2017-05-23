@@ -2,59 +2,68 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+enum CameraState
+{
+    STAY,
+    ZOOMIN,
+    ZOOMOUT,
+
+}
 public class Derector : MonoBehaviour
 {
     Camera mainCamera;
+
+    CameraState state =CameraState.STAY;
+
 
     [SerializeField]
     GameManager manager;
 
     float m_time;
-    bool initFlag = false;
+    float m_stayCnt = 0;
+
+    bool Initflag = true;
 
     // Use this for initialization
     void Start()
     {
         mainCamera = gameObject.GetComponent<Camera>();
-        m_time = Time.time;
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        float timeStep = (Time.time - m_time) / 15.0f;
+        float timeStep = (Time.time - m_time) / 5.0f;
 
         GameObject[] effects = GameObject.FindGameObjectsWithTag("Effect");
         if (effects.Length > 0)
         {
-            if (initFlag)
-            {
-                m_time = Time.time;
-                initFlag = false;
-            }
-            manager.SetSpd(0.7f);
-
-            Vector3 pos = new Vector3(effects[0].transform.position.x, effects[0].transform.position.y, this.transform.position.z);
-            mainCamera.transform.position = Lerp(mainCamera.transform.position, pos, timeStep);
-            mainCamera.orthographicSize = Lerp(mainCamera.orthographicSize, 1.0f, timeStep);
+            state = CameraState.ZOOMIN;
 
         }
 
         else
         {
-            initFlag = true;
-
-            manager.SetSpd(1.0f);
-
-            mainCamera.transform.position = Lerp(mainCamera.transform.position, new Vector3(0,0,-10), timeStep);
-            mainCamera.orthographicSize = Lerp(mainCamera.orthographicSize, 5.0f, timeStep);
+            state = CameraState.STAY;
         }
 
-        if(!initFlag)
-        {
 
-            
+        switch (state)
+        {
+            case CameraState.STAY:
+                break;
+            case CameraState.ZOOMIN:
+                Vector3 pos = new Vector3(effects[0].transform.position.x, effects[0].transform.position.y, this.transform.position.z);
+                mainCamera.transform.position = Lerp(mainCamera.transform.position, pos, timeStep);
+                mainCamera.orthographicSize = Lerp(mainCamera.orthographicSize, 2.0f, timeStep);
+                break;
+            case CameraState.ZOOMOUT:
+                mainCamera.transform.position = Lerp(mainCamera.transform.position, new Vector3(0, 0, -10), timeStep);
+                mainCamera.orthographicSize = Lerp(mainCamera.orthographicSize, 5.0f, timeStep);
+                break;
+            default:
+                break;
         }
     }
 
