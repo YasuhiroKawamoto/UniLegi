@@ -10,7 +10,7 @@ enum TAP_STATE
     DOUBLE,
     MULTI = 10,
 }
-public class GetTouch : MonoBehaviour
+public class PlayerControl : MonoBehaviour
 {
 
     [SerializeField]
@@ -142,7 +142,8 @@ public class GetTouch : MonoBehaviour
 
                                 // エフェクト発生
                                 Instantiate(effect);
-                                
+                                delay = 80;
+
                                 isWaiting = true;
 
 
@@ -194,10 +195,9 @@ public class GetTouch : MonoBehaviour
         }
         if (delay < 0)
         {
-
+            delay = 80;
             Instantiate(newUnit);
             isWaiting = false;
-            delay = 30;
             Debug.Log("gattai!");
 
         }

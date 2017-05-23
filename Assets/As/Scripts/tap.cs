@@ -63,7 +63,7 @@ public class Tap : MonoBehaviour {
                             Debug.Log("タッチ");
                             m_moveFlag = true;
                             this.gameObject.tag = "HavingPlayer";
-                            this.gameObject.layer = 12;
+                            //this.gameObject.layer = 12;
                             m_canShot = false;
                         }
                     }
@@ -82,7 +82,7 @@ public class Tap : MonoBehaviour {
                     {
                         Debug.Log("離した");
                         this.gameObject.tag = "Player";
-                        this.gameObject.layer = 0;
+                        //this.gameObject.layer = 0;
                         if (m_Cnt < 0.5f)
 
                             //タップの時
@@ -93,7 +93,7 @@ public class Tap : MonoBehaviour {
                                 m_Invert = !m_Invert;
 
                                 Debug.Log("反転");
-                                transform.Rotate(new Vector3(180.0f, 0.0f, 0.0f));
+                                //transform.Rotate(new Vector3(180.0f, 0.0f, 0.0f));
 
                                 m_Cnt = 0.0f;
 
