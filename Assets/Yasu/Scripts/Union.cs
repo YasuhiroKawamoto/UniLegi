@@ -26,7 +26,7 @@ public class Union : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        newUnit = GameObject.Find("Player").GetComponent<GetTouch>().newUnit;
+        newUnit = GameObject.Find("Player").GetComponent<PlayerControl>().newUnit;
     }
 
     // Update is called once per frame
