@@ -11,6 +11,9 @@ public class spawn : MonoBehaviour
     [SerializeField]
     private GameManager manager;
 
+    [SerializeField]
+    GameObject effect;
+
     //触ったフラグ
     private int m_flag;
     //タッチ
@@ -22,6 +25,10 @@ public class spawn : MonoBehaviour
 
     private float posx;
     private float posy;
+
+    //[SerializeField]
+    private int waitTime = 30;
+    private bool IsWaiting;
 
     private Vector3 savePos;
     Vector3 tmpPos;
@@ -37,6 +44,10 @@ public class spawn : MonoBehaviour
         tmpPos.z = -1;
 
         savePos = tmpPos;
+
+        IsWaiting = false;
+
+
 
     }
 
@@ -92,7 +103,17 @@ public class spawn : MonoBehaviour
 
                                 AsPrefab.transform.position = m_worldPoint;
 
-                                Instantiate(AsPrefab);
+                                effect.transform.position =  AsPrefab.transform.position;//エフェクト位置設定
+
+                                if (effect != null)//エフェクトスロットに設定してある場合
+                                {
+                                    Instantiate(effect);//エフェクト生成
+
+                   
+                                }
+
+                                IsWaiting = true;
+
 
                                 // コスト消費
                                 manager.SpendCost(AsPrefab.gameObject.GetComponent<States>().getCost());
@@ -126,6 +147,28 @@ public class spawn : MonoBehaviour
             transform.position = tmpPos;
 
         }
+
+
+
+
+
+        // ユニット生成
+        if (IsWaiting)
+        {
+            waitTime--;
+
+        }
+        if (waitTime < 0)
+        {
+
+            Instantiate(AsPrefab);
+            IsWaiting = false;
+            waitTime = 30;
+           
+
+        }
+
+
     }
 
 
