@@ -1,7 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 
 enum CameraState
 {
@@ -21,7 +21,7 @@ public class Derector : MonoBehaviour
     GameManager manager;
 
     float m_time;
-    float m_stayCnt = 0;
+    int m_stayCnt = 0;
 
     bool Initflag = true;
 
@@ -34,33 +34,47 @@ public class Derector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float timeStep = (Time.time - m_time) / 5.0f;
+        float timeStep = (Time.time - m_time) / 25.0f;
 
-        GameObject[] effects = GameObject.FindGameObjectsWithTag("Effect");
-        if (effects.Length > 0)
+        GameObject effect = GameObject.Find("Effect01(Clone)");
+        if (effect != null)
         {
             state = CameraState.ZOOMIN;
+            manager.SetSpd(0.4f);
+
 
         }
 
         else
         {
             state = CameraState.STAY;
+            m_stayCnt++;
+            manager.SetSpd(1.0f);
+
+            if(m_stayCnt >15)
+            {
+                state = CameraState.ZOOMOUT;
+            }
         }
 
 
+        Debug.Log(state);
         switch (state)
         {
             case CameraState.STAY:
                 break;
             case CameraState.ZOOMIN:
-                Vector3 pos = new Vector3(effects[0].transform.position.x, effects[0].transform.position.y, this.transform.position.z);
-                mainCamera.transform.position = Lerp(mainCamera.transform.position, pos, timeStep);
-                mainCamera.orthographicSize = Lerp(mainCamera.orthographicSize, 2.0f, timeStep);
+                Vector3 pos = Vector3.zero;
+                if (effect != null)
+                {
+                    pos = new Vector3(effect.transform.position.x, effect.transform.position.y, Camera.main.transform.position.z);
+                }
+                mainCamera.transform.position = Lerp(mainCamera.transform.position, pos, 0.5f, TimeStep );
+                mainCamera.orthographicSize = Lerp(mainCamera.orthographicSize, 2.0f, 0.1f * Time.timeScale, TimeStep);
                 break;
             case CameraState.ZOOMOUT:
-                mainCamera.transform.position = Lerp(mainCamera.transform.position, new Vector3(0, 0, -10), timeStep);
-                mainCamera.orthographicSize = Lerp(mainCamera.orthographicSize, 5.0f, timeStep);
+                mainCamera.transform.position = Lerp(mainCamera.transform.position, new Vector3(0, 0, -10), 0.5f, TimeStep);
+                mainCamera.orthographicSize = Lerp(mainCamera.orthographicSize, 5.0f, 0.1f * Time.timeScale, TimeStep);
                 break;
             default:
                 break;
@@ -68,19 +82,31 @@ public class Derector : MonoBehaviour
     }
 
     // 線形補間用関数
-    static float Lerp(float startNum, float targetNum, float t)
+    static float Lerp(float startNum, float targetNum,float t, Func<float,float> v)
     {
         float retNum = 0.0f;
+         
 
-        retNum = (1 - t) * startNum + t * targetNum;
+        retNum = (1 - v(t)) * startNum + v(t) * targetNum;
 
         return retNum;
     }
-    static Vector3 Lerp(Vector3 startNum, Vector3 targetNum, float t)
+
+    static float TimeStep(float stepTime)
+    {
+        float m_currentTime = 0;
+        if(m_currentTime <stepTime)
+        {
+            m_currentTime +=0.1f;
+        }
+
+        return m_currentTime;
+    }
+    static Vector3 Lerp(Vector3 startNum, Vector3 targetNum, float t, Func<float, float> v)
     {
         Vector3 pos;
 
-        pos = (1 - t) * startNum + t * targetNum;
+        pos = (1 - v(t)) * startNum + v(t) * targetNum;
 
         return pos;
     }
