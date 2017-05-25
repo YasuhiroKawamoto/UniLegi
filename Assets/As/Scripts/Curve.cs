@@ -12,6 +12,10 @@ public class Curve : MonoBehaviour {
     //終点
     private Vector3 m_endPos;
 
+    //最大拡大値
+    [SerializeField]
+    private float m_limitScale = 0;
+
     //差分
     [SerializeField]
     private Vector3 m_pos = new Vector3(5.0f, 0, 0);
@@ -25,7 +29,7 @@ public class Curve : MonoBehaviour {
 	void Update () {
         transform.localScale += m_scale;
 
-        if(transform.localScale.x > 16)
+        if(transform.localScale.x > m_limitScale)
         {
             Destroy(gameObject);
         }

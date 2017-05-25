@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class FollowEnemy : MonoBehaviour {
 
+    [SerializeField]
+    float diff;
+
     GameObject parent;
 	// Use this for initialization
 	void Start () {
@@ -19,7 +22,7 @@ public class FollowEnemy : MonoBehaviour {
         if (parentPos == Vector3.zero)
         {
             parentPos = parent.transform.position;
-            pos = new Vector3(parentPos.x, parentPos.y + 0.5f, parentPos.z);
+            pos = new Vector3(parentPos.x, parentPos.y + diff, parentPos.z);
             pos = RectTransformUtility.WorldToScreenPoint(Camera.main, pos);
         }
         
