@@ -110,7 +110,7 @@ public class EnemyAttack : MonoBehaviour {
 
         if (col.gameObject.tag == "HavingPlayer")//接触オブジェクトタグがHavingPlayer
         {
-            this.transform.parent.GetComponent<Mover>().setMoveFlag(false);//移動を止める
+            this.transform.parent.GetComponent<Mover>().setMoveFlag(true);//そのまま通過
         }
     }
 
