@@ -11,11 +11,12 @@ public class Decision : MonoBehaviour {
     private GameManager manager;
 
     [SerializeField]
-    GameObject hitEffect;
+    GameObject hitEffect;//被弾時エフェクト
 
     [SerializeField]
-    GameObject guardEffect;
+    GameObject guardEffect;//攻撃防御時エフェクト
 
+    
 
 
 

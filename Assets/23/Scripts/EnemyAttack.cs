@@ -16,6 +16,8 @@ public class EnemyAttack : MonoBehaviour {
     [SerializeField]
     GameObject effect;
 
+   
+
    private float rate;
 
    private float cnt;
@@ -24,6 +26,9 @@ public class EnemyAttack : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+
+       
+ 
         states = this.gameObject.transform.parent.GetComponent<States>();
 
       this.gameObject.transform.position =  new Vector3 (this.gameObject.transform.parent.position.x,
@@ -70,6 +75,7 @@ public class EnemyAttack : MonoBehaviour {
 
                 if (effect != null)//エフェクトスロットに設定してある場合
                 {
+                    Singleton<SoundManager>.instance.playSE("se001");
                     Instantiate(effect);//エフェクト生成
                 }
 
