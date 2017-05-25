@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Shot : MonoBehaviour {
 
-  
-	// Use this for initialization
-	void Start () {
+    [SerializeField]
+    private bool m_flag = true;
+
+    // Use this for initialization
+    void Start () {
 
 	}
 	
@@ -21,5 +23,9 @@ public class Shot : MonoBehaviour {
 
     }
 
+    public void setInverdFlag(bool flag)
+    {
+        m_flag = flag;
+    }
 
 }
