@@ -73,4 +73,9 @@ public class Emitter : MonoBehaviour {
 
         }
     }
+
+    public int GetCurrentWave()
+    {
+        return currentWave;
+    }
 }
