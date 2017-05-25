@@ -35,7 +35,11 @@ public class SoundManager
 
         audioClips.Add("se001", new AudioClipInfo("hit", "se001"));
         audioClips.Add("se002", new AudioClipInfo("Sammon", "se002"));
-        audioClips.Add("bgm001", new AudioClipInfo("Encounter_loop", "bgm001"));
+        audioClips.Add("BGM001", new AudioClipInfo("TitleBGM", "BGM001"));
+        audioClips.Add("BGM002", new AudioClipInfo("SelectBGM", "BGM002"));
+        audioClips.Add("BGM003", new AudioClipInfo("BattleBGM2", "BGM003"));
+
+
     }
 
     public bool playSE(string seName)
@@ -62,6 +66,31 @@ public class SoundManager
     }
 
 
+    public void playBGM(string bgmName, float fadeTime)
+    {
+        // destory old BGM
+        if (fadeOutBGMPlayer != null)
+            fadeOutBGMPlayer.destory();
+
+        // change to fade out for current BGM
+        if (curBGMPlayer != null)
+        {
+            curBGMPlayer.stopBGM(fadeTime);
+            fadeOutBGMPlayer = curBGMPlayer;
+        }
+
+        // play new BGM
+        if (audioClips.ContainsKey(bgmName) == false)
+        {
+            // null BGM
+            curBGMPlayer = new BGMPlayer();
+        }
+        else
+        {
+            curBGMPlayer = new BGMPlayer(audioClips[bgmName].resourceName);
+            curBGMPlayer.playBGM(fadeTime);
+        }
+    }
 
     public void playBGM()
     {

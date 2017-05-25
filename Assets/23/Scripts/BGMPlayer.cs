@@ -80,6 +80,7 @@ class BGMPlayer
             {
                 bgmPlayer.source.volume = 1.0f;
                 bgmPlayer.source.Play();
+                bgmPlayer.source.loop = true;
             }
         }
 
