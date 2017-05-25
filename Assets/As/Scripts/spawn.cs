@@ -54,65 +54,69 @@ public class spawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (Input.touchCount > 0)
+        if (CanInstantiate())
         {
-            touch = Input.GetTouch(0);
+            // 色を明るく
+            SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
 
-            m_worldPoint = Camera.main.ScreenToWorldPoint(touch.position);
-
-            //タッチ開始時
-            if (touch.phase == TouchPhase.Began)
+            sr.color = Color.white;
+            if (Input.touchCount > 0)
             {
+                touch = Input.GetTouch(0);
 
-                //タッチをした位置にオブジェクト判定
-                RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
+                m_worldPoint = Camera.main.ScreenToWorldPoint(touch.position);
 
-                if (hit)
+
+                //タッチ開始時
+                if (touch.phase == TouchPhase.Began)
                 {
-                    if (hit.collider.gameObject == this.gameObject)
+
+                    //タッチをした位置にオブジェクト判定
+                    RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
+
+                    if (hit)
                     {
-                        Debug.Log("さわった");
-                        m_flag = 1;
+                        if (hit.collider.gameObject == this.gameObject)
+                        {
+                            m_flag = 1;
+                        }
+
                     }
 
                 }
-
-            }
-            //離したとき
-            else if (touch.phase == TouchPhase.Ended)
-            {
-                //タッチをした位置にオブジェクト判定
-                RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
-
-                if (hit)
+                //離したとき
+                else if (touch.phase == TouchPhase.Ended)
                 {
-                    if (hit.collider.gameObject == this.gameObject)
-                    {
-                        if (m_worldPoint.y < zone)
-                        {
-                            //元いた位置に戻る
-                            transform.position = savePos;
+                    //タッチをした位置にオブジェクト判定
+                    RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
 
-                            m_flag = 0;
-                        }
-                        else
+                    if (hit)
+                    {
+                        if (hit.collider.gameObject == this.gameObject)
                         {
-                            if (CanInstantiate())
+                            if (m_worldPoint.y < zone)
                             {
+                                //元いた位置に戻る
+                                transform.position = savePos;
+
+                                m_flag = 0;
+                            }
+                            else
+                            {
+
 
 
                                 if (IsSummons == false)//召喚中ッで無ければ
                                 {
                                     AsPrefab.transform.position = m_worldPoint;
 
-                                effect.transform.position =  AsPrefab.transform.position;//エフェクト位置設定
+                                    effect.transform.position = AsPrefab.transform.position;//エフェクト位置設定
 
 
-                              
+
                                     if (effect != null)//エフェクトスロットに設定してある場合
                                     {
-
+                                        Singleton<SoundManager>.instance.playSE("se002");
                                         Instantiate(effect);//エフェクト生成
 
 
@@ -140,6 +144,12 @@ public class spawn : MonoBehaviour
             transform.position = savePos;
 
             m_flag = 0;
+
+            // 色を暗く
+            SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
+
+            sr.color = Color.gray;
+
         }
 
         //1の時追従する
@@ -167,6 +177,8 @@ public class spawn : MonoBehaviour
         if (waitTime < 0)
         {
 
+            
+
             Instantiate(AsPrefab);//ユニット生成
             IsWaiting = false;//エフェクト待機解除
             waitTime = 30;//待機カウントリセット
@@ -188,7 +200,7 @@ public class spawn : MonoBehaviour
             return false;
         }
 
-        // コストが足りているないとき生成不可
+        // コストが足りていないとき生成不可
         if (manager.GetCost() < AsPrefab.gameObject.GetComponent<States>().getCost())
         {
             return false;
@@ -197,3 +209,5 @@ public class spawn : MonoBehaviour
         return true;
     }
 }
+
+

@@ -139,11 +139,23 @@ public class States : MonoBehaviour {
         return m_CoolTime;
     }
 
+    public void SetCoolTime(int time)
+    {
+        m_CoolTime = time;
+    }
+
     //弾薬所持数の私
     public int GetAmmo()
     {
         return m_ammo;
     }
+
+    public void SetAmmo(int ammo)
+    {
+        m_ammo = ammo;
+    }
+
+
 
 }
 

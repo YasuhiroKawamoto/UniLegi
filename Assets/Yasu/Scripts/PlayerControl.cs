@@ -78,7 +78,7 @@ public class PlayerControl : MonoBehaviour
 
         switch (tap_state)
         {
-
+       
             case TAP_STATE.DOUBLE:
 
                 // コライダの大きさを設定
@@ -166,9 +166,12 @@ public class PlayerControl : MonoBehaviour
                 }
 
                 break;
-            case TAP_STATE.SINGLE:
+            
             // ゲームオブジェクト「魔王の指」を動的に生成
             case TAP_STATE.NONE:
+            case TAP_STATE.SINGLE:
+
+            case TAP_STATE.MULTI:
                 Area.gameObject.tag = "Collider";
                 Area.transform.position = new Vector3(-300, -300, -300);
                 hand1.transform.position = new Vector3(-300, -300, -300);
@@ -249,7 +252,7 @@ public class PlayerControl : MonoBehaviour
                 }
 
                 // 2点タップの時
-                else if (tap_state != TAP_STATE.SINGLE && Input.touchCount == 2)
+                else if (Input.touchCount == 2)
                 {
                     touch_pos1 = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
 

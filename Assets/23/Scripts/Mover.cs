@@ -12,6 +12,14 @@ public class Mover : MonoBehaviour
     [SerializeField]
     private float secondMoveTime;//第二指定時間
 
+
+    [SerializeField]
+    GameObject MoveEffect;//移動時エフェクト
+
+    private float WaitEffectTime = 0;//エフェクト待機時間
+
+    
+
     //移動速度
     [SerializeField]
     private Vector2 Speed = new Vector2(0.0f, -0.03f);//速度１
@@ -33,6 +41,7 @@ public class Mover : MonoBehaviour
     {
 
         RB = this.gameObject.GetComponent<Rigidbody2D>();
+
         
     }
 
@@ -49,6 +58,23 @@ public class Mover : MonoBehaviour
         if (moveFlag == true)//フラグがtrueの時のみ動く
         {
             MC += Time.deltaTime;//経過時間取得
+
+            WaitEffectTime += Time.deltaTime;//経過時間取得
+
+
+            if (MoveEffect != null)//エフェクトスロットに設定してある場合
+            {
+
+                if (WaitEffectTime >= 0.0f)
+                {
+                    MoveEffect.transform.position = this.gameObject.transform.position;//エフェクト位置指定 
+                    Instantiate(MoveEffect);//エフェクト生成
+
+                    WaitEffectTime = 0;
+                }
+              
+            }
+
 
             if (this.gameObject.GetComponent<States>().GetMoveType() == 1)//移動タイプ１の場合
             {
@@ -69,6 +95,7 @@ public class Mover : MonoBehaviour
                 {
                     if (ReversFlag == false)
                     {
+
                   
                         RB.velocity = Speed2; //速度加算
                     }
