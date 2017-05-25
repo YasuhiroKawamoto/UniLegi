@@ -8,6 +8,7 @@ public class Firing : MonoBehaviour {
     Tap tap;
     //Statesコンポーネント
     States states;
+
     //Bulletのプレハブ
     public GameObject bullet;
     //照準マークのプレハブ
@@ -44,13 +45,14 @@ public class Firing : MonoBehaviour {
         m_LoadFinish = states.GetCoolTime();
         m_Attack = states.getAttack();
         m_Ammo = states.GetAmmo();
+        
 
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+
         tap = GetComponent<Tap>();
 
         m_Cnt ++;
@@ -69,7 +71,6 @@ public class Firing : MonoBehaviour {
         //照準マークを作成
         if (m_AimFlag == false && m_Flag == false)
         {
-            Debug.Log("上");
             Instantiate(aim, transform.position + m_aim, transform.rotation);
             m_AimFlag = true;
         }
@@ -79,6 +80,7 @@ public class Firing : MonoBehaviour {
             m_AimFlag = false;
         }
 
+      
         Transform Children = bullet.GetComponentInChildren<Transform>();
 
         foreach (Transform ob in Children)
@@ -130,6 +132,11 @@ public class Firing : MonoBehaviour {
     public void SetBullet(GameObject bullet)
     {
         this.bullet = bullet;
+    }
+
+    public bool GetFlag()
+    {
+        return m_Reload;
     }
   
 }

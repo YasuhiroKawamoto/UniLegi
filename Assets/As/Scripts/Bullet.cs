@@ -4,23 +4,28 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
-    //弾のスピード
-    [SerializeField]
-    public float speed = 5.0f;
+   
     //ダメージ量
     [SerializeField]
     private int m_BulletDamege = 1;
     //反転しているかのフラグ　最初は反転していないのでfalse
     [SerializeField]
     private bool m_flag=false;
+    //弾のスピード
+    [SerializeField]
+    private float speed = 5.0f;
     //弾の発射角度
     [SerializeField]
     private float m_dir = 90;
 
 
-
     // Use this for initialization
     void Start () {
+
+    }
+
+    // Update is called once per frame
+    void Update () {
 
         Vector2 v;
         //反転などしていた場合、弾の向きを変更
@@ -38,15 +43,9 @@ public class Bullet : MonoBehaviour {
             //sin cosの計算をし角度を求める
             v.x = Mathf.Cos(Mathf.Deg2Rad * m_dir) * speed;
             v.y = Mathf.Sin(Mathf.Deg2Rad * m_dir) * speed;
-            GetComponent<Rigidbody2D>().velocity -= v;
+            GetComponent<Rigidbody2D>().velocity = -v;
         }
 
-    }
-
-    // Update is called once per frame
-    void Update () {
-
-       
     }
 
     //弾のダメージ量を渡す
@@ -67,6 +66,10 @@ public class Bullet : MonoBehaviour {
     public void getAttack(int attack)
     {
         m_BulletDamege = attack;
+    }
+    public void setDir(float dir)
+    {
+        m_dir = dir;
     }
 
 }
