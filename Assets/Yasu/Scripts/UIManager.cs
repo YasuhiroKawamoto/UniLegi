@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class UIManager : MonoBehaviour {
     [SerializeField]
     private float followTime;
@@ -43,13 +43,13 @@ public class UIManager : MonoBehaviour {
 
 
         // 移動終点(現在の値)
-       targetRate = hpGreen.GetComponent<Image>().fillAmount = manager.GetHp() / 1000.0f;
+       targetRate = hpGreen.GetComponent<Image>().fillAmount = manager.GetHp() / 100.0f;
 
         // 移動始点(古い値)
         startRate = hpRed.GetComponent<Image>().fillAmount;
 
         // 線形補間で計算  
-        rate = Lerp(startRate, targetRate, timeStep);
+        rate = Lerp(startRate, targetRate, followTime, TimeStep);
 
 
         //if (startRate != targetRate)
@@ -64,13 +64,25 @@ public class UIManager : MonoBehaviour {
 
 
     // 線形補間用関数
-    static float Lerp(float startNum, float targetNum, float t)
+    static float Lerp(float startNum, float targetNum, float t, Func<float, float> v)
     {
         float retNum = 0.0f;
 
-        retNum = (1 - t) * startNum + t * targetNum;
+
+        retNum = (1 - v(t)) * startNum + v(t) * targetNum;
 
         return retNum;
+    }
+
+    static float TimeStep(float stepTime)
+    {
+        float m_currentTime = 0;
+        if (m_currentTime < stepTime)
+        {
+            m_currentTime += 0.1f;
+        }
+
+        return m_currentTime;
     }
 
 }

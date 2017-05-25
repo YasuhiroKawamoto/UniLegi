@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneDataManager : MonoBehaviour {
 
@@ -11,7 +12,12 @@ public class SceneDataManager : MonoBehaviour {
 	void Start () {
         // オブジェクトを破棄しない
         DontDestroyOnLoad(gameObject);
-	}
+
+        //if (SceneManager.GetActiveScene().name == "scenename")
+        //{
+
+        //}
+    }
 	
 	// Update is called once per frame
 	void Update () {

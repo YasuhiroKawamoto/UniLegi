@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 
 public class EnemyHP : MonoBehaviour
 {
@@ -59,7 +61,7 @@ public class EnemyHP : MonoBehaviour
             startRate = hpRed.GetComponent<Image>().fillAmount;
 
             // 線形補間で計算  
-            rate = Lerp(startRate, targetRate, timeStep);
+            rate = Lerp(startRate, targetRate, followTime, TimeStep);
 
 
 
@@ -85,13 +87,22 @@ public class EnemyHP : MonoBehaviour
         }
     }
 
-    // 線形補間用関数
-    static float Lerp(float startNum, float targetNum, float t)
+    static float TimeStep(float stepTime)
     {
-        float retNum = 0.0f;
+        float m_currentTime = 0;
+        if (m_currentTime < stepTime)
+        {
+            m_currentTime += 0.1f;
+        }
 
-        retNum = (1 - t) * startNum + t * targetNum;
+        return m_currentTime;
+    }
+    static float Lerp(float startNum, float targetNum, float t, Func<float, float> v)
+    {
+        float pos;
 
-        return retNum;
+        pos = (1 - v(t)) * startNum + v(t) * targetNum;
+
+        return pos;
     }
 }

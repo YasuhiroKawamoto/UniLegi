@@ -90,12 +90,12 @@ public class Tap : MonoBehaviour {
                             if (m_Cnt < 0.5f)
                             {
                                 //反転の切り替え
-                                m_Invert = !m_Invert;
+                                // m_Invert = !m_Invert;
 
-                                Debug.Log("反転");
+                                // Debug.Log("反転");
                                 //transform.Rotate(new Vector3(180.0f, 0.0f, 0.0f));
 
-                                m_Cnt = 0.0f;
+                               // m_Cnt = 0.0f;
 
                             }
 
@@ -117,7 +117,7 @@ public class Tap : MonoBehaviour {
                     //タッチしている座標に追従する
                     transform.position = m_worldPoint;
                     //オブジェクトを倍加させる
-                    this.transform.localScale = new Vector3(rate, rate, 1);
+                   // this.transform.localScale = new Vector3(rate, rate, 1);
                     //撃てない
                     m_canShot = false;
 
