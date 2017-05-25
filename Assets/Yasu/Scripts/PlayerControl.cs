@@ -43,6 +43,8 @@ public class PlayerControl : MonoBehaviour
 
 
     private int pinch_num;
+    private int unionCost;
+
 
     private float delay;
     private bool isWaiting;
@@ -62,7 +64,7 @@ public class PlayerControl : MonoBehaviour
         canInstantiate = true;
         isTrigger = false;
         isWaiting = false;
-
+        unionCost = 0;
         pinch_num = 0;
 
         tap_state = TAP_STATE.NONE;
@@ -209,10 +211,12 @@ public class PlayerControl : MonoBehaviour
 
 
         pinch_num = 0;
+        unionCost = 0;
         // 判定エリア内のユニット数をカウント
         foreach (GameObject union in unions)
         {
             pinch_num++;
+            unionCost += union.GetComponent<States>().getCost(); 
         }
 
         if (Area.gameObject.tag == "Pinched")
