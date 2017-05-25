@@ -7,6 +7,8 @@ public class Angle : MonoBehaviour {
     //
     Firing firing;
 
+    [SerializeField]
+    private float m_spd;
     //角度の設定
     [SerializeField]
     private float m_dir = 0;
@@ -35,7 +37,7 @@ public class Angle : MonoBehaviour {
         if(m_dir > m_angle && m_flag==true)
         {
             m_flag = false;
-        }
+        } 
         else if(m_dir < 30.0f && m_flag==false)
         {
             m_flag = true;
@@ -45,11 +47,11 @@ public class Angle : MonoBehaviour {
         {
             if (m_flag == true)
             {
-                m_dir += 1.0f;
+                m_dir += m_spd;
             }
             else if (m_flag == false)
             {
-                m_dir -= 1.0f;
+                m_dir -= m_spd;
             }
         }
         Transform Children = bullet.GetComponentInChildren<Transform>();

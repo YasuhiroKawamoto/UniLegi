@@ -15,7 +15,7 @@ public class Pause : MonoBehaviour
     void Start()
     {
         isPause = false;
-
+ 
 
         // Buttonクリック時、OnClickメソッドを呼び出す
         GetComponent<Button>().onClick.AddListener(OnTap);
