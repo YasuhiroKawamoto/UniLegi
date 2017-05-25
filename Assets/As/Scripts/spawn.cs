@@ -112,7 +112,7 @@ public class spawn : MonoBehaviour
                               
                                     if (effect != null)//エフェクトスロットに設定してある場合
                                     {
-
+                                        Singleton<SoundManager>.instance.playSE("se002");
                                         Instantiate(effect);//エフェクト生成
 
 
@@ -166,6 +166,8 @@ public class spawn : MonoBehaviour
         }
         if (waitTime < 0)
         {
+
+            
 
             Instantiate(AsPrefab);//ユニット生成
             IsWaiting = false;//エフェクト待機解除
