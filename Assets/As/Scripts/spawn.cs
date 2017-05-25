@@ -11,6 +11,9 @@ public class spawn : MonoBehaviour
     [SerializeField]
     private GameManager manager;
 
+    [SerializeField]
+    GameObject effect;
+
     //触ったフラグ
     private int m_flag;
     //タッチ
@@ -23,6 +26,10 @@ public class spawn : MonoBehaviour
     private float posx;
     private float posy;
 
+    //[SerializeField]
+    private int waitTime = 30;
+    private bool IsWaiting;
+    private bool IsSummons;//召喚中か？
     private Vector3 savePos;
     Vector3 tmpPos;
 
@@ -37,6 +44,10 @@ public class spawn : MonoBehaviour
         tmpPos.z = -1;
 
         savePos = tmpPos;
+
+        IsWaiting = false;
+
+        IsSummons = false;
 
     }
 
@@ -90,13 +101,29 @@ public class spawn : MonoBehaviour
                             if (CanInstantiate())
                             {
 
-                                AsPrefab.transform.position = m_worldPoint;
 
-                                Instantiate(AsPrefab);
+                                if (IsSummons == false)//召喚中ッで無ければ
+                                {
+                                    AsPrefab.transform.position = m_worldPoint;
 
-                                // コスト消費
-                                manager.SpendCost(AsPrefab.gameObject.GetComponent<States>().getCost());
+                                effect.transform.position =  AsPrefab.transform.position;//エフェクト位置設定
 
+
+                              
+                                    if (effect != null)//エフェクトスロットに設定してある場合
+                                    {
+
+                                        Instantiate(effect);//エフェクト生成
+
+
+                                    }
+                                    IsSummons = true;//召喚状態にする
+                                    IsWaiting = true;//エフェクト待機状態にする
+
+
+                                    // コスト消費
+                                    manager.SpendCost(AsPrefab.gameObject.GetComponent<States>().getCost());
+                                }
                                 //元いた位置に戻る
                                 transform.position = savePos;
 
@@ -126,6 +153,28 @@ public class spawn : MonoBehaviour
             transform.position = tmpPos;
 
         }
+
+
+
+
+
+        // ユニット生成
+        if (IsWaiting)
+        {
+            waitTime--;
+
+        }
+        if (waitTime < 0)
+        {
+
+            Instantiate(AsPrefab);//ユニット生成
+            IsWaiting = false;//エフェクト待機解除
+            waitTime = 30;//待機カウントリセット
+            IsSummons = false;//召喚待機状態に設定
+
+        }
+
+
     }
 
 
