@@ -14,7 +14,7 @@ public class Emitter : MonoBehaviour {
     [SerializeField]
     public GameObject[] stage3;
 
-    GameObject sceneData;
+  
 
     public GameObject[][] Waves;
 
@@ -26,12 +26,12 @@ public class Emitter : MonoBehaviour {
     {
             
         Waves = new GameObject[][] { stage1, stage2, stage3};
-        sceneData = GameObject.Find("SceneData");
+       
     }
 
     IEnumerator Start()
     {
-        int stageNum = sceneData.GetComponent<SceneDataManager>().GetStage();
+        int stageNum = Singleton<SceneData>.instance.getStageNumber();
 
         Debug.Log("currentWave" + currentWave);
         Debug.Log("Waves.Length" + Waves[stageNum].Length);
