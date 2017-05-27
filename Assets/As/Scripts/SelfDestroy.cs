@@ -18,10 +18,11 @@ public class SelfDestroy : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        m_cnt = Time.deltaTime;
+        m_cnt += 1*0.01f;
 		
         if(m_limitTime < m_cnt)
         {
+            Debug.Log("破壊");
             Destroy(this.gameObject);
         }
 
