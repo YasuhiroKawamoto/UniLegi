@@ -12,7 +12,7 @@ public class SoundManager
     BGMPlayer curBGMPlayer;
     BGMPlayer fadeOutBGMPlayer;
 
-  
+    bool IsMute;//ミュートしているか
     
 
     // AudioClip information
@@ -115,4 +115,19 @@ public class SoundManager
         if (fadeOutBGMPlayer != null)
             fadeOutBGMPlayer.stopBGM(fadeTime);
     }
+
+
+    public bool getIsMute()
+    {
+        return IsMute;
+    }
+
+
+    public void setIsMute(bool f)
+    {
+
+        IsMute = f;
+    }
+
+
 }

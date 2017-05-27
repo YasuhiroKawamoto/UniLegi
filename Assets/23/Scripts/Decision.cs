@@ -60,10 +60,12 @@ public class Decision : MonoBehaviour {
             {
                 if (col.GetComponent<Bullet>().getInverdFlag() == false)//被弾した弾の向きが反転していなければ
                 {
-                    guardEffect.transform.position = col.transform.position;//エフェクト位置設定
+                    
 
                     if (guardEffect != null)//エフェクトスロットに設定してある場合
                     {
+                        guardEffect.transform.position = col.transform.position;//エフェクト位置設定
+
                         Instantiate(guardEffect);//エフェクト生成
                     }
 
@@ -74,10 +76,10 @@ public class Decision : MonoBehaviour {
                     states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());//ダメージ判定
 
 
-                    hitEffect.transform.position = col.transform.position;//エフェクト位置設定
-
                     if (hitEffect != null)//エフェクトスロットに設定してある場合
                     {
+                        hitEffect.transform.position = col.transform.position;//エフェクト位置設定
+
                         Instantiate(hitEffect);//エフェクト生成
                     }
 
@@ -87,15 +89,20 @@ public class Decision : MonoBehaviour {
             else
             {
 
-                states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());//ダメージ判定
 
-                hitEffect.transform.position = col.transform.position;//エフェクト位置設定
+                
 
 
                 if (hitEffect != null)//エフェクトスロットに設定してある場合
                 {
+                    hitEffect.transform.position = col.transform.position;//エフェクト位置設定
+
                     Instantiate(hitEffect);//エフェクト生成
                 }
+
+                states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());//ダメージ判定
+
+               
             }
             Destroy(col);//弾の消滅
         }

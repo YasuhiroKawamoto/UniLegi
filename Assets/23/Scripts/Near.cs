@@ -5,8 +5,8 @@ using UnityEngine;
 public class Near : MonoBehaviour {
     //自オブジェクトと最も近いオブジェクトを取得し対応するスクリプト
 
-
-
+    Collider2D CO;
+    
 
     private GameObject nearObject;         //最も近いオブジェクト
     private float searchTime = 0;    //経過時間
@@ -14,6 +14,8 @@ public class Near : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        //ユニットのリジッドボディを取得
+        CO = this.GetComponent<Collider2D>();
         //最も近かったオブジェクトを取得
         nearObject = serchTag(gameObject, "Enemy");
     }
@@ -62,7 +64,7 @@ public class Near : MonoBehaviour {
         foreach (GameObject obs in GameObject.FindGameObjectsWithTag(tagName))
         {
             //自身と取得したオブジェクトの距離を取得
-            if ((Mathf.Abs(obs.transform.position.x - nowObj.transform.position.x) < 0.3f))
+            if ((Mathf.Abs(obs.transform.position.x - nowObj.transform.position.x) < CO.bounds.size.x))
             {
                 tmpDis = Vector3.Distance(obs.transform.position, nowObj.transform.position);
 

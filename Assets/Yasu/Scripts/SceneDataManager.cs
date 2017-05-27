@@ -12,15 +12,20 @@ public class SceneDataManager : MonoBehaviour {
 	void Start () {
         // オブジェクトを破棄しない
         DontDestroyOnLoad(gameObject);
+
+
         if (SceneManager.GetActiveScene().name == "TitleScene")
-        {
-            Singleton<SoundManager>.instance.playBGM("BGM001", 0.0f);
-        }
-        else if (SceneManager.GetActiveScene().name == "SelectScene")
         {
             Singleton<SoundManager>.instance.playBGM("BGM002", 0.0f);
         }
-        else if (SceneManager.GetActiveScene().name == "MainScene")
+
+        if (SceneManager.GetActiveScene().name == "SelectScene")
+        {
+            Singleton<SoundManager>.instance.playBGM("BGM002", 0.0f);
+        }
+
+
+        if (SceneManager.GetActiveScene().name == "MainScene")
         {
 
             Singleton<SoundManager>.instance.playBGM("BGM003", 0.0f);

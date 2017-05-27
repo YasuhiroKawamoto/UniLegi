@@ -75,7 +75,11 @@ public class EnemyAttack : MonoBehaviour {
 
                 if (effect != null)//エフェクトスロットに設定してある場合
                 {
-                    Singleton<SoundManager>.instance.playSE("se001");
+                    if (Singleton<SoundManager>.instance.getIsMute() == false)
+                    {
+                        Singleton<SoundManager>.instance.playSE("se001");
+                    }
+                   
                     Instantiate(effect);//エフェクト生成
                 }
 
