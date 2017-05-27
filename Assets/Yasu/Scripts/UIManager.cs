@@ -19,6 +19,12 @@ public class UIManager : MonoBehaviour {
     [SerializeField]
     GameObject costGage;
 
+    [SerializeField]
+    PlayerControl player;
+
+    [SerializeField]
+    GameObject unionGage;
+
     // ゲージの表示割合
     float rate;
 
@@ -60,6 +66,8 @@ public class UIManager : MonoBehaviour {
 
         // コストゲージ
         costGage.GetComponent<Image>().fillAmount = (float)manager.GetCost() / manager.GetMaxCost();
+
+        unionGage.GetComponent<Image>().fillAmount = 1- (float)player.GetUnionCoolTime() / player.GetCoolTime();
     }
 
 

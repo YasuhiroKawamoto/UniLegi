@@ -57,8 +57,6 @@ public class Derector : MonoBehaviour
             }
         }
 
-
-        Debug.Log(state);
         switch (state)
         {
             case CameraState.STAY:

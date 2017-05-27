@@ -44,6 +44,8 @@ public class PlayerControl : MonoBehaviour
 
     private int pinch_num;
     private int unionCost;
+    private float unionCoolTime;
+    const int COOL_TIME = 100;
 
 
     private float delay;
@@ -66,6 +68,7 @@ public class PlayerControl : MonoBehaviour
         isWaiting = false;
         unionCost = 0;
         pinch_num = 0;
+        unionCoolTime = COOL_TIME;
 
         tap_state = TAP_STATE.NONE;
     }
@@ -107,6 +110,7 @@ public class PlayerControl : MonoBehaviour
                 {
                     if (size.x > 1)
                     {
+                        // 手が出現
                         hand1.transform.position = new Vector3(pos.x - size.x / 2.0f, pos.y, 0);
                         hand2.transform.position = new Vector3(pos.x + size.x / 2.0f, pos.y, 0);
                     }
@@ -133,26 +137,33 @@ public class PlayerControl : MonoBehaviour
                             // コストが足りているとき
                             if (manager.GetCost() >= newUnit.gameObject.GetComponent<States>().getCost())
                             {
-                                // 合体ユニット設定
-                                newUnit.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y/2.0f, 0.0f);
-                                newUnit.transform.localScale = new Vector3(1, 1, 1);
-                                //newUnit.tag = "isPinched";
+                                // クールタイムが終了いているとき
+                                if (unionCoolTime <= 0)
+                                {
+                                    // 合体ユニット設定
+                                    newUnit.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
+                                    newUnit.transform.localScale = new Vector3(1, 1, 1);
+                                    //newUnit.tag = "isPinched";
 
-                                // エフェクト設定
-                                effect.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
-                                effect.transform.localScale = new Vector3(1, 1, 1);
+                                    // エフェクト設定
+                                    effect.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
+                                    effect.transform.localScale = new Vector3(1, 1, 1);
 
-                                // エフェクト発生
-                                Instantiate(effect);
-                                delay = 80;
+                                    // エフェクト発生
+                                    Instantiate(effect);
 
-                                isWaiting = true;
+                                    unionCoolTime = COOL_TIME;
+
+                                    delay = 80;
+
+                                    isWaiting = true;
 
 
-                                // コスト消費
-                                manager.SpendCost(newUnit.gameObject.GetComponent<States>().getCost());
+                                    // コスト消費
+                                    manager.SpendCost(unionCost);
 
-                                canInstantiate = false;
+                                    canInstantiate = false;
+                                }
                             }
                         }
                     }
@@ -207,6 +218,11 @@ public class PlayerControl : MonoBehaviour
 
         }
 
+        if(unionCoolTime > 0)
+        {
+            unionCoolTime -= Time.deltaTime*3;
+            
+        }
 
 
 
@@ -278,11 +294,13 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    //private void OnTriggerStay2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.tag == "Pinched" && this.gameObject.tag == "isPinched")
-    //    {
-    //        Destroy(this.gameObject);
-    //    }
-    //}
+    public float GetUnionCoolTime()
+    {
+        return unionCoolTime;
+    }
+
+    public int GetCoolTime()
+    {
+        return COOL_TIME;
+    }
 }

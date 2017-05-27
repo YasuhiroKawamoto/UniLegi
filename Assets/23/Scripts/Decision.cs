@@ -67,11 +67,12 @@ public class Decision : MonoBehaviour {
                         Instantiate(guardEffect);//エフェクト生成
                     }
 
-
+                   
                 }
                 else
                 {
                     states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());//ダメージ判定
+
 
                     hitEffect.transform.position = col.transform.position;//エフェクト位置設定
 
