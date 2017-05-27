@@ -13,10 +13,25 @@ public class SceneDataManager : MonoBehaviour {
         // オブジェクトを破棄しない
         DontDestroyOnLoad(gameObject);
 
-        //if (SceneManager.GetActiveScene().name == "scenename")
-        //{
 
-        //}
+        if (SceneManager.GetActiveScene().name == "TitleScene")
+        {
+            Singleton<SoundManager>.instance.playBGM("BGM002", 0.0f);
+        }
+
+        if (SceneManager.GetActiveScene().name == "SelectScene")
+        {
+            Singleton<SoundManager>.instance.playBGM("BGM002", 0.0f);
+        }
+
+
+        if (SceneManager.GetActiveScene().name == "MainScene")
+        {
+
+            Singleton<SoundManager>.instance.playBGM("BGM003", 0.0f);
+
+        }
+
     }
 	
 	// Update is called once per frame
@@ -27,6 +42,8 @@ public class SceneDataManager : MonoBehaviour {
         {
             Destroy(data);
         }
+
+       
 
 
 

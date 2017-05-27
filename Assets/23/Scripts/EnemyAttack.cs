@@ -75,7 +75,11 @@ public class EnemyAttack : MonoBehaviour {
 
                 if (effect != null)//エフェクトスロットに設定してある場合
                 {
-                    Singleton<SoundManager>.instance.playSE("se001");
+                    if (Singleton<SoundManager>.instance.getIsMute() == false)
+                    {
+                        Singleton<SoundManager>.instance.playSE("se001");
+                    }
+                   
                     Instantiate(effect);//エフェクト生成
                 }
 
@@ -110,7 +114,7 @@ public class EnemyAttack : MonoBehaviour {
 
         if (col.gameObject.tag == "HavingPlayer")//接触オブジェクトタグがHavingPlayer
         {
-            this.transform.parent.GetComponent<Mover>().setMoveFlag(false);//移動を止める
+            this.transform.parent.GetComponent<Mover>().setMoveFlag(true);//そのまま通過
         }
     }
 
