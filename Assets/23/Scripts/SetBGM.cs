@@ -26,11 +26,11 @@ public class SetBGM : MonoBehaviour
         //メイン（戦闘）
         if (SceneManager.GetActiveScene().name == "MainScene")
         {
-            if (Singleton<SceneData>.instance.getStageNumber() == 0)
+            if (Singleton<SceneData>.instance.getStageNumber() == 1)
             {
                 Singleton<SoundManager>.instance.playBGM("BGM003", 0.0f);
             }
-            if (Singleton<SceneData>.instance.getStageNumber() == 1)
+            if (Singleton<SceneData>.instance.getStageNumber() == 2)
             {
                 Singleton<SoundManager>.instance.playBGM("BGM001", 0.0f);
             }
