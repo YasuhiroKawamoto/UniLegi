@@ -20,6 +20,15 @@ public class TimeAttack : MonoBehaviour {
         //スタートしてからの秒数を代入
         m_timeCount += Time.deltaTime;
         GetComponent<Text>().text = m_timeCount.ToString("F2");
+        
 
 	}
+
+
+    void OnDestroy()
+    {
+
+        Singleton<SceneData>.instance.setTime(m_timeCount);
+
+    }
 }
