@@ -60,7 +60,9 @@ public class Decision : MonoBehaviour {
             {
                 if (col.GetComponent<Bullet>().getInverdFlag() == false)//被弾した弾の向きが反転していなければ
                 {
-                    
+
+
+                    Singleton<SoundManager>.instance.playSE("se009");
 
                     if (guardEffect != null)//エフェクトスロットに設定してある場合
                     {
@@ -73,6 +75,8 @@ public class Decision : MonoBehaviour {
                 }
                 else
                 {
+
+                    Singleton<SoundManager>.instance.playSE("se001");
                     states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());//ダメージ判定
 
 
@@ -100,6 +104,7 @@ public class Decision : MonoBehaviour {
                     Instantiate(hitEffect);//エフェクト生成
                 }
 
+                Singleton<SoundManager>.instance.playSE("se001");
                 states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());//ダメージ判定
 
                

@@ -41,7 +41,7 @@ public class SoundManager
         audioClips.Add("se006", new AudioClipInfo("Lose", "se006"));
         audioClips.Add("se007", new AudioClipInfo("Pick", "se007"));
         audioClips.Add("se008", new AudioClipInfo("GaugeMax", "se008"));
-        //audioClips.Add("se009", new AudioClipInfo("Danger", "se009"));
+        audioClips.Add("se009", new AudioClipInfo("Guard", "se009"));
 
 
 

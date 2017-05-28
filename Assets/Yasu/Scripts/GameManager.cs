@@ -42,6 +42,11 @@ public class GameManager : MonoBehaviour
 
 
 
+    [SerializeField]
+    public Text Lose;
+    [SerializeField]
+    private Canvas canvas;
+
 
 
     // Use this for initialization
@@ -109,7 +114,12 @@ public class GameManager : MonoBehaviour
             IsWaiting = true;
             Singleton<SoundManager>.instance.pauseBGM();
             Singleton<SoundManager>.instance.playSE("se006");
-            
+
+
+            Lose.text = "LOSE...";
+
+            Instantiate(Lose, canvas.transform);
+
         }
 
 
