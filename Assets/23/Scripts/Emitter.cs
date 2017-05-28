@@ -78,7 +78,7 @@ public class Emitter : MonoBehaviour {
 
                 yield return new WaitForSeconds(3.0f);
 
-                SceneManager.LoadScene("ClearScene");
+                SceneManager.LoadScene("ResultScene");
 
                 break;
             }
