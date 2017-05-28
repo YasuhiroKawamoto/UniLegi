@@ -53,13 +53,12 @@ public class EnemyAttack : MonoBehaviour {
         if (this.gameObject.GetComponentInParent<States>().GetDead() == false)
         {
 
-<<<<<<< HEAD
+
             if (AttackFlag)//攻撃フラグがONであれば
-=======
+
             states.SetCharge(cnt);
 
             if (rate <= cnt)//攻撃間隔にカウントが到達
->>>>>>> a85fe1ea533ff943e4ca95ef27d7d2bcd0c99c85
             {
                 cnt += Time.deltaTime;
 
