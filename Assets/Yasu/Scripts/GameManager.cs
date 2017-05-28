@@ -86,6 +86,12 @@ public class GameManager : MonoBehaviour
             m_unitNum++;
         }
 
+        unions = GameObject.FindGameObjectsWithTag("isPinched");
+        foreach (GameObject union in unions)
+        {
+            m_unitNum++;
+        }
+
         // UIの更新
         text_hp.GetComponent<Text>().text = "HP:" + m_hp.ToString();
 
