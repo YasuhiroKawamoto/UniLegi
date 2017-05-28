@@ -36,7 +36,7 @@ public class SceneButton : UIBehaviour
 
     void OnClick()
     {
-        fade.OnClick();
+        //fade.OnClick();
 
 
         Singleton<SceneData>.instance.setStageNumber(stageNumber);
