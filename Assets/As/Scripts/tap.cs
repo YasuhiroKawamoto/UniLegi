@@ -22,6 +22,10 @@ public class Tap : MonoBehaviour {
     private Vector2 m_worldPoint;
     //オブジェクトを触っている時間
     private float m_Cnt;
+    //魔王の手
+    [SerializeField]
+    GameObject Hand;
+    
 
 
     // Use this for initialization
@@ -60,11 +64,15 @@ public class Tap : MonoBehaviour {
                         if (hit.collider.gameObject == this.gameObject)
                         {
                             //移動フラグをtrueにし弾を打てないようにする
-                            Debug.Log("タッチ");
+                            PlayerControl.canUnion = false;
+
                             m_moveFlag = true;
                             this.gameObject.tag = "HavingPlayer";
                             //this.gameObject.layer = 12;
                             m_canShot = false;
+
+                            Instantiate(Hand, transform.position, transform.rotation);
+
                         }
                     }
                 }
@@ -80,28 +88,14 @@ public class Tap : MonoBehaviour {
                 {
                     if (hit)
                     {
-                        Debug.Log("離した");
+                        PlayerControl.canUnion = true;
                         this.gameObject.tag = "Player";
                         //this.gameObject.layer = 0;
                         if (m_Cnt < 0.5f)
 
-                            //タップの時
-
-                            if (m_Cnt < 0.5f)
-                            {
-                                //反転の切り替え
-                                // m_Invert = !m_Invert;
-
-                                // Debug.Log("反転");
-                                //transform.Rotate(new Vector3(180.0f, 0.0f, 0.0f));
-
-                               // m_Cnt = 0.0f;
-
-                            }
-
                         this.transform.localScale = m_saveScale;
                         m_moveFlag = false;
-
+                        
                         m_canShot = true;
 
                         m_Cnt = 0.0f;
@@ -116,8 +110,7 @@ public class Tap : MonoBehaviour {
                 {
                     //タッチしている座標に追従する
                     transform.position = m_worldPoint;
-                    //オブジェクトを倍加させる
-                   // this.transform.localScale = new Vector3(rate, rate, 1);
+                 
                     //撃てない
                     m_canShot = false;
 

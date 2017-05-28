@@ -56,6 +56,8 @@ public class States : MonoBehaviour {
     private float waitCnt = 30;
 
 
+    private float m_currentCharge;
+
     // Use this for initialization
     void Start () {
          DeadCnt = 30;
@@ -209,6 +211,17 @@ public class States : MonoBehaviour {
 
         return DeadFlag;
 
+    }
+
+
+    public float GetCharge()
+    {
+        return m_currentCharge;
+    }
+
+    public void SetCharge(float charge)
+    {
+        m_currentCharge = charge;
     }
 
 

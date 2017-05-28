@@ -27,7 +27,7 @@ public class CoolTime : MonoBehaviour
     float targetRate;
 
     // 最大HP
-    int maxHp;
+    float maxCool;
 
     GameObject hpGreen = null;
     GameObject hpRed = null;
@@ -35,12 +35,16 @@ public class CoolTime : MonoBehaviour
     private void Awake()
     {
         // 生成時のHPを最大値として設定
-        maxHp = gameObject.GetComponent<States>().getHp();
+        if (gameObject.tag == "Enemy")
+        {
+            maxCool = gameObject.GetComponent<States>().getrate();
+        }
+        else if (gameObject.tag == "Player")
+        {
+            maxCool = gameObject.GetComponent<States>().GetCoolTime();
+        }
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
-
-
     }
-
     // Use this for initialization
     void Start()
     {
@@ -54,7 +58,7 @@ public class CoolTime : MonoBehaviour
         if (hpGreen != null && hpRed != null)
         {
             // 移動終点(現在の値)
-            targetRate = hpGreen.GetComponent<Image>().fillAmount = (float)gameObject.GetComponent<States>().getHp() / maxHp;
+            targetRate = hpGreen.GetComponent<Image>().fillAmount = gameObject.GetComponent<States>().GetCharge() / (float)maxCool;
 
             // 移動始点(古い値)
             startRate = hpRed.GetComponent<Image>().fillAmount;

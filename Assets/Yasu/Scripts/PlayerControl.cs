@@ -53,7 +53,7 @@ public class PlayerControl : MonoBehaviour
 
     int tmpId = 0;
 
-
+    static public bool canUnion;
 
     // タップ状態
     private TAP_STATE tap_state;
@@ -70,6 +70,7 @@ public class PlayerControl : MonoBehaviour
         pinch_num = 0;
         unionCoolTime = COOL_TIME;
 
+        canUnion = true;
         tap_state = TAP_STATE.NONE;
     }
 
@@ -81,126 +82,141 @@ public class PlayerControl : MonoBehaviour
 
         GameObject[] unions = GameObject.FindGameObjectsWithTag("isPinched");
 
-        switch (tap_state)
+        bool canUnion_ = canUnion;
+        // dangerzone 以下は出現しない
+        if (touch_pos1.y <= manager.GetDangerZone().gameObject.transform.position.y || touch_pos2.y <= manager.GetDangerZone().gameObject.transform.position.y)
         {
-       
-            case TAP_STATE.DOUBLE:
-
-                // コライダの大きさを設定
-                Vector2 size = new Vector2(Mathf.Abs(touch_pos1.x - touch_pos2.x), 1.0f);
-
-                if (start_size.x > 0.0f)
-                {
-                    size.x = Mathf.Clamp(size.x, 0.0f, start_size.x);
-                }
-
-                Area.transform.localScale = size;
+            canUnion_ = false;
+        }
+        else
+        {
+            canUnion_ = canUnion;
+        }
 
 
+        if (canUnion_)
+        {
+            switch (tap_state)
+            {
 
-                // コライダの位置を設定
-                float min_x = Mathf.Min(touch_pos1.x, touch_pos2.x);
-                float min_y = Mathf.Min(touch_pos1.y, touch_pos2.y);
+                case TAP_STATE.DOUBLE:
 
-                Vector2 pos = new Vector2(min_x + size.x / 2.0f, min_y);
+                    // コライダの大きさを設定
+                    Vector2 size = new Vector2(Mathf.Abs(touch_pos1.x - touch_pos2.x), 1.0f);
 
-
-                // コライダ生成
-                if (isTrigger == false)
-                {
-                    if (size.x > 1)
+                    if (start_size.x > 0.0f)
                     {
-                        // 手が出現
-                        hand1.transform.position = new Vector3(pos.x - size.x / 2.0f, pos.y, 0);
-                        hand2.transform.position = new Vector3(pos.x + size.x / 2.0f, pos.y, 0);
+                        size.x = Mathf.Clamp(size.x, 0.0f, start_size.x);
                     }
 
-                    start_size = size;
-                    start_pos = pos;
-                    Area.transform.position = pos;
-
-                    isTrigger = true;
-                }
+                    Area.transform.localScale = size;
 
 
-                // 合体
-                if (Area.gameObject.tag == "Pinched" && Area.transform.localScale.x < 1)
-                {
-                    Area.transform.position = new Vector3(-300, -300, -300);
 
-                    if (canInstantiate)
+                    // コライダの位置を設定
+                    float min_x = Mathf.Min(touch_pos1.x, touch_pos2.x);
+                    float min_y = Mathf.Min(touch_pos1.y, touch_pos2.y);
+
+                    Vector2 pos = new Vector2(min_x + size.x / 2.0f, min_y);
+
+
+                    // コライダ生成
+                    if (isTrigger == false)
                     {
-                        // 2体以上はさんだ時
-                        if (pinch_num >= 2)
+                        if (size.x > 1)
                         {
-                            tmpId = newUnit.GetComponent<States>().GetTypeId();
-                            // コストが足りているとき
-                            if (manager.GetCost() >= newUnit.gameObject.GetComponent<States>().getCost())
+                            // 手が出現
+                            hand1.transform.position = new Vector3(pos.x - size.x / 2.0f, pos.y, 0);
+                            hand2.transform.position = new Vector3(pos.x + size.x / 2.0f, pos.y, 0);
+                        }
+
+                        start_size = size;
+                        start_pos = pos;
+                        Area.transform.position = pos;
+
+                        isTrigger = true;
+                    }
+
+
+                    // 合体
+                    if (Area.gameObject.tag == "Pinched" && Area.transform.localScale.x < 1)
+                    {
+                        Area.transform.position = new Vector3(-300, -300, -300);
+
+                        if (canInstantiate)
+                        {
+                            // 2体以上はさんだ時
+                            if (pinch_num >= 2)
                             {
-                                // クールタイムが終了いているとき
-                                if (unionCoolTime <= 0)
+                                tmpId = newUnit.GetComponent<States>().GetTypeId();
+                                // コストが足りているとき
+                                if (manager.GetCost() >= newUnit.gameObject.GetComponent<States>().getCost())
                                 {
-                                    // 合体ユニット設定
-                                    newUnit.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
-                                    newUnit.transform.localScale = new Vector3(1, 1, 1);
-                                    //newUnit.tag = "isPinched";
+                                    // クールタイムが終了いているとき
+                                    if (unionCoolTime <= 0)
+                                    {
+                                        // 合体ユニット設定
+                                        newUnit.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
+                                        newUnit.transform.localScale = new Vector3(1, 1, 1);
+                                        //newUnit.tag = "isPinched";
 
-                                    // エフェクト設定
-                                    effect.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
-                                    effect.transform.localScale = new Vector3(1, 1, 1);
+                                        // エフェクト設定
+                                        effect.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
+                                        effect.transform.localScale = new Vector3(1, 1, 1);
 
-                                    // エフェクト発生
-                                    Instantiate(effect);
+                                        // エフェクト発生
+                                        Instantiate(effect);
 
-                                    unionCoolTime = COOL_TIME;
+                                        unionCoolTime = COOL_TIME;
 
-                                    delay = 80;
+                                        delay = 80;
 
-                                    isWaiting = true;
+                                        isWaiting = true;
 
 
-                                    // コスト消費
-                                    manager.SpendCost(unionCost);
+                                        // コスト消費
+                                        manager.SpendCost(unionCost);
 
-                                    canInstantiate = false;
+                                        canInstantiate = false;
+                                    }
                                 }
                             }
                         }
                     }
-                }
 
 
 
 
-                // ピンチイン判定
-                if (size.x <= 1)
-                {
-                    Area.gameObject.tag = "Pinched";
-                }
+                    // ピンチイン判定
+                    if (size.x <= 1)
+                    {
+                        Area.gameObject.tag = "Pinched";
+                    }
 
-                break;
-            
-            // ゲームオブジェクト「魔王の指」を動的に生成
-            case TAP_STATE.NONE:
-            case TAP_STATE.SINGLE:
+                    break;
 
-            case TAP_STATE.MULTI:
-                Area.gameObject.tag = "Collider";
-                Area.transform.position = new Vector3(-300, -300, -300);
-                hand1.transform.position = new Vector3(-300, -300, -300);
-                hand2.transform.position = new Vector3(-300, -300, -300);
-                //newUnit.tag = "Player";
-                isTrigger = false;
-                canInstantiate = true;
-                unions = GameObject.FindGameObjectsWithTag("isPinched");
+                // ゲームオブジェクト「魔王の指」を動的に生成
+                case TAP_STATE.NONE:
+                case TAP_STATE.SINGLE:
 
-                foreach (GameObject union in unions)
-                {
-                    union.gameObject.tag = "Player";
-                }
-                pinch_num = 0;
-                start_size = new Vector2(0.0f, 0.0f);
-                break;
+                case TAP_STATE.MULTI:
+                    Area.gameObject.tag = "Collider";
+                    Area.transform.position = new Vector3(-300, -300, -300);
+                    hand1.transform.position = new Vector3(-300, -300, -300);
+                    hand2.transform.position = new Vector3(-300, -300, -300);
+                    //newUnit.tag = "Player";
+                    isTrigger = false;
+                    canInstantiate = true;
+                    unions = GameObject.FindGameObjectsWithTag("isPinched");
+
+                    foreach (GameObject union in unions)
+                    {
+                        union.gameObject.tag = "Player";
+                    }
+                    pinch_num = 0;
+                    start_size = new Vector2(0.0f, 0.0f);
+                    break;
+            }
         }
 
         // ユニット生成
