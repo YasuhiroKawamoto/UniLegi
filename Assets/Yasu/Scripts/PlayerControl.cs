@@ -177,7 +177,7 @@ public class PlayerControl : MonoBehaviour
 
                                         // エフェクト発生
                                         Instantiate(effect);
-
+                                        Singleton<SoundManager>.instance.playSE("se002");
                                         unionCoolTime = COOL_TIME;
 
                                         delay = 80;
