@@ -50,41 +50,43 @@ public class EnemyAttack : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-
-
-        if (AttackFlag)//攻撃フラグがONであれば
+        if (this.gameObject.GetComponentInParent<States>().GetDead() == false)
         {
-            cnt += Time.deltaTime;
 
-            if (rate <= cnt)//攻撃間隔にカウントが到達
+            if (AttackFlag)//攻撃フラグがONであれば
             {
+                cnt += Time.deltaTime;
 
-                if (target.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
+                if (rate <= cnt)//攻撃間隔にカウントが到達
                 {
-                    target.GetComponent<States>().setDamege(states.getAttack());//ダメージ判定
 
-                    effect.transform.position = target.transform.position;//エフェクトの位置を設定
-                }
-                else if (target.gameObject.tag == "DangerZone")//接触オブジェクトタグがDangerZone
-                {
-                    target.GetComponent<DangerZone>().SetHp(target.GetComponent<DangerZone>().GetHp() - states.getAttack());//ダメージ判定
-
-                    effect.transform.position = new Vector3(this.gameObject.transform.position.x, target.transform.position.y);//エフェクト位置設定
-                }
-              
-
-                if (effect != null)//エフェクトスロットに設定してある場合
-                {
-                    if (Singleton<SoundManager>.instance.getIsMute() == false)
+                    if (target.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
                     {
-                        Singleton<SoundManager>.instance.playSE("se001");
-                    }
-                   
-                    Instantiate(effect);//エフェクト生成
-                }
+                        target.GetComponent<States>().setDamege(states.getAttack());//ダメージ判定
 
-                Debug.Log("攻撃");
-                cnt = 0;//カウントリセット
+                        effect.transform.position = target.transform.position;//エフェクトの位置を設定
+                    }
+                    else if (target.gameObject.tag == "DangerZone")//接触オブジェクトタグがDangerZone
+                    {
+                        target.GetComponent<DangerZone>().SetHp(target.GetComponent<DangerZone>().GetHp() - states.getAttack());//ダメージ判定
+
+                        effect.transform.position = new Vector3(this.gameObject.transform.position.x, target.transform.position.y);//エフェクト位置設定
+                    }
+
+
+                    if (effect != null)//エフェクトスロットに設定してある場合
+                    {
+                        if (Singleton<SoundManager>.instance.getIsMute() == false)
+                        {
+                            Singleton<SoundManager>.instance.playSE("se001");
+                        }
+
+                        Instantiate(effect);//エフェクト生成
+                    }
+
+                    Debug.Log("攻撃");
+                    cnt = 0;//カウントリセット
+                }
             }
         }
        
