@@ -13,6 +13,8 @@ public class Alert : MonoBehaviour {
     private Canvas canvas;
 
     Emitter emitter;
+    public GameObject gameObject1;
+    public GameObject gameObject2;
 
     private int m_cnt = 0;
 
@@ -20,29 +22,51 @@ public class Alert : MonoBehaviour {
 
     private bool m_flag = true;
 
+    [SerializeField]
+    private Vector3 m_pos;
+    [SerializeField]
+    private Vector3 m_rot;
+
+    //ラストウェーブの数
+    [SerializeField]
+    private int m_lastWave;
+
     // Use this for initialization
     void Start () {
 
         //Emitterのコンポーネント
         emitter = gameObject.GetComponent<Emitter>();
-
     }
 	
 	//  is called once per frame
 	void Update () {
 
 
-        int CurrentWave = emitter.GetCurrentWave()+1;
+        int CurrentWave = emitter.GetCurrentWave() + 1;
 
         if (m_cnt != CurrentWave)
         {
             Debug.Log("WAVE");
             //wave数の表示
-            wave.text = "WAVE " + CurrentWave.ToString();
-            Instantiate(wave, canvas.transform);
-            m_cnt = CurrentWave;
-            m_flag = true;
-            m_time = 0.0f;
+
+            if (m_lastWave == m_cnt)
+            {
+                wave.text = "LASTWAVE";
+                Instantiate(wave, canvas.transform);
+                Instantiate(gameObject1, transform.position + m_pos, transform.rotation);
+                Instantiate(gameObject2, transform.position - m_pos, transform.rotation);
+                m_cnt = CurrentWave;
+                m_flag = true;
+                m_time = 0.0f;
+            }
+            else
+            {
+                wave.text = "WAVE " + CurrentWave.ToString();
+                Instantiate(wave, canvas.transform);
+                m_cnt = CurrentWave;
+                m_flag = true;
+                m_time = 0.0f;
+            }
         }
 
         m_time += Time.deltaTime;
