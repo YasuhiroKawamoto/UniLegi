@@ -11,6 +11,9 @@ public class Pause : MonoBehaviour
     private bool isPause;
     [SerializeField]
     GameManager manager;
+
+    [SerializeField]
+    Text text;
     // Use this for initialization
     void Start()
     {
@@ -34,10 +37,12 @@ public class Pause : MonoBehaviour
         if (isPause)
         {
             Time.timeScale = 0;
+            text.text = "▶";
         }
         else
         {
             Time.timeScale = manager.GetSpd();
+            text.text = "||";
         }
     }
 }

@@ -246,7 +246,7 @@ public class PlayerControl : MonoBehaviour
 
         if(unionCoolTime > 0)
         {
-            unionCoolTime -= Time.deltaTime*30;
+            unionCoolTime -= Time.deltaTime*5;
             
         }
 
