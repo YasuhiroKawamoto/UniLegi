@@ -22,7 +22,7 @@ public class SelfDestroy : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        m_cnt += 1*0.01f;
+        m_cnt += Time.deltaTime;
 		
         if(m_limitTime < m_cnt)
         {
