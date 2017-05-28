@@ -7,11 +7,15 @@ public class SelfDestroy : MonoBehaviour {
     //限界活動時間
     [SerializeField]
     private float m_limitTime = 0;
-    //
     private float m_cnt = 0;
 
-	// Use this for initialization
-	void Start () {
+    
+
+
+    // Use this for initialization
+    void Start () {
+
+        
 		
 	}
 	
