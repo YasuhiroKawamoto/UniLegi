@@ -8,11 +8,13 @@ public class SceneDataManager : MonoBehaviour {
     [SerializeField]
     int stageNumber;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
+
         // オブジェクトを破棄しない
         DontDestroyOnLoad(gameObject);
 
+      
       
         if (SceneManager.GetActiveScene().name == "TitleScene")
         {
