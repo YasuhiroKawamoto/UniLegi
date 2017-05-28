@@ -35,9 +35,19 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     int m_maxCost;
 
+    [SerializeField]
+    float m_WaitCnt;
+
+    private bool IsWaiting;
+
+
+
+
+
     // Use this for initialization
     void Start()
     {
+        IsWaiting = false;
         m_gameSpeed = 1;
         m_unitNum = 0;
         m_cnt = 0;
@@ -84,12 +94,33 @@ public class GameManager : MonoBehaviour
 
         text_unit.GetComponent<Text>().text = "UNIT:" + m_unitNum.ToString() + "/" + 5;
 
+
+
         // シーン遷移
-        if (m_hp < 0)
+        if (m_hp < 0 && IsWaiting == false)
         {
-                
-            SceneManager.LoadScene("ResultScene");
+
+            IsWaiting = true;
+            Singleton<SoundManager>.instance.pauseBGM();
+            Singleton<SoundManager>.instance.playSE("se006");
+            
         }
+
+
+        if (IsWaiting)
+        {
+
+            m_WaitCnt -= Time.deltaTime;
+
+        }
+
+        if (m_WaitCnt <= 0)
+        {
+
+            SceneManager.LoadScene("SelectScene");
+
+        }
+
     }
    
 

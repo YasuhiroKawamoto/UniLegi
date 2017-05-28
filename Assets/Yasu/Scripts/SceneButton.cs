@@ -37,6 +37,7 @@ public class SceneButton : UIBehaviour
     void OnClick()
     {
         Singleton<SceneData>.instance.setStageNumber(stageNumber);
+        Singleton<SoundManager>.instance.playSE("se004");
         time = Time.time;
         fade.FadeIn(1);
         flag = true;
