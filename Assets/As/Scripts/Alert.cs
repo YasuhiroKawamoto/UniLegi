@@ -46,7 +46,7 @@ public class Alert : MonoBehaviour {
 
         if (m_cnt != CurrentWave)
         {
-            Debug.Log("WAVE");
+           
             //wave数の表示
 
             if (m_lastWave == m_cnt)
