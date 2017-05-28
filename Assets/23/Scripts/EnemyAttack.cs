@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttack : MonoBehaviour {
+public class EnemyAttack : MonoBehaviour
+{
 
     //Statesコンポーネント
     States states;
@@ -16,23 +17,24 @@ public class EnemyAttack : MonoBehaviour {
     [SerializeField]
     GameObject effect;
 
-   
 
-   private float rate;
 
-   private float cnt;
+    private float rate;
+
+    private float cnt;
 
     private bool AttackFlag;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
 
-       
- 
+
+
         states = this.gameObject.transform.parent.GetComponent<States>();
 
-      this.gameObject.transform.position =  new Vector3 (this.gameObject.transform.parent.position.x,
-          (this.gameObject.transform.parent.position.y-0.2f), this.gameObject.transform.parent.position.z);
+        this.gameObject.transform.position = new Vector3(this.gameObject.transform.parent.position.x,
+            (this.gameObject.transform.parent.position.y - 0.2f), this.gameObject.transform.parent.position.z);
 
         C = this.gameObject.GetComponent<Collider2D>();
 
@@ -44,11 +46,12 @@ public class EnemyAttack : MonoBehaviour {
 
         AttackFlag = false;
 
-       
+
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
 
          
 
@@ -56,8 +59,10 @@ public class EnemyAttack : MonoBehaviour {
         {
             cnt += Time.deltaTime;
 
+
             states.SetCharge(cnt);
 
+      
             if (rate <= cnt)//攻撃間隔にカウントが到達
             {
 
@@ -71,6 +76,7 @@ public class EnemyAttack : MonoBehaviour {
                 {
                     target.GetComponent<DangerZone>().SetHp(target.GetComponent<DangerZone>().GetHp() - states.getAttack());//ダメージ判定
 
+
                     effect.transform.position = new Vector3(this.gameObject.transform.position.x, target.transform.position.y);//エフェクト位置設定
                 }
               
@@ -81,7 +87,7 @@ public class EnemyAttack : MonoBehaviour {
                     {
                         Singleton<SoundManager>.instance.playSE("se001");
                     }
-                   
+
                     Instantiate(effect);//エフェクト生成
                 }
 
@@ -90,14 +96,15 @@ public class EnemyAttack : MonoBehaviour {
             }
         }
 
-       
+
+
     }
 
 
     void OnTriggerEnter2D(Collider2D col)
     {
 
-        
+
 
         if (col.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
         {
@@ -138,7 +145,7 @@ public class EnemyAttack : MonoBehaviour {
     void OnTriggerExit2D(Collider2D col)
     {
         if (col.gameObject.tag == "DangerZone" || col.gameObject.tag == "Player" || col.gameObject.tag == "HavingPlayer")
-            {
+        {
             AttackFlag = false;//攻撃フラグOFF
             this.transform.parent.GetComponent<Mover>().setMoveFlag(true);//移動を開始
             Debug.Log("離脱");

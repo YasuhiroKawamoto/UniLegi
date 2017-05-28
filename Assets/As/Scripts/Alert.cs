@@ -46,9 +46,7 @@ public class Alert : MonoBehaviour {
 
         if (m_cnt != CurrentWave)
         {
-            Debug.Log("WAVE");
             //wave数の表示
-
             if (m_lastWave == m_cnt)
             {
                 wave.text = "LASTWAVE";
@@ -59,7 +57,7 @@ public class Alert : MonoBehaviour {
                 m_flag = true;
                 m_time = 0.0f;
             }
-            else
+            else if(m_lastWave > m_cnt)
             {
                 wave.text = "WAVE " + CurrentWave.ToString();
                 Instantiate(wave, canvas.transform);

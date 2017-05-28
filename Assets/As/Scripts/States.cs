@@ -64,7 +64,9 @@ public class States : MonoBehaviour {
 
      waitCnt = 30;
 
-}
+        DeadFlag = false;
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
