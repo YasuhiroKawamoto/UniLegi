@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
         text_hp.GetComponent<Text>().text = "HP:" + m_hp.ToString();
 
        m_cost = Mathf.Clamp(m_cost, 0, m_maxCost);
-        text_cost.GetComponent<Text>().text = "COST:" + m_cost.ToString() + "/" + m_maxCost.ToString();
+        text_cost.GetComponent<Text>().text =    m_cost.ToString() + "\n" + m_maxCost.ToString();
 
         text_unit.GetComponent<Text>().text = "UNIT:" + m_unitNum.ToString() + "/" + 5;
 
@@ -140,5 +140,10 @@ public class GameManager : MonoBehaviour
     public void SetSpd(float spd)
     {
         m_gameSpeed = spd;
+    }
+
+    public DangerZone GetDangerZone()
+    {
+        return dangerZone;
     }
 }

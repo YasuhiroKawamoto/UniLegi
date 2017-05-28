@@ -45,7 +45,6 @@ public class Firing : MonoBehaviour {
         m_LoadFinish = states.GetCoolTime();
         m_Attack = states.getAttack();
         m_Ammo = states.GetAmmo();
-        
 
     }
 
@@ -117,9 +116,11 @@ public class Firing : MonoBehaviour {
         if(m_Reload == true)
         {
             m_LoadTime += Time.deltaTime;
+            states.SetCharge(m_LoadTime);
+
         }
         //リロードが終わったらフラグをfalseにする
-        if(m_LoadTime > m_LoadFinish)
+        if (m_LoadTime > m_LoadFinish)
         {
             m_Reload = false;
             m_Cartridge = 0;

@@ -13,13 +13,21 @@ public class SceneButton : UIBehaviour
     [SerializeField]
     string seneName;
 
+
+    SceneFade fade;
+
+    protected override void Awake()
+    {
+        fade = gameObject.GetComponent<SceneFade>();
+    }
+
+
     GameObject SceneData;
 
 
     protected override void Start()
     {
         base.Start();
-
         SceneData = GameObject.Find("SceneData");
 
         // Buttonクリック時、OnClickメソッドを呼び出す
@@ -28,6 +36,9 @@ public class SceneButton : UIBehaviour
 
     void OnClick()
     {
+        fade.OnClick();
+
+
         Singleton<SceneData>.instance.setStageNumber(stageNumber);
 
         // 「GameScene」シーンに遷移する

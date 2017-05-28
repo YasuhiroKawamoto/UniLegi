@@ -67,9 +67,20 @@ public class UIManager : MonoBehaviour {
         // コストゲージ
         costGage.GetComponent<Image>().fillAmount = (float)manager.GetCost() / manager.GetMaxCost();
 
-        unionGage.GetComponent<Image>().fillAmount = 1- (float)player.GetUnionCoolTime() / player.GetCoolTime();
-    }
 
+
+        unionGage.GetComponent<Image>().fillAmount = 1- (float)player.GetUnionCoolTime() / player.GetCoolTime();
+        if (unionGage.GetComponent<Image>().fillAmount >= 1)
+        {
+            // 最大時画像
+            unionGage.GetComponent<Image>().sprite = Resources.Load<Sprite>("gage2");
+        }
+        else
+        {
+            //最大時じゃない画像
+            unionGage.GetComponent<Image>().sprite = Resources.Load<Sprite>("gage");
+        }
+    }
 
     // 線形補間用関数
     static float Lerp(float startNum, float targetNum, float t, Func<float, float> v)

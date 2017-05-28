@@ -31,7 +31,7 @@ public class Emitter : MonoBehaviour {
 
     IEnumerator Start()
     {
-        int stageNum = Singleton<SceneData>.instance.getStageNumber();
+        int stageNum = Singleton<SceneData>.instance.getStageNumber()-1;
 
         Debug.Log("currentWave" + currentWave);
         Debug.Log("Waves.Length" + Waves[stageNum].Length);

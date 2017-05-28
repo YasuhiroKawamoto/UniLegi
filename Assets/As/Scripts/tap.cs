@@ -64,7 +64,7 @@ public class Tap : MonoBehaviour {
                         if (hit.collider.gameObject == this.gameObject)
                         {
                             //移動フラグをtrueにし弾を打てないようにする
-                            Debug.Log("タッチ");
+                            PlayerControl.canUnion = false;
 
                             m_moveFlag = true;
                             this.gameObject.tag = "HavingPlayer";
@@ -88,7 +88,7 @@ public class Tap : MonoBehaviour {
                 {
                     if (hit)
                     {
-                        Debug.Log("離した");
+                        PlayerControl.canUnion = true;
                         this.gameObject.tag = "Player";
                         //this.gameObject.layer = 0;
                         if (m_Cnt < 0.5f)

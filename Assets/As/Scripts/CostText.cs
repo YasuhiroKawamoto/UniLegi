@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CostText : MonoBehaviour {
 
+    [SerializeField]
+    private int m_cost = 0;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -12,5 +15,7 @@ public class CostText : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+
+
 	}
 }
