@@ -39,7 +39,7 @@ public class CoolTime : MonoBehaviour
         {
             maxCool = gameObject.GetComponent<States>().getrate();
         }
-        else if (gameObject.tag == "Player")
+        else
         {
             maxCool = gameObject.GetComponent<States>().GetCoolTime();
         }

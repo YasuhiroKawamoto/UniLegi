@@ -230,13 +230,12 @@ public class PlayerControl : MonoBehaviour
             delay = 80;
             Instantiate(newUnit);
             isWaiting = false;
-            Debug.Log("gattai!");
 
         }
 
         if(unionCoolTime > 0)
         {
-            unionCoolTime -= Time.deltaTime*3;
+            unionCoolTime -= Time.deltaTime*30;
             
         }
 

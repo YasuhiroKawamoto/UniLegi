@@ -63,5 +63,18 @@ public class Angle : MonoBehaviour {
 
     }
 
+    public void SetDir(float dir)
+    {
+        m_dir = dir;
+    }
+
+    public void SetSpd(float spd)
+    {
+      m_spd = spd;
+    }
+     public   void SetAng(float ang)
+    {
+        m_angle = ang;
+    }
     
 }
