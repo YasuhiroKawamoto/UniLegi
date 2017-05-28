@@ -16,28 +16,39 @@ public class Firing : MonoBehaviour {
     //Delay
     private float m_Delay;
     //カウント
-    private int m_Cnt = 0;
+    private int m_Cnt;
     //反転
     private bool m_Flag;
     //弾薬
-    private int m_Ammo = 0;
+    private int m_Ammo;
     //薬莢
-    private int m_Cartridge = 0;
+    private int m_Cartridge;
     //リロードフラグ
-    private bool m_Reload = false;
+    private bool m_Reload;
     //装填時間
-    private float m_LoadTime = 0.0f;
+    private float m_LoadTime;
     //装填終わり
-    private int m_LoadFinish = 0;
+    private int m_LoadFinish;
     private int m_Attack;
     //範囲
     private Vector3 m_aim =new Vector3(0.0f,0.5f,0.0f);
     //Aimフラグ
-    private bool m_AimFlag = false;
+    private bool m_AimFlag;
 
+    private void Awake()
+    {
+        // 初期化
+        m_LoadTime = 0.0f;
+        m_LoadFinish = 0;
+        m_AimFlag = false;
+        m_Reload = false;
+        m_Cartridge = 0;
+        m_Ammo = 0;
+        m_Cnt = 0;
+    }
 
     //Use this for initialization
-   void Start () {
+    void Start () {
 
         //Statesコンポーネントの取得
         states = GetComponent<States>();
@@ -45,7 +56,6 @@ public class Firing : MonoBehaviour {
         m_LoadFinish = states.GetCoolTime();
         m_Attack = states.getAttack();
         m_Ammo = states.GetAmmo();
-
     }
 
     // Update is called once per frame
@@ -54,15 +64,15 @@ public class Firing : MonoBehaviour {
 
         tap = GetComponent<Tap>();
 
-        m_Cnt ++;
+        m_Cnt++;
 
         m_Flag = tap.getInverd();
 
-        if(m_Flag==false)
+        if (m_Flag == false)
         {
             m_AimFlag = false;
         }
-        else if(m_Flag==true)
+        else if (m_Flag == true)
         {
             m_AimFlag = true;
         }
@@ -73,13 +83,13 @@ public class Firing : MonoBehaviour {
             Instantiate(aim, transform.position + m_aim, transform.rotation);
             m_AimFlag = true;
         }
-        else if(m_AimFlag == true && m_Flag == true)
+        else if (m_AimFlag == true && m_Flag == true)
         {
             Instantiate(aim, transform.position - m_aim, transform.rotation);
             m_AimFlag = false;
         }
 
-      
+
         Transform Children = bullet.GetComponentInChildren<Transform>();
 
         foreach (Transform ob in Children)
@@ -93,32 +103,36 @@ public class Firing : MonoBehaviour {
         {
             if (m_Delay < m_Cnt)
             {
-                if(Time.timeScale != 0)
+                if (Time.timeScale != 0)
                 {
 
-                //弾をプレイヤーと同じ位置に設定
-                Instantiate(bullet, transform.position, transform.rotation);
-                //弾を数える
-                m_Cartridge++;
-                //リセット
-                m_Cnt = 0;
+                    //弾をプレイヤーと同じ位置に設定
+                    Instantiate(bullet, transform.position, transform.rotation);
+                    //弾を数える
+                    m_Cartridge++;
+                    //リセット
+                    m_Cnt = 0;
                 }
-            } 
+            }
         }
 
         //リロード
-        if(m_Cartridge >= m_Ammo)
+        if (m_Cartridge >= m_Ammo)
         {
             m_Reload = true;
         }
 
         //リロードに入ったらカウントを数える
-        if(m_Reload == true)
+        if (m_Reload == true)
         {
-            m_LoadTime += Time.deltaTime;
-            states.SetCharge(m_LoadTime);
+            if (gameObject.tag == "Player")
+            {
 
+                m_LoadTime += Time.deltaTime;
+                states.SetCharge(m_LoadTime);
+            }
         }
+
         //リロードが終わったらフラグをfalseにする
         if (m_LoadTime > m_LoadFinish)
         {
@@ -126,10 +140,7 @@ public class Firing : MonoBehaviour {
             m_Cartridge = 0;
             m_LoadTime = 0;
         }
-
-
     }
-
     public void SetBullet(GameObject bullet)
     {
         this.bullet = bullet;

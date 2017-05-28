@@ -66,7 +66,7 @@ public class EnemyAttack : MonoBehaviour
             if (rate <= cnt)//攻撃間隔にカウントが到達
             {
 
-                if (target.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
+                if (target.gameObject.tag == "Player" || target.gameObject.tag == "isPinched")//接触オブジェクトタグがPlayer
                 {
                     target.GetComponent<States>().setDamege(states.getAttack());//ダメージ判定
 
@@ -106,7 +106,7 @@ public class EnemyAttack : MonoBehaviour
 
 
 
-        if (col.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
+        if (col.gameObject.tag == "Player" || col.gameObject.tag == "isPinched")//接触オブジェクトタグがPlayer
         {
             AttackFlag = true;//攻撃フラグON
             Debug.Log("接敵");

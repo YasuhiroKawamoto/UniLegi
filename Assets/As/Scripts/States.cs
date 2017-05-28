@@ -184,6 +184,13 @@ public class States : MonoBehaviour {
     {
         return m_typePoint;
     }
+
+    public void SetTypePoint(int typePoint)
+    {
+        m_typePoint = typePoint;
+    }
+
+
     public int GetAbilityType()
     {
         return m_abilityType;
@@ -212,9 +219,7 @@ public class States : MonoBehaviour {
 
     public bool GetDead()
     {
-
         return DeadFlag;
-
     }
 
 
