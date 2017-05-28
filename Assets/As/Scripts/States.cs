@@ -86,8 +86,10 @@ public class States : MonoBehaviour {
             {
                 if (Singleton<SoundManager>.instance.getIsMute() == false)
                 {
-                    Singleton<SoundManager>.instance.playSE("se001");
+                    Singleton<SoundManager>.instance.playSE("se003");
                 }
+
+
 
                 DeadEffect.transform.position = this.gameObject.transform.position;//エフェクトの位置を設定
 
