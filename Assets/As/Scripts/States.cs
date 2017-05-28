@@ -44,6 +44,8 @@ public class States : MonoBehaviour {
     [SerializeField]
     private int m_ammo = 0;
 
+    private float m_currentCharge;
+
     // Use this for initialization
     void Start () {
 		
@@ -153,6 +155,17 @@ public class States : MonoBehaviour {
     public void SetAmmo(int ammo)
     {
         m_ammo = ammo;
+    }
+
+
+    public float GetCharge()
+    {
+        return m_currentCharge;
+    }
+
+    public void SetCharge(float charge)
+    {
+        m_currentCharge = charge;
     }
 
 

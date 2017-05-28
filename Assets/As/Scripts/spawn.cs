@@ -78,6 +78,7 @@ public class spawn : MonoBehaviour
                     {
                         if (hit.collider.gameObject == this.gameObject)
                         {
+                            PlayerControl.canUnion = false;
                             m_flag = 1;
                         }
 
@@ -98,6 +99,7 @@ public class spawn : MonoBehaviour
                             {
                                 //元いた位置に戻る
                                 transform.position = savePos;
+                                PlayerControl.canUnion = true;
 
                                 m_flag = 0;
                             }
@@ -130,6 +132,7 @@ public class spawn : MonoBehaviour
                                 }
                                 //元いた位置に戻る
                                 transform.position = savePos;
+                                PlayerControl.canUnion = true;
 
                                 m_flag = 0;
                             }

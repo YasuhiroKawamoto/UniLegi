@@ -56,6 +56,8 @@ public class EnemyAttack : MonoBehaviour {
         {
             cnt += Time.deltaTime;
 
+            states.SetCharge(cnt);
+
             if (rate <= cnt)//攻撃間隔にカウントが到達
             {
 
@@ -87,6 +89,7 @@ public class EnemyAttack : MonoBehaviour {
                 cnt = 0;//カウントリセット
             }
         }
+
        
     }
 
