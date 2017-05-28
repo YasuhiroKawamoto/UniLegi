@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class States : MonoBehaviour {
+public class States : MonoBehaviour
+{
 
     //攻撃値
     [SerializeField]
@@ -49,68 +50,74 @@ public class States : MonoBehaviour {
 
     private bool DeadFlag = false;
 
-    private float DeadCnt = 30;
+    private float DeadCnt = 2;
 
     private bool IsWaiting = false;
 
-    private float waitCnt = 30;
+
 
 
     private float m_currentCharge;
 
     // Use this for initialization
-    void Start () {
-         DeadCnt = 30;
+    void Start()
+    {
+        DeadCnt = 30;
 
-     waitCnt = 30;
 
         DeadFlag = false;
 
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
 
         // HP0以下で消滅
         if (getHp() <= 0)
         {
             DeadFlag = true;
-        }
 
-
-       
-
-        if (DeadFlag)
-        {
             if (DeadEffect != null)//エフェクトスロットに設定してある場合
             {
+
+                DeadEffect.transform.position = this.gameObject.transform.position;//エフェクトの位置を設定
+
+                Instantiate(DeadEffect);//エフェクト生成
+
                 if (Singleton<SoundManager>.instance.getIsMute() == false)
                 {
                     Singleton<SoundManager>.instance.playSE("se003");
                 }
 
 
-
-                DeadEffect.transform.position = this.gameObject.transform.position;//エフェクトの位置を設定
-
-                Instantiate(DeadEffect);//エフェクト生成
             }
 
+        }
 
-            DeadCnt--;
+
+
+
+        if (DeadFlag == true)
+        {
+
+
+
+            DeadCnt -= Time.deltaTime;
 
         }
+
         if (DeadCnt < 0)
         {
 
             Destroy(gameObject);
-         
-         
+
+
 
         }
 
 
-       
+
 
 
     }
@@ -147,7 +154,7 @@ public class States : MonoBehaviour {
 
     public void setDamege(int Damege)
     {
-         m_Hp -= Damege;
+        m_Hp -= Damege;
     }
 
     public int GetMoveType()
