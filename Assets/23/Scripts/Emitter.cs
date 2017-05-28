@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class Emitter : MonoBehaviour {
@@ -13,6 +14,10 @@ public class Emitter : MonoBehaviour {
     public GameObject[] stage2;
     [SerializeField]
     public GameObject[] stage3;
+    [SerializeField]
+    public Text Clear;
+    [SerializeField]
+    private Canvas canvas;
 
   
 
@@ -66,6 +71,13 @@ public class Emitter : MonoBehaviour {
             // 格納されているWaveを全て実行したらcurrentWaveを0にする（最初から -> ループ）
             if (currentWave >= Waves[stageNum].Length)
             {
+
+                Clear.text = "CLEAR";
+
+                Instantiate(Clear, canvas.transform);
+
+                yield return new WaitForSeconds(3.0f);
+
                 SceneManager.LoadScene("ClearScene");
 
                 break;
