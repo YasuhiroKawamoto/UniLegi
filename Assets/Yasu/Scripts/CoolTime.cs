@@ -5,22 +5,17 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class PlayerHP : MonoBehaviour
+public class CoolTime : MonoBehaviour
 {
-
-
     [SerializeField]
     private float followTime;
 
     [SerializeField]
-    GameObject hpGage;
+    GameObject coolGage;
 
     GameObject obj;
 
-    Canvas canvas;
-
-    // 
-    float m_autoMoveTime;
+    private Canvas canvas;
 
     // ゲージの表示割合
     float rate;
@@ -43,6 +38,7 @@ public class PlayerHP : MonoBehaviour
         maxHp = gameObject.GetComponent<States>().getHp();
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
 
+
     }
 
     // Use this for initialization
@@ -50,6 +46,7 @@ public class PlayerHP : MonoBehaviour
     {
 
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -65,8 +62,7 @@ public class PlayerHP : MonoBehaviour
             // 線形補間で計算  
             rate = Lerp(startRate, targetRate, followTime, TimeStep);
 
-
-                hpRed.GetComponent<Image>().fillAmount = rate;
+            hpRed.GetComponent<Image>().fillAmount = rate;
 
         }
     }
@@ -76,8 +72,10 @@ public class PlayerHP : MonoBehaviour
         if (collision.tag == "DestroyArea")
         {
             // HPゲージをキャンバスの子として生成
-            hpGage.GetComponent<FollowPlayer>().SetParent(this.gameObject);
-            obj = Instantiate(hpGage, canvas.transform);
+            //hpGage.transform.position = new Vector3(-300, -300, -300);
+            coolGage.GetComponent<FollowEnemy>().SetParent(this.gameObject);
+
+            obj = Instantiate(coolGage, canvas.transform);
 
 
             hpGreen = obj.transform.FindChild("GageBase/GageG").gameObject;

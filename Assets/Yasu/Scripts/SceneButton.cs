@@ -28,8 +28,7 @@ public class SceneButton : UIBehaviour
 
     void OnClick()
     {
-        if(SceneData != null)
-        SceneData.GetComponent<SceneDataManager>().SetStage(stageNumber);
+        Singleton<SceneData>.instance.setStageNumber(stageNumber);
 
         // 「GameScene」シーンに遷移する
         SceneManager.LoadScene(seneName);

@@ -7,16 +7,15 @@ using UnityEngine.UI;
 
 public class EnemyHP : MonoBehaviour
 {
-
-
     [SerializeField]
     private float followTime;
 
     [SerializeField]
     GameObject hpGage;
 
-    // 
-    float m_autoMoveTime;
+    GameObject obj;
+
+    private Canvas canvas;
 
     // ゲージの表示割合
     float rate;
@@ -37,23 +36,23 @@ public class EnemyHP : MonoBehaviour
     {
         // 生成時のHPを最大値として設定
         maxHp = gameObject.GetComponent<States>().getHp();
+        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+
+
     }
 
     // Use this for initialization
     void Start()
     {
 
-        m_autoMoveTime = Time.time;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float timeStep = (Time.time - m_autoMoveTime) / followTime;
 
         if (hpGreen != null && hpRed != null)
         {
-
             // 移動終点(現在の値)
             targetRate = hpGreen.GetComponent<Image>().fillAmount = (float)gameObject.GetComponent<States>().getHp() / maxHp;
 
@@ -63,27 +62,24 @@ public class EnemyHP : MonoBehaviour
             // 線形補間で計算  
             rate = Lerp(startRate, targetRate, followTime, TimeStep);
 
-
-
-            // if (startRate != targetRate)
-            {
-                hpRed.GetComponent<Image>().fillAmount = rate;
-            }
+            hpRed.GetComponent<Image>().fillAmount = rate;
+            
         }
-
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "DestroyArea" && hpGreen == null)
+        if (collision.tag == "DestroyArea")
         {
-            // HPゲージを子として生成
-            hpGage.transform.position = new Vector3(-300, -300, -300);
-            Instantiate(hpGage, gameObject.transform);
+            // HPゲージをキャンバスの子として生成
+            //hpGage.transform.position = new Vector3(-300, -300, -300);
+            hpGage.GetComponent<FollowEnemy>().SetParent(this.gameObject);
 
-            hpGreen = transform.Find("EnemyHP(Clone)/Canvas/GageBase/GageG").gameObject;
-            hpRed = transform.Find("EnemyHP(Clone)/Canvas/GageBase/GageR").gameObject;
+            obj = Instantiate(hpGage, canvas.transform);
+
+
+            hpGreen = obj.transform.FindChild("GageBase/GageG").gameObject;
+            hpRed = obj.transform.FindChild("GageBase/GageR").gameObject;
         }
     }
 

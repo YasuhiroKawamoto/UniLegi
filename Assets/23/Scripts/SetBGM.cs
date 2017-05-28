@@ -3,66 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneDataManager : MonoBehaviour {
+public class SetBGM : MonoBehaviour
+{
 
-    [SerializeField]
-    int stageNumber;
+    // Use this for initialization
+    void Start()
+    {
+        //シーン切り替わり時にBGMをスタート
 
-	// Use this for initialization
-	void Start () {
-        // オブジェクトを破棄しない
-        DontDestroyOnLoad(gameObject);
-
-      
+        //タイトルシーン
         if (SceneManager.GetActiveScene().name == "TitleScene")
         {
             Singleton<SoundManager>.instance.playBGM("BGM001", 0.0f);
         }
 
+        //セレクトシーン
         if (SceneManager.GetActiveScene().name == "SelectScene")
         {
             Singleton<SoundManager>.instance.playBGM("BGM002", 0.0f);
         }
 
-
+        //メイン（戦闘）
         if (SceneManager.GetActiveScene().name == "MainScene")
         {
-            if (stageNumber == 1)
+            if (Singleton<SceneData>.instance.getStageNumber() == 0)
             {
                 Singleton<SoundManager>.instance.playBGM("BGM003", 0.0f);
             }
-            if (stageNumber == 2)
+            if (Singleton<SceneData>.instance.getStageNumber() == 1)
             {
                 Singleton<SoundManager>.instance.playBGM("BGM001", 0.0f);
             }
         }
 
     }
-	
-	// Update is called once per frame
-	void Update () {
-        GameObject data = GameObject.FindGameObjectWithTag("SceneData");
-
-        if (data != null && data != this.gameObject)
-        {
-          
-
-            Destroy(data);
-        }
-
-       
 
 
 
-    }
-
-    public void SetStage(int stage)
-    {
-        stageNumber = stage;
-    }
-
-    public int GetStage()
-    {
-        return stageNumber;
-    }
 }
+
+
+
