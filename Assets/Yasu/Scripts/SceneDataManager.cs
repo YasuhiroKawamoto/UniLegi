@@ -8,14 +8,18 @@ public class SceneDataManager : MonoBehaviour {
     [SerializeField]
     int stageNumber;
 
+    [SerializeField]
+    Fade fade;
+
+    private void Awake()
+    {
+        fade.ResetFade();
+    }
+
     // Use this for initialization
     void Start () {
+        fade.FadeOut(1);
 
-        // オブジェクトを破棄しない
-        DontDestroyOnLoad(gameObject);
-
-      
-      
         if (SceneManager.GetActiveScene().name == "TitleScene")
         {
             Singleton<SoundManager>.instance.playBGM("BGM001", 0.0f);
@@ -47,15 +51,14 @@ public class SceneDataManager : MonoBehaviour {
 
         if (data != null && data != this.gameObject)
         {
-          
-
             Destroy(data);
         }
-
-       
-
+    }
 
 
+    private void OnDestroy()
+    {
+        fade.FadeIn(1);
     }
 
     public void SetStage(int stage)
@@ -66,5 +69,10 @@ public class SceneDataManager : MonoBehaviour {
     public int GetStage()
     {
         return stageNumber;
+    }
+
+    public Fade GetFade()
+    {
+        return fade;
     }
 }

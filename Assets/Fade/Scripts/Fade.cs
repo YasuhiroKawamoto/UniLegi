@@ -106,4 +106,9 @@ public class Fade : MonoBehaviour
 	{
 		return FadeIn (time, null);
 	}
+
+    public void ResetFade()
+    {
+        cutoutRange = 1;
+    }
 }

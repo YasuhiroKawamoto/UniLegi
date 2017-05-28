@@ -14,21 +14,21 @@ public class SceneButton : UIBehaviour
     string seneName;
 
 
-    SceneFade fade;
+    float time;
+    Fade fade;
 
-    protected override void Awake()
-    {
-        fade = gameObject.GetComponent<SceneFade>();
-    }
-
+    bool flag;
 
     GameObject SceneData;
-
+    //SceneFade fade;
 
     protected override void Start()
     {
         base.Start();
+        flag = false;
+
         SceneData = GameObject.Find("SceneData");
+        fade = SceneData.GetComponent<SceneDataManager>().GetFade();
 
         // Buttonクリック時、OnClickメソッドを呼び出す
         GetComponent<Button>().onClick.AddListener(OnClick);
@@ -36,14 +36,23 @@ public class SceneButton : UIBehaviour
 
     void OnClick()
     {
-        fade.OnClick();
-
-
         Singleton<SceneData>.instance.setStageNumber(stageNumber);
-
-        // 「GameScene」シーンに遷移する
-        SceneManager.LoadScene(seneName);
+        time = Time.time;
+        fade.FadeIn(1);
+        flag = true;
 
     }
 
+
+    private void Update()
+    {
+        if (flag)
+
+        {
+            if (Time.time - time > 1)
+
+                // 「GameScene」シーンに遷移する
+                SceneManager.LoadScene(seneName);
+        }
+    }
 }

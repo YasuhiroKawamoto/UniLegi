@@ -87,6 +87,7 @@ public class GameManager : MonoBehaviour
         // シーン遷移
         if (m_hp < 0)
         {
+                
             SceneManager.LoadScene("ResultScene");
         }
     }
