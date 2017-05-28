@@ -19,9 +19,12 @@ public class SceneDataManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         fade.FadeOut(1);
+<<<<<<< HEAD
 
         
 
+=======
+>>>>>>> 31e86e1f1359ca61396f29e1f79eddf1336bc3ba
     }
 	
 	// Update is called once per frame

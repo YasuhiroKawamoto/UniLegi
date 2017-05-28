@@ -82,9 +82,14 @@ public class PlayerControl : MonoBehaviour
 
         GameObject[] unions = GameObject.FindGameObjectsWithTag("isPinched");
 
-        bool canUnion_ = canUnion;
-        // dangerzone 以下は出現しない
-        if (touch_pos1.y <= manager.GetDangerZone().gameObject.transform.position.y || touch_pos2.y <= manager.GetDangerZone().gameObject.transform.position.y)
+
+
+            bool canUnion_ = canUnion;
+
+
+
+            // dangerzone 以下は出現しない
+            if (touch_pos1.y <= manager.GetDangerZone().gameObject.transform.position.y || touch_pos2.y <= manager.GetDangerZone().gameObject.transform.position.y)
         {
             canUnion_ = false;
         }
@@ -93,6 +98,12 @@ public class PlayerControl : MonoBehaviour
             canUnion_ = canUnion;
         }
 
+
+        GameObject effect_ = GameObject.FindGameObjectWithTag("Effect");
+        if (effect_ != null)
+        {
+            canUnion_ = false;
+        }
 
         if (canUnion_)
         {
