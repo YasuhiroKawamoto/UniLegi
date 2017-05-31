@@ -35,9 +35,23 @@ public class SoundManager
 
         audioClips.Add("se001", new AudioClipInfo("hit", "se001"));
         audioClips.Add("se002", new AudioClipInfo("Sammon", "se002"));
+        audioClips.Add("se003", new AudioClipInfo("Dead", "se003"));
+        audioClips.Add("se004", new AudioClipInfo("Button", "se004"));
+        audioClips.Add("se005", new AudioClipInfo("Fanfare", "se005"));
+        audioClips.Add("se006", new AudioClipInfo("Lose", "se006"));
+        audioClips.Add("se007", new AudioClipInfo("Pick", "se007"));
+        audioClips.Add("se008", new AudioClipInfo("GaugeMax", "se008"));
+        audioClips.Add("se009", new AudioClipInfo("Guard", "se009"));
+
+
+
+
+
         audioClips.Add("BGM001", new AudioClipInfo("TitleBGM", "BGM001"));
         audioClips.Add("BGM002", new AudioClipInfo("SelectBGM", "BGM002"));
         audioClips.Add("BGM003", new AudioClipInfo("BattleBGM2", "BGM003"));
+        //audioClips.Add("BGM004", new AudioClipInfo("BattleBGM2", "BGM003"));
+        //audioClips.Add("BGM005", new AudioClipInfo("BattleBGM2", "BGM003"));
 
 
     }

@@ -63,6 +63,8 @@ public class Tap : MonoBehaviour {
                     {
                         if (hit.collider.gameObject == this.gameObject)
                         {
+
+                            Singleton<SoundManager>.instance.playSE("se007");
                             //移動フラグをtrueにし弾を打てないようにする
                             PlayerControl.canUnion = false;
 

@@ -36,7 +36,7 @@ public class Derector : MonoBehaviour
     {
         float timeStep = (Time.time - m_time) / 25.0f;
 
-        GameObject effect = GameObject.Find("Effect01(Clone)");
+        GameObject effect = GameObject.FindGameObjectWithTag("Effect"); ;
         if (effect != null)
         {
             state = CameraState.ZOOMIN;

@@ -43,73 +43,29 @@ public class States : MonoBehaviour {
     //弾薬
     [SerializeField]
     private int m_ammo = 0;
-    //死亡時エフェクト
-    [SerializeField]
-    GameObject DeadEffect;
+  
 
-    private bool DeadFlag = false;
-
-    private float DeadCnt = 30;
-
-    private bool IsWaiting = false;
-
-    private float waitCnt = 30;
-
-
+ 
     private float m_currentCharge;
 
     // Use this for initialization
     void Start () {
-         DeadCnt = 30;
 
-     waitCnt = 30;
-
-        DeadFlag = false;
+      
 
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
 
         // HP0以下で消滅
         if (getHp() <= 0)
         {
-            DeadFlag = true;
-        }
 
-
-       
-
-        if (DeadFlag)
-        {
-            if (DeadEffect != null)//エフェクトスロットに設定してある場合
-            {
-                if (Singleton<SoundManager>.instance.getIsMute() == false)
-                {
-                    Singleton<SoundManager>.instance.playSE("se001");
-                }
-
-                DeadEffect.transform.position = this.gameObject.transform.position;//エフェクトの位置を設定
-
-                Instantiate(DeadEffect);//エフェクト生成
-            }
-
-
-            DeadCnt--;
+            Destroy(this.gameObject);
 
         }
-        if (DeadCnt < 0)
-        {
-
-            Destroy(gameObject);
-         
-         
-
-        }
-
-
-       
-
 
     }
 
@@ -182,6 +138,13 @@ public class States : MonoBehaviour {
     {
         return m_typePoint;
     }
+
+    public void SetTypePoint(int typePoint)
+    {
+        m_typePoint = typePoint;
+    }
+
+
     public int GetAbilityType()
     {
         return m_abilityType;
@@ -208,13 +171,7 @@ public class States : MonoBehaviour {
         m_ammo = ammo;
     }
 
-    public bool GetDead()
-    {
-
-        return DeadFlag;
-
-    }
-
+   
 
     public float GetCharge()
     {

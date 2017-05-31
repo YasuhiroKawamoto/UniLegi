@@ -17,32 +17,9 @@ public class SceneDataManager : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         fade.FadeOut(1);
-
-        if (SceneManager.GetActiveScene().name == "TitleScene")
-        {
-            Singleton<SoundManager>.instance.playBGM("BGM001", 0.0f);
-        }
-
-        if (SceneManager.GetActiveScene().name == "SelectScene")
-        {
-            Singleton<SoundManager>.instance.playBGM("BGM002", 0.0f);
-        }
-
-
-        if (SceneManager.GetActiveScene().name == "MainScene")
-        {
-            if (stageNumber == 1)
-            {
-                Singleton<SoundManager>.instance.playBGM("BGM003", 0.0f);
-            }
-            if (stageNumber == 2)
-            {
-                Singleton<SoundManager>.instance.playBGM("BGM001", 0.0f);
-            }
-        }
-
     }
 	
 	// Update is called once per frame

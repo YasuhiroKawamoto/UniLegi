@@ -5,7 +5,9 @@ using UnityEngine;
 public class SceneData {
 
 
-    int StageNumber = 1;//ステージの番号
+    private int StageNumber = 1;//ステージの番号
+
+    private float time;
 
 
     public void setStageNumber(int num)
@@ -18,5 +20,18 @@ public class SceneData {
         return StageNumber;
 
     }
-	
+
+
+
+    public void setTime(float num)
+    {
+        time = num;
+    }
+
+    public float getTime()
+    {
+        return time;
+
+    }
+
 }

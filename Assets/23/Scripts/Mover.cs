@@ -55,9 +55,7 @@ public class Mover : MonoBehaviour
             this.gameObject.GetComponent<States>().SetMoveType(Random.Range(1, 4));//移動タイプをランダムにする
         }
 
-        if (this.gameObject.GetComponent<States>().GetDead() == false)
-        {
-
+    
 
             if (moveFlag == true)//フラグがtrueの時のみ動く
             {
@@ -195,7 +193,7 @@ public class Mover : MonoBehaviour
                 RB.velocity = new Vector3(0, 0, 0);//停止
             }
 
-        }
+        
        
     }
 

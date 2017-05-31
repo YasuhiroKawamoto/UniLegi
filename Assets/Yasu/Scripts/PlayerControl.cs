@@ -82,9 +82,14 @@ public class PlayerControl : MonoBehaviour
 
         GameObject[] unions = GameObject.FindGameObjectsWithTag("isPinched");
 
-        bool canUnion_ = canUnion;
-        // dangerzone 以下は出現しない
-        if (touch_pos1.y <= manager.GetDangerZone().gameObject.transform.position.y || touch_pos2.y <= manager.GetDangerZone().gameObject.transform.position.y)
+
+
+            bool canUnion_ = canUnion;
+
+
+
+            // dangerzone 以下は出現しない
+            if (touch_pos1.y <= manager.GetDangerZone().gameObject.transform.position.y || touch_pos2.y <= manager.GetDangerZone().gameObject.transform.position.y)
         {
             canUnion_ = false;
         }
@@ -93,6 +98,12 @@ public class PlayerControl : MonoBehaviour
             canUnion_ = canUnion;
         }
 
+
+        GameObject effect_ = GameObject.FindGameObjectWithTag("Effect");
+        if (effect_ != null)
+        {
+            canUnion_ = false;
+        }
 
         if (canUnion_)
         {
@@ -166,7 +177,7 @@ public class PlayerControl : MonoBehaviour
 
                                         // エフェクト発生
                                         Instantiate(effect);
-
+                                        Singleton<SoundManager>.instance.playSE("se002");
                                         unionCoolTime = COOL_TIME;
 
                                         delay = 80;
@@ -230,13 +241,12 @@ public class PlayerControl : MonoBehaviour
             delay = 80;
             Instantiate(newUnit);
             isWaiting = false;
-            Debug.Log("gattai!");
 
         }
 
         if(unionCoolTime > 0)
         {
-            unionCoolTime -= Time.deltaTime*3;
+            unionCoolTime -= Time.deltaTime*5;
             
         }
 

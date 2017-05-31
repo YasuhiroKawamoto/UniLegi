@@ -36,6 +36,8 @@ public class UIManager : MonoBehaviour {
 
     float m_autoMoveTime;
 
+    bool SoundFlag;
+
 
     // Use this for initialization
     void Start () {
@@ -72,11 +74,19 @@ public class UIManager : MonoBehaviour {
         unionGage.GetComponent<Image>().fillAmount = 1- (float)player.GetUnionCoolTime() / player.GetCoolTime();
         if (unionGage.GetComponent<Image>().fillAmount >= 1)
         {
+
+            if (SoundFlag == false)
+            {
+                Singleton<SoundManager>.instance.playSE("se008");
+                SoundFlag = true;
+            }
+          
             // 最大時画像
             unionGage.GetComponent<Image>().sprite = Resources.Load<Sprite>("gage2");
         }
         else
         {
+            SoundFlag = false;
             //最大時じゃない画像
             unionGage.GetComponent<Image>().sprite = Resources.Load<Sprite>("gage");
         }

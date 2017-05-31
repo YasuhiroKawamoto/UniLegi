@@ -35,9 +35,24 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     int m_maxCost;
 
+    [SerializeField]
+    float m_WaitCnt;
+
+    private bool IsWaiting;
+
+
+
+    [SerializeField]
+    public Text Lose;
+    [SerializeField]
+    private Canvas canvas;
+
+
+
     // Use this for initialization
     void Start()
     {
+        IsWaiting = false;
         m_gameSpeed = 1;
         m_unitNum = 0;
         m_cnt = 0;
@@ -76,6 +91,12 @@ public class GameManager : MonoBehaviour
             m_unitNum++;
         }
 
+        unions = GameObject.FindGameObjectsWithTag("isPinched");
+        foreach (GameObject union in unions)
+        {
+            m_unitNum++;
+        }
+
         // UIの更新
         text_hp.GetComponent<Text>().text = "HP:" + m_hp.ToString();
 
@@ -84,12 +105,38 @@ public class GameManager : MonoBehaviour
 
         text_unit.GetComponent<Text>().text = "UNIT:" + m_unitNum.ToString() + "/" + 5;
 
+
+
         // シーン遷移
-        if (m_hp < 0)
+        if (m_hp < 0 && IsWaiting == false)
         {
-                
-            SceneManager.LoadScene("ResultScene");
+
+            IsWaiting = true;
+            Singleton<SoundManager>.instance.pauseBGM();
+            Singleton<SoundManager>.instance.playSE("se006");
+
+
+            Lose.text = "LOSE...";
+
+            Instantiate(Lose, canvas.transform);
+
         }
+
+
+        if (IsWaiting)
+        {
+
+            m_WaitCnt -= Time.deltaTime;
+
+        }
+
+        if (m_WaitCnt <= 0)
+        {
+
+            SceneManager.LoadScene("SelectScene");
+
+        }
+
     }
    
 
