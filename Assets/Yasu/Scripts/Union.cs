@@ -174,6 +174,8 @@ public class Union : MonoBehaviour
         if (typeId == 1)
         {
             newBullet = Resources.Load<GameObject>("Prefabs/PlayerBullet");
+            Angle cmp = newUnit.GetComponent<Angle>();
+            cmp.enabled = false;
         }
 
         //赤スライム
@@ -184,14 +186,16 @@ public class Union : MonoBehaviour
             newUnit.GetComponent<States>().SetCoolTime(3);
             newUnit.GetComponent<States>().SetAmmo(5);
             newUnit.GetComponent<States>().SetTypePoint(1);
-
+            Angle cmp = newUnit.GetComponent<Angle>();
+            cmp.enabled = false;
         }
 
         // 白ケル
         if (typeId == 3)
         {
             newBullet = Resources.Load<GameObject>("Prefabs/PlayerBullet2");
-
+            Angle cmp = newUnit.GetComponent<Angle>();
+            cmp.enabled = false;
         }
 
         // 紫ケル
@@ -200,6 +204,8 @@ public class Union : MonoBehaviour
             newBullet = Resources.Load<GameObject>("Prefabs/PlayerBullet3");
             newUnit.GetComponent<States>().SetFireRate(7);
             newUnit.GetComponent<States>().SetTypePoint(2);
+            Angle cmp = newUnit.GetComponent<Angle>();
+            cmp.enabled = false;
 
         }
 
@@ -208,6 +214,8 @@ public class Union : MonoBehaviour
         {
             newBullet = Resources.Load<GameObject>("Prefabs/PlayerBullet7");
             newUnit.GetComponent<States>().SetFireRate(7);
+            Angle cmp = newUnit.GetComponent<Angle>();
+            cmp.enabled = false;
         }
 
         // 氷ゴーレム
@@ -218,6 +226,8 @@ public class Union : MonoBehaviour
             newUnit.GetComponent<States>().SetCoolTime(1);
             newUnit.GetComponent<States>().SetAmmo(3);
             newUnit.GetComponent<States>().SetTypePoint(4);
+            Angle cmp = newUnit.GetComponent<Angle>();
+            cmp.enabled = false;
         }
 
         //ドラゴン
@@ -229,11 +239,14 @@ public class Union : MonoBehaviour
             newUnit.GetComponent<States>().SetAmmo(15);
             newUnit.GetComponent<States>().SetTypePoint(7);
 
-            newUnit.AddComponent<Angle>();
+
+
             Angle cmp = newUnit.GetComponent<Angle>();
+            cmp.enabled = true;
             cmp.SetDir(30.0f);
             cmp.SetAng(150.0f);
             cmp.SetSpd(3.0f);
+            cmp.SetBullet(newBullet);
 
 
 

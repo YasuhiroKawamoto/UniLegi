@@ -51,7 +51,7 @@ public class UIManager : MonoBehaviour {
 
 
         // 移動終点(現在の値)
-       targetRate = hpGreen.GetComponent<Image>().fillAmount = manager.GetHp() / 100.0f;
+       targetRate = hpGreen.GetComponent<Image>().fillAmount = manager.GetHp() / 150;
 
         // 移動始点(古い値)
         startRate = hpRed.GetComponent<Image>().fillAmount;

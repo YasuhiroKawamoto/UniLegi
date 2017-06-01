@@ -13,11 +13,13 @@ public class SceneButton : UIBehaviour
     [SerializeField]
     string seneName;
 
+    MyFade fade;
+
 
     float time;
-    Fade fade;
 
     bool flag;
+    float alpha;
 
     GameObject SceneData;
     //SceneFade fade;
@@ -28,7 +30,7 @@ public class SceneButton : UIBehaviour
         flag = false;
 
         SceneData = GameObject.Find("SceneData");
-        fade = SceneData.GetComponent<SceneDataManager>().GetFade();
+       fade = SceneData.GetComponent<SceneDataManager>().GetFade();
 
         // Buttonクリック時、OnClickメソッドを呼び出す
         GetComponent<Button>().onClick.AddListener(OnClick);
@@ -39,9 +41,9 @@ public class SceneButton : UIBehaviour
         Singleton<SceneData>.instance.setStageNumber(stageNumber);
         Singleton<SoundManager>.instance.playSE("se004");
         time = Time.time;
-        fade.FadeIn(1);
         flag = true;
-
+        MyFade fade_ = Resources.Load<MyFade>("Prefabs/MyFade");
+        fade = Instantiate(fade_, GameObject.Find("Canvas").transform);
     }
 
 
@@ -50,6 +52,7 @@ public class SceneButton : UIBehaviour
         if (flag)
 
         {
+            fade.SetAlpha(alpha += 0.05f);
             if (Time.time - time > 1)
 
                 // 「GameScene」シーンに遷移する
