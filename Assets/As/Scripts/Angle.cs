@@ -76,5 +76,10 @@ public class Angle : MonoBehaviour {
     {
         m_angle = ang;
     }
-    
+
+    public void SetBullet(GameObject bullet)
+    {
+        this.bullet = bullet;
+    }
+
 }

@@ -47,6 +47,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Canvas canvas;
 
+    Fade fade;
+    float m_WaitFade;
+    bool fadeFlag;
+
 
 
     // Use this for initialization
@@ -56,12 +60,14 @@ public class GameManager : MonoBehaviour
         m_gameSpeed = 1;
         m_unitNum = 0;
         m_cnt = 0;
+        //fade = GameObject.Find("SceneData").GetComponent<SceneDataManager>().GetFade();
+        m_WaitFade = 1.0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        m_hp =dangerZone.GetHp();
+        m_hp = dangerZone.GetHp();
 
 
         // コストが最大値以下ならコスト回復
@@ -100,8 +106,8 @@ public class GameManager : MonoBehaviour
         // UIの更新
         text_hp.GetComponent<Text>().text = "HP:" + m_hp.ToString();
 
-       m_cost = Mathf.Clamp(m_cost, 0, m_maxCost);
-        text_cost.GetComponent<Text>().text =    m_cost.ToString() + "\n" + m_maxCost.ToString();
+        m_cost = Mathf.Clamp(m_cost, 0, m_maxCost);
+        text_cost.GetComponent<Text>().text = m_cost.ToString() + "\n" + m_maxCost.ToString();
 
         text_unit.GetComponent<Text>().text = "UNIT:" + m_unitNum.ToString() + "/" + 5;
 
@@ -119,12 +125,12 @@ public class GameManager : MonoBehaviour
             Lose.text = "LOSE...";
 
             Instantiate(Lose, canvas.transform);
-
         }
 
 
         if (IsWaiting)
         {
+
 
             m_WaitCnt -= Time.deltaTime;
 
@@ -133,12 +139,25 @@ public class GameManager : MonoBehaviour
         if (m_WaitCnt <= 0)
         {
 
+            //fade.FadeIn(1);
+            fadeFlag = true;
+            IsWaiting = false;
+        }
+
+        if (fadeFlag)
+        {
+            m_WaitFade -= Time.deltaTime;
+
+        }
+
+        if(m_WaitFade <= 0)
+        {
             SceneManager.LoadScene("SelectScene");
 
         }
 
     }
-   
+
 
 
 

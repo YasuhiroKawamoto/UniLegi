@@ -9,33 +9,43 @@ public class SceneDataManager : MonoBehaviour {
     int stageNumber;
 
     [SerializeField]
-    Fade fade;
+    MyFade fade;
+
+    float alpha = 1;
 
     private void Awake()
     {
-        fade.ResetFade();
     }
 
     // Use this for initialization
     void Start()
     {
-        fade.FadeOut(1);
+       // fade.SetFade(false);
+
     }
 	
 	// Update is called once per frame
 	void Update () {
-        GameObject data = GameObject.FindGameObjectWithTag("SceneData");
-
-        if (data != null && data != this.gameObject)
+        fade.SetAlpha(alpha -= 0.05f);
+        if(alpha <=0 && fade!=null)
         {
-            Destroy(data);
+            Destroy(fade.gameObject);
         }
+
+        //GameObject data = GameObject.FindGameObjectWithTag("SceneData");
+
+        //if (data != null && data != this.gameObject)
+        //{
+        //    Destroy(data);
+        //}
     }
 
 
     private void OnDestroy()
     {
-        fade.FadeIn(1);
+        //fade.FadeIn(1);
+
+
     }
 
     public void SetStage(int stage)
@@ -48,8 +58,8 @@ public class SceneDataManager : MonoBehaviour {
         return stageNumber;
     }
 
-    public Fade GetFade()
+    public MyFade GetFade()
     {
-        return fade;
+      return fade;
     }
 }
