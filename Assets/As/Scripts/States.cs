@@ -45,24 +45,35 @@ public class States : MonoBehaviour
     [SerializeField]
     private int m_ammo = 0;
 
-
+    //ロックオンカーソル
     [SerializeField]
     GameObject LockOnCursor;
-
-
     GameObject Lock;
+
+    [SerializeField]
+    GameObject DeadAction;
+
+    private float DeadCnt;
+    //死んでいるか？
+    private bool IsDead = false;
 
     //ねらわれているか
     private bool IsLockon = false;
-
     private bool IsLockonNow = false;
-
     private float m_currentCharge;
+
+    [SerializeField]
+    private GameManager manager;
+   
+
+
 
     // Use this for initialization
     void Start()
     {
-
+        DeadCnt = 0.5f;
+        manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        DeadAction = (GameObject)Resources.Load("Prefabs/DeadA");
         LockOnCursor = (GameObject)Resources.Load("Prefabs/LockOnCursor");
 
     }
@@ -74,7 +85,36 @@ public class States : MonoBehaviour
         // HP0以下で消滅
         if (getHp() <= 0)
         {
-            Destroy(this.gameObject);
+            if (DeadAction != null&&!IsDead)
+            {
+                IsDead = true;
+                Debug.Log("死んだ");
+                DeadAction.transform.position = this.gameObject.transform.position;
+                // コスト回復
+                manager.RecoverCost(getCost());
+
+
+                //死亡時動作
+                Instantiate<GameObject>(DeadAction);
+
+
+            }
+           
+        }
+
+
+
+        if (IsDead)
+        {
+
+            DeadCnt -= Time.deltaTime;
+
+            if (DeadCnt < 0)
+            {
+                Destroy(this.gameObject);
+
+            }
+
         }
 
         //lock-onされている場合
@@ -220,7 +260,23 @@ public class States : MonoBehaviour
         IsLockon = f;
     }
 
+    //死んでいるかどうか？
+    public bool getDead()
+    {
 
+        return IsDead;
+    }
+
+
+    void OnDestroy()
+    {
+        if (IsLockonNow)
+        {
+            Destroy(Lock);
+            IsLockonNow = false;
+        }
+
+    }
 }
 
 

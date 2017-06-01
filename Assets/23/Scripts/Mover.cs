@@ -48,14 +48,15 @@ public class Mover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
-        if (this.gameObject.GetComponent<States>().GetMoveType() ==  5)//ランダム指定タイプだった場合
+        if (this.gameObject.GetComponent<States>().getDead() == false)
         {
-            this.gameObject.GetComponent<States>().SetMoveType(Random.Range(1, 4));//移動タイプをランダムにする
-        }
 
-    
+            if (this.gameObject.GetComponent<States>().GetMoveType() == 5)//ランダム指定タイプだった場合
+            {
+                this.gameObject.GetComponent<States>().SetMoveType(Random.Range(1, 4));//移動タイプをランダムにする
+            }
+
+
 
             if (moveFlag == true)//フラグがtrueの時のみ動く
             {
@@ -193,7 +194,7 @@ public class Mover : MonoBehaviour
                 RB.velocity = new Vector3(0, 0, 0);//停止
             }
 
-        
+        }
        
     }
 
