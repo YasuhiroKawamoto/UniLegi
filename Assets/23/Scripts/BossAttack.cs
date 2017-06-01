@@ -104,6 +104,8 @@ public class BossAttack : MonoBehaviour {
             target.Add(col.gameObject);
 
             AttackFlag = true;//攻撃フラグON
+
+            col.gameObject.GetComponent<States>().SetLockOn(true);
                 Debug.Log("接敵");
         
             }
@@ -139,12 +141,25 @@ public class BossAttack : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D col)
     {
-        if (col.gameObject.tag == "DangerZone" || col.gameObject.tag == "Player" || col.gameObject.tag == "HavingPlayer")
+        if(col.gameObject.tag == "Player" || col.gameObject.tag == "HavingPlayer")
         {
             target.Clear();
+            col.gameObject.GetComponent<States>().SetLockOn(true);
             AttackFlag = false;//攻撃フラグOFF
             this.transform.parent.GetComponent<Mover>().setMoveFlag(true);//移動を開始
             Debug.Log("離脱");
+        }
+
+
+
+        if (col.gameObject.tag == "DangerZone")
+        {
+            target.Clear();
+            col.gameObject.GetComponent<States>().SetLockOn(true);
+            AttackFlag = false;//攻撃フラグOFF
+            this.transform.parent.GetComponent<Mover>().setMoveFlag(true);//移動を開始
+            Debug.Log("離脱");
+
         }
     }
 }

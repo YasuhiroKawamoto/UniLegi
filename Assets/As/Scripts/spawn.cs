@@ -54,139 +54,149 @@ public class spawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (CanInstantiate())
+
+        if (Time.timeScale != 0)
         {
-            // 色を明るく
-            SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
 
-            sr.color = Color.white;
-            if (Input.touchCount > 0)
+            if (CanInstantiate())
             {
-                touch = Input.GetTouch(0);
+                // 色を明るく
+                SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
 
-                m_worldPoint = Camera.main.ScreenToWorldPoint(touch.position);
-
-
-                //タッチ開始時
-                if (touch.phase == TouchPhase.Began)
+                sr.color = Color.white;
+                if (Input.touchCount > 0)
                 {
+                    touch = Input.GetTouch(0);
 
-                    //タッチをした位置にオブジェクト判定
-                    RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
+                    m_worldPoint = Camera.main.ScreenToWorldPoint(touch.position);
 
-                    if (hit)
+
+                    //タッチ開始時
+                    if (touch.phase == TouchPhase.Began)
                     {
-                        if (hit.collider.gameObject == this.gameObject)
+
+                        //タッチをした位置にオブジェクト判定
+                        RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
+
+                        if (hit)
                         {
-                            PlayerControl.canUnion = false;
-                            m_flag = 1;
+                            if (hit.collider.gameObject == this.gameObject)
+                            {
+                                PlayerControl.canUnion = false;
+                                m_flag = 1;
+                            }
+
                         }
 
                     }
-
-                }
-                //離したとき
-                else if (touch.phase == TouchPhase.Ended)
-                {
-                    //タッチをした位置にオブジェクト判定
-                    RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
-
-                    if (hit)
+                    //離したとき
+                    else if (touch.phase == TouchPhase.Ended)
                     {
-                        if (hit.collider.gameObject == this.gameObject)
+                        //タッチをした位置にオブジェクト判定
+                        RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
+
+                        if (hit)
                         {
-                            if (m_worldPoint.y < zone)
+                            if (hit.collider.gameObject == this.gameObject)
                             {
-                                //元いた位置に戻る
-                                transform.position = savePos;
-                                PlayerControl.canUnion = true;
-
-                                m_flag = 0;
-                            }
-                            else
-                            {
-
-
-
-                                if (IsSummons == false)//召喚中ッで無ければ
+                                if (m_worldPoint.y < zone)
                                 {
-                                    AsPrefab.transform.position = m_worldPoint;
+                                    //元いた位置に戻る
+                                    transform.position = savePos;
+                                    PlayerControl.canUnion = true;
 
-                                    effect.transform.position = AsPrefab.transform.position;//エフェクト位置設定
-
-
-
-                                    if (effect != null)//エフェクトスロットに設定してある場合
-                                    {
-                                        Singleton<SoundManager>.instance.playSE("se002");
-                                        Instantiate(effect);//エフェクト生成
-
-
-                                    }
-                                    IsSummons = true;//召喚状態にする
-                                    IsWaiting = true;//エフェクト待機状態にする
-
-
-                                    // コスト消費
-                                    manager.SpendCost(AsPrefab.gameObject.GetComponent<States>().getCost());
+                                    m_flag = 0;
                                 }
-                                //元いた位置に戻る
-                                transform.position = savePos;
-                                PlayerControl.canUnion = true;
+                                else
+                                {
 
-                                m_flag = 0;
+
+
+                                    if (IsSummons == false)//召喚中ッで無ければ
+                                    {
+                                        AsPrefab.transform.position = m_worldPoint;
+
+                                        effect.transform.position = AsPrefab.transform.position;//エフェクト位置設定
+
+
+
+                                        if (effect != null)//エフェクトスロットに設定してある場合
+                                        {
+                                            Singleton<SoundManager>.instance.playSE("se002");
+                                            Instantiate(effect);//エフェクト生成
+
+
+                                        }
+                                        IsSummons = true;//召喚状態にする
+                                        IsWaiting = true;//エフェクト待機状態にする
+
+
+                                        // コスト消費
+                                        manager.SpendCost(AsPrefab.gameObject.GetComponent<States>().getCost());
+                                    }
+                                    //元いた位置に戻る
+                                    transform.position = savePos;
+                                    PlayerControl.canUnion = true;
+
+                                    m_flag = 0;
+                                }
                             }
                         }
                     }
+                }
+                else
+                {
+                    m_flag = 0;
+                    transform.position = savePos;
                 }
             }
-        }
-        else
-        {
-            //元いた位置に戻る
-            transform.position = savePos;
+            else
+            {
+                //元いた位置に戻る
+                transform.position = savePos;
 
-            m_flag = 0;
+                m_flag = 0;
 
-            // 色を暗く
-            SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
+                // 色を暗く
+                SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
 
-            sr.color = Color.gray;
+                sr.color = Color.gray;
 
-        }
+            }
 
-        //1の時追従する
-        if (m_flag == 1)
-        {
-            //タッチしている座標に追従する
-            transform.position = m_worldPoint;
+            //1の時追従する
+            if (m_flag == 1)
+            {
+                //タッチしている座標に追従する
+                transform.position = m_worldPoint;
 
-            tmpPos = transform.position;
-            tmpPos.z = -1;
-            transform.position = tmpPos;
+                tmpPos = transform.position;
+                tmpPos.z = -1;
+                transform.position = tmpPos;
 
-        }
-
+            }
 
 
 
 
-        // ユニット生成
-        if (IsWaiting)
-        {
-            waitTime--;
 
-        }
-        if (waitTime < 0)
-        {
+            // ユニット生成
+            if (IsWaiting)
+            {
+                waitTime--;
 
-            
+            }
+            if (waitTime < 0)
+            {
 
-            Instantiate(AsPrefab);//ユニット生成
-            IsWaiting = false;//エフェクト待機解除
-            waitTime = 30;//待機カウントリセット
-            IsSummons = false;//召喚待機状態に設定
 
+
+                Instantiate(AsPrefab);//ユニット生成
+                IsWaiting = false;//エフェクト待機解除
+                waitTime = 30;//待機カウントリセット
+                IsSummons = false;//召喚待機状態に設定
+
+            }
         }
 
 

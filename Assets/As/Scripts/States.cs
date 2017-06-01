@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class States : MonoBehaviour {
+public class States : MonoBehaviour
+{
 
     //攻撃値
     [SerializeField]
@@ -43,15 +44,26 @@ public class States : MonoBehaviour {
     //弾薬
     [SerializeField]
     private int m_ammo = 0;
-  
 
- 
+
+    [SerializeField]
+    GameObject LockOnCursor;
+
+
+    GameObject Lock;
+
+    //ねらわれているか
+    private bool IsLockon = false;
+
+    private bool IsLockonNow = false;
+
     private float m_currentCharge;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
 
-      
+        LockOnCursor = (GameObject)Resources.Load("Prefabs/LockOnCursor");
 
     }
 
@@ -62,9 +74,28 @@ public class States : MonoBehaviour {
         // HP0以下で消滅
         if (getHp() <= 0)
         {
-
             Destroy(this.gameObject);
+        }
 
+        //lock-onされている場合
+        if (IsLockon)
+        {
+            if (LockOnCursor != null && IsLockonNow == false)
+            {
+                IsLockonNow = true;
+
+                Lock = Instantiate<GameObject>(LockOnCursor);
+
+            }
+            Lock.transform.position = this.gameObject.transform.position;
+        }
+        else
+        {
+            if (IsLockonNow)
+            {
+                Destroy(Lock);
+                IsLockonNow = false;
+            }
         }
 
     }
@@ -101,7 +132,7 @@ public class States : MonoBehaviour {
 
     public void setDamege(int Damege)
     {
-         m_Hp -= Damege;
+        m_Hp -= Damege;
     }
 
     public int GetMoveType()
@@ -171,7 +202,7 @@ public class States : MonoBehaviour {
         m_ammo = ammo;
     }
 
-   
+
 
     public float GetCharge()
     {
@@ -183,6 +214,11 @@ public class States : MonoBehaviour {
         m_currentCharge = charge;
     }
 
+    //ロックオン状態変更関数
+    public void SetLockOn(bool f)
+    {
+        IsLockon = f;
+    }
 
 
 }

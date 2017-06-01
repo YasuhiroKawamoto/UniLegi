@@ -9,7 +9,7 @@ public class Tap : MonoBehaviour {
     //動いてるかどうか
     private bool m_moveFlag;
     //スケールの倍数
-    const float rate = 1.5f                 ;
+    const float rate = 1.5f;
     //範囲
     Vector3 zone;
     //元の大きさを保存
@@ -25,8 +25,8 @@ public class Tap : MonoBehaviour {
     //魔王の手
     [SerializeField]
     GameObject Hand;
-    
 
+    GameObject objCursor;
 
     // Use this for initialization
     void Start()
@@ -73,7 +73,7 @@ public class Tap : MonoBehaviour {
                             //this.gameObject.layer = 12;
                             m_canShot = false;
 
-                            Instantiate(Hand, transform.position, transform.rotation);
+                            objCursor =   Instantiate(Hand, transform.position, transform.rotation);
 
                         }
                     }
@@ -129,6 +129,8 @@ public class Tap : MonoBehaviour {
 
 
                     m_Cnt = 0.0f;
+
+                    Destroy(objCursor);
                 }
 
             }

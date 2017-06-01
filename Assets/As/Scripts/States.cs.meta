@@ -1,10 +1,12 @@
 fileFormatVersion: 2
 guid: 4e3a5244e0c0e0a409c3163e03e7dd9c
-timeCreated: 1493873660
+timeCreated: 1496135700
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - LockOnCursor: {fileID: 1632354068454380, guid: fff3e45a69acfb54fae8241950b9977d,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
