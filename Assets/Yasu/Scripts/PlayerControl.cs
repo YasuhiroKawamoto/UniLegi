@@ -92,6 +92,8 @@ public class PlayerControl : MonoBehaviour
             if (touch_pos1.y <= manager.GetDangerZone().gameObject.transform.position.y || touch_pos2.y <= manager.GetDangerZone().gameObject.transform.position.y)
         {
             canUnion_ = false;
+            hand1.transform.position = new Vector3(-300, -300, -300);
+            hand2.transform.position = new Vector3(-300, -300, -300);
         }
         else
         {
@@ -150,7 +152,7 @@ public class PlayerControl : MonoBehaviour
 
 
                     // 合体
-                    if (Area.gameObject.tag == "Pinched" && Area.transform.localScale.x < 1)
+                    if (Area.gameObject.tag == "Pinched" && Area.transform.localScale.x < 1.5f)
                     {
                         Area.transform.position = new Vector3(-300, -300, -300);
 
@@ -181,6 +183,8 @@ public class PlayerControl : MonoBehaviour
                                         unionCoolTime = COOL_TIME;
 
                                         delay = 80;
+
+                                        // 手をどける
 
                                         isWaiting = true;
 
@@ -234,8 +238,13 @@ public class PlayerControl : MonoBehaviour
         if (isWaiting)
         {
             delay--;
-
+            if (delay < 60)
+            {
+                hand1.transform.position = new Vector3(-300, -300, -300);
+                hand2.transform.position = new Vector3(-300, -300, -300);
+            }
         }
+           
         if (delay < 0)
         {
             delay = 80;
