@@ -7,8 +7,7 @@ public class Decision : MonoBehaviour {
     //Statesコンポーネント
     States states;
 
-    [SerializeField]
-    private GameManager manager;
+    
 
     [SerializeField]
     GameObject hitEffect;//被弾時エフェクト
@@ -27,7 +26,8 @@ public class Decision : MonoBehaviour {
         //Statesコンポーネントの取得
         states = GetComponent<States>();
 
-        manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+      
 
 
 
@@ -40,13 +40,8 @@ public class Decision : MonoBehaviour {
     {
 
 
-        if (states.getHp() <= 0)
-        {
-            // コスト回復
-            manager.RecoverCost(states.getCost());
 
-            Destroy(this.gameObject);
-        }
+            
 
 	}
 
