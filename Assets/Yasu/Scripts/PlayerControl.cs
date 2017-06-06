@@ -51,6 +51,8 @@ public class PlayerControl : MonoBehaviour
     private float delay;
     private bool isWaiting;
 
+    private bool isCreated;
+
     int tmpId = 0;
 
     static public bool canUnion;
@@ -66,6 +68,7 @@ public class PlayerControl : MonoBehaviour
         canInstantiate = true;
         isTrigger = false;
         isWaiting = false;
+        isCreated = false;
         unionCost = 0;
         pinch_num = 0;
         unionCoolTime = COOL_TIME;
@@ -109,6 +112,7 @@ public class PlayerControl : MonoBehaviour
 
         if (canUnion_)
         {
+            isCreated = false;
             switch (tap_state)
             {
 
@@ -249,6 +253,8 @@ public class PlayerControl : MonoBehaviour
         {
             delay = 80;
             Instantiate(newUnit);
+            //
+            isCreated = true;
             isWaiting = false;
 
         }
@@ -334,8 +340,18 @@ public class PlayerControl : MonoBehaviour
         return unionCoolTime;
     }
 
+    public void SetUnionCoolTime(float num)
+    {
+        unionCoolTime = num;
+    }
+
     public int GetCoolTime()
     {
         return COOL_TIME;
+    }
+
+    public bool getIsCreated()
+    {
+        return isCreated;
     }
 }

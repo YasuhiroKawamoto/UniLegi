@@ -7,7 +7,20 @@ public class Decision : MonoBehaviour {
     //Statesコンポーネント
     States states;
 
-    
+    //挟撃を受けているか？
+    private bool IsPincer;
+
+    //正面被弾
+    private bool flontHit;
+    //背面被弾
+    private bool backHit;
+
+    private float flontCnt;
+
+    private float backCnt;
+
+    //挟撃ボーナスダメージ
+    private int pincerBonusDamage = 2;
 
     [SerializeField]
     GameObject hitEffect;//被弾時エフェクト
@@ -15,7 +28,10 @@ public class Decision : MonoBehaviour {
     [SerializeField]
     GameObject guardEffect;//攻撃防御時エフェクト
 
-    
+    [SerializeField]
+    GameObject pincerEffect;//攻撃防御時エフェクト
+
+
 
 
 
@@ -26,11 +42,15 @@ public class Decision : MonoBehaviour {
         //Statesコンポーネントの取得
         states = GetComponent<States>();
 
+        IsPincer = false;
 
-      
+        flontHit = false;
 
+        flontCnt = 2.0f;
 
+        backHit = false;
 
+        backCnt = 2.0f;
 
 
     }
@@ -39,11 +59,38 @@ public class Decision : MonoBehaviour {
 	void Update ()
     {
 
+        if (flontHit && backHit)
+        {
+            IsPincer = true;
+        }
+        else
+        {
+            IsPincer = false;
+        }
 
 
-            
+        if (flontHit)
+        {
+            flontCnt -= Time.deltaTime;
+            if (flontCnt <= 0)
+            {
+                flontHit = false;
+                Debug.Log("正面リセット");
+            }
+        }
 
-	}
+
+        if (backHit)
+        {
+            backCnt -= Time.deltaTime;
+            if (backCnt <= 0)
+            {
+                backHit = false;
+                Debug.Log("背面リセット");
+            }
+        }
+
+    }
 
 
     void OnTriggerEnter2D(Collider2D col)
@@ -56,14 +103,14 @@ public class Decision : MonoBehaviour {
                 if (col.GetComponent<Bullet>().getInverdFlag() == false)//被弾した弾の向きが反転していなければ
                 {
 
-
+                    //ガード音再生
                     Singleton<SoundManager>.instance.playSE("se009");
 
                     if (guardEffect != null)//エフェクトスロットに設定してある場合
                     {
                         guardEffect.transform.position = col.transform.position;//エフェクト位置設定
 
-                        Instantiate(guardEffect);//エフェクト生成
+                        Instantiate(guardEffect);//ガードエフェクト生成
                     }
 
                    
@@ -71,16 +118,14 @@ public class Decision : MonoBehaviour {
                 else
                 {
 
-                    Singleton<SoundManager>.instance.playSE("se001");
-                    states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());//ダメージ判定
-
-
+      
                     if (hitEffect != null)//エフェクトスロットに設定してある場合
                     {
                         hitEffect.transform.position = col.transform.position;//エフェクト位置設定
 
                         Instantiate(hitEffect);//エフェクト生成
                     }
+                    states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());//ダメージ判定
 
                 }
 
@@ -89,18 +134,64 @@ public class Decision : MonoBehaviour {
             {
 
 
-                
-
-
-                if (hitEffect != null)//エフェクトスロットに設定してある場合
+                if (IsPincer == false)//非挟撃時
                 {
-                    hitEffect.transform.position = col.transform.position;//エフェクト位置設定
 
-                    Instantiate(hitEffect);//エフェクト生成
+                    if (col.GetComponent<Bullet>().getInverdFlag() == false)//被弾した弾の向きが反転していなければ
+                    {
+                        flontHit = true;
+                        Debug.Log("正面被弾");
+                        flontCnt = 2.0f;
+                    }
+
+                    if (col.GetComponent<Bullet>().getInverdFlag() == true)//被弾した弾の向きが反転していれば
+                    {
+                        backHit = true;
+                        Debug.Log("背面被弾");
+                        backCnt = 2.0f;
+
+                    }
+
+                    if (hitEffect != null)//エフェクトスロットに設定してある場合
+                    {
+                        hitEffect.transform.position = col.transform.position;//エフェクト位置設定
+                        Instantiate(hitEffect);//エフェクト生成
+                    }
+                    Singleton<SoundManager>.instance.playSE("se001");//サウンド
+                    states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());//ダメージ判定
+
                 }
+                else if(IsPincer == true)//挟撃成立時
+                {
+                    if (col.GetComponent<Bullet>().getInverdFlag() == false)//被弾した弾の向きが反転していなければ
+                    {
+                       
+                        flontCnt = 2.0f;
+                    }
 
-                Singleton<SoundManager>.instance.playSE("se001");
-                states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());//ダメージ判定
+                    if (col.GetComponent<Bullet>().getInverdFlag() == true)//被弾した弾の向きが反転していれば
+                    {
+                       
+                        backCnt = 2.0f;
+
+                    }
+
+
+
+                    Debug.Log("挟撃成功");
+
+                    if (pincerEffect != null)//エフェクトスロットに設定してある場合
+                    {
+                        pincerEffect.transform.position = col.transform.position;//エフェクト位置設定
+                        Instantiate(pincerEffect);//エフェクト生成
+                       
+                    }
+
+                    Singleton<SoundManager>.instance.playSE("se001");//挟撃サウンド
+                    states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage()　+ pincerBonusDamage);//ダメージ判定(挟撃ボーナス込み)
+                   
+                }
+                
 
                
             }
@@ -113,9 +204,6 @@ public class Decision : MonoBehaviour {
 
         if (col.gameObject.tag == "Bullet")
         {
-
-
-            Debug.Log("緋弾のアリアAA");
 
             states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());
 

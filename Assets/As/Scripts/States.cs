@@ -83,22 +83,24 @@ public class States : MonoBehaviour
     {
 
         // HP0以下で消滅
-        if (getHp() <= 0)
+        if (getHp() <= 0 &&IsDead == false )
         {
-            if (DeadAction != null&&!IsDead)
-            {
+            
                 IsDead = true;
                 Debug.Log("死んだ");
-                DeadAction.transform.position = this.gameObject.transform.position;
-                // コスト回復
+               
                 manager.RecoverCost(getCost());
 
 
-                //死亡時動作
-                Instantiate<GameObject>(DeadAction);
+                if (DeadAction != null)
+                {
+                    //死亡時動作
+                    DeadAction.transform.position = this.gameObject.transform.position;
+                    // コスト回復
+                    Instantiate<GameObject>(DeadAction);
+                }
 
-
-            }
+          
            
         }
 
@@ -106,7 +108,6 @@ public class States : MonoBehaviour
 
         if (IsDead)
         {
-
             DeadCnt -= Time.deltaTime;
 
             if (DeadCnt < 0)

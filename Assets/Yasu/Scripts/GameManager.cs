@@ -209,6 +209,12 @@ public class GameManager : MonoBehaviour
         m_gameSpeed = spd;
     }
 
+    public int GetUnitNum()
+    {
+      return  m_unitNum;
+
+    }
+
     public DangerZone GetDangerZone()
     {
         return dangerZone;
