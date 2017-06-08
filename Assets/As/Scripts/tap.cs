@@ -50,6 +50,8 @@ public class Tap : MonoBehaviour
         m_moveFlag = false;
         //大きさを保存
         m_saveScale = this.transform.localScale;
+
+        
     }
 
     // Update is called once per frame
