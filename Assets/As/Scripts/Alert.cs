@@ -49,8 +49,10 @@ public class Alert : MonoBehaviour {
 
         int CurrentWave = emitter.GetCurrentWave() + 1;
 
-        //if (m_gameManajer.GetOverFlag() == true)
-        //{ 
+        if (m_gameManajer.IsLose() == true)
+        {
+
+
 
             if (m_cnt != CurrentWave)
             {
@@ -74,7 +76,7 @@ public class Alert : MonoBehaviour {
                     m_time = 0.0f;
                 }
             }
-        //}
+        }
         m_time += Time.deltaTime;
 
         if (m_flag==true)

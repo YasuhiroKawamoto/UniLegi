@@ -13,6 +13,8 @@ public class button : UIBehaviour {
     [SerializeField]
     string seneName;
 
+
+
 	// Use this for initialization
 	void Start () {
 

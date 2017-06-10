@@ -50,8 +50,6 @@ public class Emitter : MonoBehaviour {
         while (true)
         {
 
-           
-
             // Waveを作成する
             GameObject wave = (GameObject)Instantiate(Waves[stageNum][currentWave], this.transform.position, Quaternion.identity);
 
