@@ -125,6 +125,7 @@ public class Decision : MonoBehaviour {
 
                         Instantiate(hitEffect);//エフェクト生成
                     }
+                    Singleton<SoundManager>.instance.playSE("se001");//サウンド
                     states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());//ダメージ判定
 
                 }
@@ -175,7 +176,6 @@ public class Decision : MonoBehaviour {
                         backCnt = 2.0f;
 
                     }
-
 
 
                     Debug.Log("挟撃成功");
