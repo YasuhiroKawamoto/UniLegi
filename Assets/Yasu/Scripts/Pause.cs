@@ -11,6 +11,12 @@ public class Pause : MonoBehaviour
     private bool isPause;
     [SerializeField]
     GameManager manager;
+    [SerializeField]
+    GameObject gameObject;
+    [SerializeField]
+    Canvas canvas;
+
+    private bool m_flag = false; 
 
     [SerializeField]
     Text text;
@@ -27,7 +33,6 @@ public class Pause : MonoBehaviour
     // Update is called once per frame
     void OnTap()
     {
-
         isPause = !isPause;
     }
 
@@ -38,11 +43,19 @@ public class Pause : MonoBehaviour
         {
             Time.timeScale = 0;
             text.text = "▶";
+
+            if (m_flag == false)
+            {
+                Instantiate(gameObject, canvas.transform);
+                m_flag = true;
+            }
         }
         else
         {
             Time.timeScale = manager.GetSpd();
             text.text = "||";
+            m_flag = false;
+            Destroy(gameObject);
         }
     }
 }
