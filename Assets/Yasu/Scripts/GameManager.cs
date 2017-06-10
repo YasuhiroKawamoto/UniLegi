@@ -40,6 +40,8 @@ public class GameManager : MonoBehaviour
 
     private bool IsWaiting;
 
+    private bool LoseFlag;
+
 
 
     [SerializeField]
@@ -56,6 +58,7 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        LoseFlag = false;
         IsWaiting = false;
         m_gameSpeed = 1;
         m_unitNum = 0;
@@ -116,7 +119,7 @@ public class GameManager : MonoBehaviour
         // シーン遷移
         if (m_hp < 0 && IsWaiting == false)
         {
-
+            LoseFlag = true;
             IsWaiting = true;
             Singleton<SoundManager>.instance.pauseBGM();
             Singleton<SoundManager>.instance.playSE("se006");
@@ -213,6 +216,11 @@ public class GameManager : MonoBehaviour
     {
       return  m_unitNum;
 
+    }
+
+    public bool IsLose()
+    {
+        return LoseFlag;
     }
 
     public DangerZone GetDangerZone()
