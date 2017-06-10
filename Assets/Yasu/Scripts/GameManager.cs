@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
 
 
         // シーン遷移
-        if (m_hp < 0 && IsWaiting == false)
+        if (m_hp < 0 && IsWaiting == false&&LoseFlag == false)
         {
             LoseFlag = true;
             IsWaiting = true;

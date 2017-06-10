@@ -12,10 +12,10 @@ public class Alert : MonoBehaviour {
     [SerializeField]
     private Canvas canvas;
     [SerializeField]
-    //private GameManager gameManajer;
+    private GameManager gameManager;
 
     Emitter emitter;
-    GameManager m_gameManajer;
+    GameManager m_gameManager;
 
     public GameObject gameObject1;
     public GameObject gameObject2;
@@ -40,7 +40,7 @@ public class Alert : MonoBehaviour {
 
         //Emitterのコンポーネント
         emitter = gameObject.GetComponent<Emitter>();
-        //m_gameManajer = gameManajer.GetComponent<GameManager>();
+        m_gameManager = gameManager.GetComponent<GameManager>();
     }
 	
 	//  is called once per frame
@@ -49,10 +49,8 @@ public class Alert : MonoBehaviour {
 
         int CurrentWave = emitter.GetCurrentWave() + 1;
 
-        if (m_gameManajer.IsLose() == true)
+        if (m_gameManager.IsLose() == true)
         {
-
-
 
             if (m_cnt != CurrentWave)
             {

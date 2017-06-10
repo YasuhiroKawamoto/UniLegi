@@ -23,7 +23,7 @@ public class Emitter : MonoBehaviour {
 
     public GameObject[][] Waves;
 
-
+    int stageNum;
     // 現在のWave
     private int currentWave;
 
@@ -36,7 +36,7 @@ public class Emitter : MonoBehaviour {
 
     IEnumerator Start()
     {
-        int stageNum = Singleton<SceneData>.instance.getStageNumber()-1;
+        stageNum = Singleton<SceneData>.instance.getStageNumber()-1;
 
         Debug.Log("currentWave" + currentWave);
         Debug.Log("Waves.Length" + Waves[stageNum].Length);
@@ -89,5 +89,10 @@ public class Emitter : MonoBehaviour {
     public int GetCurrentWave()
     {
         return currentWave;
+    }
+
+    public int GetWaveSize()
+    {
+        return Waves[stageNum].Length;
     }
 }
