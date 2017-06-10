@@ -6,6 +6,7 @@ public class Union : MonoBehaviour
 {
 
     GameObject newUnit;
+    static public Sprite tmpSprite;
 
     bool isattached = false;
 
@@ -21,6 +22,7 @@ public class Union : MonoBehaviour
     {
         dragonFlagBit = 0;
         newUnit = GameObject.Find("Player").GetComponent<PlayerControl>().newUnit;
+
     }
 
     // Update is called once per frame
@@ -51,7 +53,7 @@ public class Union : MonoBehaviour
             newState.SetAtk(CalcAtk(unions));
 
             // スプライトを設定
-            newUnit.GetComponent<SpriteRenderer>().sprite = GetSpr();
+            tmpSprite = newUnit.GetComponent<SpriteRenderer>().sprite = GetSpr();
 
             // 弾の設定
             SelectBullet();
