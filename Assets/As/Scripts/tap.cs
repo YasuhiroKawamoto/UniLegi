@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tap : MonoBehaviour {
+public class Tap : MonoBehaviour
+{
 
     //弾が撃てる
     private bool m_canShot = true;
@@ -26,17 +27,31 @@ public class Tap : MonoBehaviour {
     [SerializeField]
     GameObject Hand;
 
+    [SerializeField]
+    GameObject state;
+
+    GameObject canvas;
+
     GameObject objCursor;
+    GameObject objState;
+    States unitStates;
+    StateUI stateUI;
+
 
     // Use this for initialization
     void Start()
     {
         zone = GameObject.Find("SpriteDengerZone").transform.position;
+        canvas = GameObject.Find("Canvas");
+        unitStates = gameObject.GetComponent<States>();
+        stateUI = state.GetComponent<StateUI>();
 
         //フラグは立たない
         m_moveFlag = false;
         //大きさを保存
         m_saveScale = this.transform.localScale;
+
+        
     }
 
     // Update is called once per frame
@@ -63,6 +78,8 @@ public class Tap : MonoBehaviour {
                     {
                         if (hit.collider.gameObject == this.gameObject)
                         {
+                            StateUI.HP = unitStates.getHp();
+                            StateUI.ATK = unitStates.getAttack();
 
                             Singleton<SoundManager>.instance.playSE("se007");
                             //移動フラグをtrueにし弾を打てないようにする
@@ -73,7 +90,10 @@ public class Tap : MonoBehaviour {
                             //this.gameObject.layer = 12;
                             m_canShot = false;
 
-                            objCursor =   Instantiate(Hand, transform.position, transform.rotation);
+                            objCursor = Instantiate(Hand, transform.position, transform.rotation);
+
+
+                            objState = Instantiate(state, canvas.transform);
 
                         }
                     }
@@ -95,12 +115,15 @@ public class Tap : MonoBehaviour {
                         //this.gameObject.layer = 0;
                         if (m_Cnt < 0.5f)
 
-                        this.transform.localScale = m_saveScale;
+                            this.transform.localScale = m_saveScale;
                         m_moveFlag = false;
-                        
+
                         m_canShot = true;
 
                         m_Cnt = 0.0f;
+
+                        Destroy(objState);
+
                     }
                 }
             }
@@ -112,7 +135,12 @@ public class Tap : MonoBehaviour {
                 {
                     //タッチしている座標に追従する
                     transform.position = m_worldPoint;
-                 
+
+
+                    Vector3 pos = gameObject.transform.position;
+                    pos.y = pos.y + 1.0f;
+                    objState.transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, pos);
+
                     //撃てない
                     m_canShot = false;
 
@@ -131,6 +159,7 @@ public class Tap : MonoBehaviour {
                     m_Cnt = 0.0f;
 
                     Destroy(objCursor);
+                    Destroy(objState);
                 }
 
             }

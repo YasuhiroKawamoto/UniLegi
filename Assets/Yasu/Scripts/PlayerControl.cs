@@ -16,6 +16,11 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     public GameObject newUnit;
 
+    [SerializeField]
+    public GameObject Prediction;
+    GameObject predictionUnit;
+    GameObject predictionOption;
+
 
     [SerializeField]
     GameObject effect;
@@ -37,7 +42,6 @@ public class PlayerControl : MonoBehaviour
     private bool isTrigger;
     private bool canInstantiate;
 
-
     [SerializeField]
     private GameManager manager;
 
@@ -51,12 +55,17 @@ public class PlayerControl : MonoBehaviour
     private float delay;
     private bool isWaiting;
 
+    private bool isCreated;
+
     int tmpId = 0;
 
     static public bool canUnion;
 
     // タップ状態
     private TAP_STATE tap_state;
+
+
+    Sprite deleteSpr;
 
     // Use this for initialization
     void Start()
@@ -66,12 +75,18 @@ public class PlayerControl : MonoBehaviour
         canInstantiate = true;
         isTrigger = false;
         isWaiting = false;
+        isCreated = false;
         unionCost = 0;
         pinch_num = 0;
         unionCoolTime = COOL_TIME;
 
         canUnion = true;
         tap_state = TAP_STATE.NONE;
+
+        predictionUnit = GameObject.Find("Prediction/Unit");
+        predictionOption = GameObject.Find("Prediction/Option");
+
+        deleteSpr = Resources.Load<Sprite>("delete");
     }
 
     // Update is called once per frame
@@ -82,9 +97,10 @@ public class PlayerControl : MonoBehaviour
 
         GameObject[] unions = GameObject.FindGameObjectsWithTag("isPinched");
 
+        SpriteRenderer sprPre = predictionUnit.GetComponent<SpriteRenderer>();
+        SpriteRenderer sprPreOp = predictionOption.GetComponent<SpriteRenderer>();
 
-
-            bool canUnion_ = canUnion;
+        bool canUnion_ = canUnion;
 
 
 
@@ -92,6 +108,7 @@ public class PlayerControl : MonoBehaviour
             if (touch_pos1.y <= manager.GetDangerZone().gameObject.transform.position.y || touch_pos2.y <= manager.GetDangerZone().gameObject.transform.position.y)
         {
             canUnion_ = false;
+            Prediction.transform.position = new Vector3(-300, -300, -300);
             hand1.transform.position = new Vector3(-300, -300, -300);
             hand2.transform.position = new Vector3(-300, -300, -300);
         }
@@ -109,6 +126,7 @@ public class PlayerControl : MonoBehaviour
 
         if (canUnion_)
         {
+            isCreated = false;
             switch (tap_state)
             {
 
@@ -130,7 +148,8 @@ public class PlayerControl : MonoBehaviour
                     float min_x = Mathf.Min(touch_pos1.x, touch_pos2.x);
                     float min_y = Mathf.Min(touch_pos1.y, touch_pos2.y);
 
-                    Vector2 pos = new Vector2(min_x + size.x / 2.0f, min_y);
+
+                   Vector2 pos = new Vector2(min_x + size.x / 2.0f, min_y);
 
 
                     // コライダ生成
@@ -143,18 +162,38 @@ public class PlayerControl : MonoBehaviour
                             hand2.transform.position = new Vector3(pos.x + size.x / 2.0f, pos.y, 0);
                         }
 
+                        // ピンチエリア移動
                         start_size = size;
                         start_pos = pos;
                         Area.transform.position = pos;
+
+                        // 予測ユニット表示
+                        Vector3 pos2 = pos + new Vector2(0, 1.5f);
+                        Prediction.transform.position = pos2;
 
                         isTrigger = true;
                     }
 
 
+                    sprPre.sprite = Union.tmpSprite;
+
+                    if (pinch_num == 1)
+                    {
+                        sprPreOp.sprite = deleteSpr;
+                    }
+
+                    else
+                    {
+                        sprPreOp.sprite = null;
+
+                    }
                     // 合体
                     if (Area.gameObject.tag == "Pinched" && Area.transform.localScale.x < 1.5f)
                     {
                         Area.transform.position = new Vector3(-300, -300, -300);
+                        Prediction.transform.position = new Vector3(-300, -300, -300);
+                        Union.tmpSprite = null;
+
 
                         if (canInstantiate)
                         {
@@ -196,6 +235,7 @@ public class PlayerControl : MonoBehaviour
                                     }
                                 }
                             }
+
                         }
                     }
 
@@ -219,6 +259,10 @@ public class PlayerControl : MonoBehaviour
                     Area.transform.position = new Vector3(-300, -300, -300);
                     hand1.transform.position = new Vector3(-300, -300, -300);
                     hand2.transform.position = new Vector3(-300, -300, -300);
+                    Prediction.transform.position = new Vector3(-300, -300, -300);
+                    Union.tmpSprite = null;
+
+
                     //newUnit.tag = "Player";
                     isTrigger = false;
                     canInstantiate = true;
@@ -242,6 +286,7 @@ public class PlayerControl : MonoBehaviour
             {
                 hand1.transform.position = new Vector3(-300, -300, -300);
                 hand2.transform.position = new Vector3(-300, -300, -300);
+                
             }
         }
            
@@ -249,6 +294,8 @@ public class PlayerControl : MonoBehaviour
         {
             delay = 80;
             Instantiate(newUnit);
+            //
+            isCreated = true;
             isWaiting = false;
 
         }
@@ -259,10 +306,9 @@ public class PlayerControl : MonoBehaviour
             
         }
 
-
-
         pinch_num = 0;
         unionCost = 0;
+
         // 判定エリア内のユニット数をカウント
         foreach (GameObject union in unions)
         {
@@ -278,6 +324,17 @@ public class PlayerControl : MonoBehaviour
                 {
                     // 既存のユニットを破壊
                     Destroy(union);
+                }
+            }
+            else
+            {
+               if( pinch_num == 1)
+                {
+                    foreach (GameObject union in unions)
+                    {
+                        // 既存のユニットを破壊
+                        Destroy(union);
+                    }
                 }
             }
 
@@ -334,8 +391,18 @@ public class PlayerControl : MonoBehaviour
         return unionCoolTime;
     }
 
+    public void SetUnionCoolTime(float num)
+    {
+        unionCoolTime = num;
+    }
+
     public int GetCoolTime()
     {
         return COOL_TIME;
+    }
+
+    public bool getIsCreated()
+    {
+        return isCreated;
     }
 }
