@@ -34,6 +34,7 @@ public class button : UIBehaviour {
 		
         if(flag)
         {
+            Time.timeScale = 1;
             //タイトルへ移動
             SceneManager.LoadScene(seneName);
         }

@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: ffeb5f6989ce5ac41850ca352a8f6770
+timeCreated: 1497086745
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: KH Dot Hibiya 24
+  fontNames:
+  - KH Dot Hibiya 24
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
