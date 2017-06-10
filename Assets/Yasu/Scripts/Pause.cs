@@ -51,7 +51,7 @@ public class Pause : MonoBehaviour
                 m_flag = true;
             }
         }
-        else
+        else if(m_flag == true)
         {
             m_flag = false;
             Destroy(button.gameObject);
