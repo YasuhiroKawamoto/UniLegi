@@ -108,9 +108,9 @@ public class PlayerControl : MonoBehaviour
             if (touch_pos1.y <= manager.GetDangerZone().gameObject.transform.position.y || touch_pos2.y <= manager.GetDangerZone().gameObject.transform.position.y)
         {
             canUnion_ = false;
-            Prediction.transform.position = new Vector3(-300, -300, -300);
             hand1.transform.position = new Vector3(-300, -300, -300);
             hand2.transform.position = new Vector3(-300, -300, -300);
+            Prediction.transform.position = new Vector3(-300, -300, -300);
         }
         else
         {
@@ -177,6 +177,8 @@ public class PlayerControl : MonoBehaviour
 
                     sprPre.sprite = Union.tmpSprite;
 
+
+
                     if (pinch_num == 1)
                     {
                         sprPreOp.sprite = deleteSpr;
@@ -235,12 +237,8 @@ public class PlayerControl : MonoBehaviour
                                     }
                                 }
                             }
-
                         }
                     }
-
-
-
 
                     // ピンチイン判定
                     if (size.x <= 1)
@@ -318,6 +316,7 @@ public class PlayerControl : MonoBehaviour
 
         if (Area.gameObject.tag == "Pinched")
         {
+
             if (pinch_num > 1 && canInstantiate == false)
             {
                 foreach (GameObject union in unions)
