@@ -7,13 +7,36 @@ public class StepText : MonoBehaviour {
 
 	//オブジェクト
     [SerializeField]
-    private Text step;
+    private GameObject step;
     [SerializeField]
     private Canvas canvas;
+    [SerializeField]
+    private Text text1;
+    [SerializeField]
+    private Text text2;
+    [SerializeField]
+    private Text text3;
+    [SerializeField]
+    private Text text4;
+    [SerializeField]
+    private Text text5;
+    [SerializeField]
+    private Text text6;
+
+    [SerializeField]
+    private GameObject TB;
+
+    [SerializeField]
+    private GameObject SB;
+
+
+
+    Text tmpText;
+
+    GameObject tmpObj;
 
     GameObject TutorialManager;
-    public GameObject gameObject1;
-    public GameObject gameObject2;
+    
 
     private int m_cnt = 0;
 
@@ -23,14 +46,11 @@ public class StepText : MonoBehaviour {
 
     private int CurrentStep = 0;
 
-    [SerializeField]
-    private Vector3 m_pos;
-    [SerializeField]
-    private Vector3 m_rot;
+   
 
-    //ラストウェーブの数
+    //最終ステップの数
     [SerializeField]
-    private int m_lastWave;
+    private int m_lastStep;
 
     // Use this for initialization
     void Start () {
@@ -48,37 +68,82 @@ public class StepText : MonoBehaviour {
 
         if (m_cnt != CurrentStep)
         {
+            if(tmpText != null)
+            Destroy(tmpText.gameObject);
+            Destroy(tmpObj);
             //wave数の表示
-            if (m_lastWave == m_cnt)
+            if (m_lastStep == m_cnt)
             {
-                step.text = "LASTSTEP";
-                Instantiate(step, canvas.transform);
-                Instantiate(gameObject1, transform.position + m_pos, transform.rotation);
-                Instantiate(gameObject2, transform.position - m_pos, transform.rotation);
+
+                //ウィンドウの召喚
+                tmpObj = Instantiate(step, canvas.transform);
+                tmpText = Instantiate(text6, canvas.transform);
+
+                if (TB != null)
+                {
+                    TB.transform.position = new Vector3(-400, 400, 0);
+                    Instantiate(TB,canvas.transform);
+                }
+
+                if (SB != null)
+                {
+                    SB.transform.position = new Vector3(400,400, 0);
+                    Instantiate(SB, canvas.transform);
+                }
+
+
+
                 m_cnt = CurrentStep;
                 m_flag = true;
                 m_time = 0.0f;
             }
-            else if(m_lastWave > m_cnt)
+            else if(m_lastStep > m_cnt)
             {
-                step.text = "STEP " + CurrentStep.ToString();
-                Instantiate(step, canvas.transform);
+                
+                //ウィンドウの召喚
+                tmpObj = Instantiate(step, canvas.transform);
+                
+
+                switch (CurrentStep)
+                {
+                    case 1:
+                        tmpText = Instantiate(text1, canvas.transform);
+                        break;
+                    case 2:
+                        tmpText = Instantiate(text2, canvas.transform);
+                        break;
+                    case 3:
+                        tmpText = Instantiate(text3, canvas.transform);
+                        break;
+                    case 4:
+                        tmpText = Instantiate(text4, canvas.transform);
+                        break;
+                    case 5:
+                        tmpText = Instantiate(text5, canvas.transform);
+                        break;
+
+                }
+               
                 m_cnt = CurrentStep;
                 m_flag = true;
                 m_time = 0.0f;
             }
         }
 
+        if (tmpText != null)
+        {
+            tmpText.GetComponent<RectTransform>().position = RectTransformUtility.WorldToScreenPoint(Camera.main, new Vector3(0, 2.5f, 0));
+        }
+
+        
         m_time += Time.deltaTime;
 
         if (m_flag == true)
         {
             if (m_time > 2.0f)
-            {
+            {     
                 m_flag = false;
             }
         }
-
     }
-
 }

@@ -44,11 +44,15 @@ public class TutorialManager : MonoBehaviour {
 	void Update ()
     {
 
-        if (StepFlag != 4)
+        if (StepFlag < 4)
         {
             Player.GetComponent<PlayerControl>().SetUnionCoolTime(100);
         }
+        else
+        {
 
+            Player.GetComponent<PlayerControl>().SetUnionCoolTime(0);
+        }
         
 
         ChangeStep();
@@ -79,11 +83,11 @@ public class TutorialManager : MonoBehaviour {
                     break;
                 case 1:
                     Debug.Log("STEP1");
-                    TestEnemy1 = Instantiate(Enemy1);
-                    TestEnemy1.transform.position = new Vector3(0, 0, 0);
                     break;
                 case 2:
                     Debug.Log("STEP2");
+                    TestEnemy1 = Instantiate(Enemy1);
+                    TestEnemy1.transform.position = new Vector3(0, 0, 0);
                     break;
                 case 3:
                     Debug.Log("STEP3");
