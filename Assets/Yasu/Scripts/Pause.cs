@@ -13,6 +13,7 @@ public class Pause : MonoBehaviour
     GameManager manager;
     [SerializeField]
     GameObject gameObject;
+    GameObject button;
     [SerializeField]
     Canvas canvas;
 
@@ -46,16 +47,18 @@ public class Pause : MonoBehaviour
 
             if (m_flag == false)
             {
-                Instantiate(gameObject, canvas.transform);
+                button = Instantiate(gameObject, canvas.transform);
                 m_flag = true;
             }
         }
         else
         {
+            m_flag = false;
+            Destroy(button.gameObject);
             Time.timeScale = manager.GetSpd();
             text.text = "||";
-            m_flag = false;
-            Destroy(gameObject);
+           
+            
         }
     }
 }
