@@ -111,7 +111,7 @@ public class BossAttack : MonoBehaviour {
 
             col.gameObject.GetComponent<States>().SetLockOn(true);
                 Debug.Log("接敵");
-        
+
             }
 
             if (col.gameObject.tag == "DangerZone")//接触オブジェクトがDangerZone

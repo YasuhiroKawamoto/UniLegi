@@ -32,7 +32,7 @@ public class SoundManager
     public SoundManager()
     {
 
-
+        //SEの登録
         audioClips.Add("se001", new AudioClipInfo("hit", "se001"));
         audioClips.Add("se002", new AudioClipInfo("Sammon", "se002"));
         audioClips.Add("se003", new AudioClipInfo("Dead", "se003"));
@@ -42,16 +42,17 @@ public class SoundManager
         audioClips.Add("se007", new AudioClipInfo("Pick", "se007"));
         audioClips.Add("se008", new AudioClipInfo("GaugeMax", "se008"));
         audioClips.Add("se009", new AudioClipInfo("Guard", "se009"));
+        audioClips.Add("se010", new AudioClipInfo("AlartSE", "se010"));
 
 
-
-
-
+        //BGMの登録
         audioClips.Add("BGM001", new AudioClipInfo("TitleBGM", "BGM001"));
         audioClips.Add("BGM002", new AudioClipInfo("SelectBGM", "BGM002"));
         audioClips.Add("BGM003", new AudioClipInfo("BattleBGM2", "BGM003"));
-        //audioClips.Add("BGM004", new AudioClipInfo("BattleBGM2", "BGM003"));
-        //audioClips.Add("BGM005", new AudioClipInfo("BattleBGM2", "BGM003"));
+        audioClips.Add("BGM004", new AudioClipInfo("TutorialBGM", "BGM004"));
+        audioClips.Add("BGM004", new AudioClipInfo("Infinity", "BGM005"));
+        //audioClips.Add("BGM004", new AudioClipInfo("", ""));
+        //audioClips.Add("BGM005", new AudioClipInfo("", ""));
 
 
     }

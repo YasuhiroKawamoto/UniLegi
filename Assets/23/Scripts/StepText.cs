@@ -81,13 +81,13 @@ public class StepText : MonoBehaviour {
 
                 if (TB != null)
                 {
-                    TB.transform.position = new Vector3(-400, 400, 0);
+                    TB.transform.position = new Vector3(-400,-400, 0);
                     Instantiate(TB,canvas.transform);
                 }
 
                 if (SB != null)
                 {
-                    SB.transform.position = new Vector3(400,400, 0);
+                    SB.transform.position = new Vector3(400,-400, 0);
                     Instantiate(SB, canvas.transform);
                 }
 

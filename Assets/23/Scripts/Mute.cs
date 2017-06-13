@@ -30,6 +30,7 @@ public class Mute: MonoBehaviour
 
                 Singleton<SoundManager>.instance.setIsMute(true);//ミュートフラグをオン
                 Singleton<SoundManager>.instance.pauseBGM();//BGMを一時停止
+                
             }
         }
     }

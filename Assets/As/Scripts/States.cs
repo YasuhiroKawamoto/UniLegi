@@ -268,7 +268,17 @@ public class States : MonoBehaviour
         return IsDead;
     }
 
+    public void StatesUpEnemy(GameObject obj,int Cnt)
+    {
+       obj.GetComponent<States>().m_Attack += Cnt/10;
+        obj.GetComponent<States>().m_Hp += Cnt;
+    }
 
+    public void StatesUpBoss(GameObject obj, int Cnt)
+    {
+        obj.GetComponent<States>().m_Attack += Cnt *2;
+        obj.GetComponent<States>().m_Hp += Cnt*10;
+    }
     void OnDestroy()
     {
         if (IsLockonNow)
