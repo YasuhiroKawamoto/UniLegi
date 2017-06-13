@@ -18,6 +18,10 @@ public class Bullet : MonoBehaviour {
     [SerializeField]
     private float m_dir = 90;
 
+    //貫通弾かどうか
+    [SerializeField]
+    private bool m_pierce=false;
+
 
     // Use this for initialization
     void Start () {
@@ -71,5 +75,11 @@ public class Bullet : MonoBehaviour {
     {
         m_dir = dir;
     }
+    //貫通するかどうかのフラグ
+    public bool getFlag()
+    {
+        return m_pierce;
+    }
+
 
 }
