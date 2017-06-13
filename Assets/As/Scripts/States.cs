@@ -73,7 +73,8 @@ public class States : MonoBehaviour
     {
         DeadCnt = 0.5f;
         manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        DeadAction = (GameObject)Resources.Load("Prefabs/DeadA");
+        if (DeadAction == null)
+            DeadAction = (GameObject)Resources.Load("Prefabs/DeadA");
         LockOnCursor = (GameObject)Resources.Load("Prefabs/LockOnCursor");
 
     }

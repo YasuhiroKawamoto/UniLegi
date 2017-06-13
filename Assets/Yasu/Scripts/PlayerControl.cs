@@ -104,8 +104,8 @@ public class PlayerControl : MonoBehaviour
 
 
 
-            // dangerzone 以下は出現しない
-            if (touch_pos1.y <= manager.GetDangerZone().gameObject.transform.position.y || touch_pos2.y <= manager.GetDangerZone().gameObject.transform.position.y)
+        // dangerzone 以下は出現しない
+        if (touch_pos1.y <= manager.GetDangerZone().gameObject.transform.position.y || touch_pos2.y <= manager.GetDangerZone().gameObject.transform.position.y)
         {
             canUnion_ = false;
             hand1.transform.position = new Vector3(-300, -300, -300);
@@ -140,7 +140,7 @@ public class PlayerControl : MonoBehaviour
                         size.x = Mathf.Clamp(size.x, 0.0f, start_size.x);
                     }
 
-                    Area.transform.localScale = size;
+                    Area.transform.localScale = size - new Vector2(0.6f, 0);
 
 
 
@@ -149,7 +149,7 @@ public class PlayerControl : MonoBehaviour
                     float min_y = Mathf.Min(touch_pos1.y, touch_pos2.y);
 
 
-                   Vector2 pos = new Vector2(min_x + size.x / 2.0f, min_y);
+                    Vector2 pos = new Vector2(min_x + size.x / 2.0f, min_y);
 
 
                     // コライダ生成
@@ -160,6 +160,8 @@ public class PlayerControl : MonoBehaviour
                             // 手が出現
                             hand1.transform.position = new Vector3(pos.x - size.x / 2.0f, pos.y, 0);
                             hand2.transform.position = new Vector3(pos.x + size.x / 2.0f, pos.y, 0);
+                            Prediction.transform.position = new Vector3(-300, -300, -300);
+
                         }
 
                         // ピンチエリア移動
@@ -223,7 +225,8 @@ public class PlayerControl : MonoBehaviour
                                         Singleton<SoundManager>.instance.playSE("se002");
                                         unionCoolTime = COOL_TIME;
 
-                                        delay = 80;
+                                        delay = 50;
+                                        pinch_num = 0;
 
                                         // 手をどける
 
@@ -251,12 +254,12 @@ public class PlayerControl : MonoBehaviour
                 // ゲームオブジェクト「魔王の指」を動的に生成
                 case TAP_STATE.NONE:
                 case TAP_STATE.SINGLE:
-
                 case TAP_STATE.MULTI:
                     Area.gameObject.tag = "Collider";
                     Area.transform.position = new Vector3(-300, -300, -300);
                     hand1.transform.position = new Vector3(-300, -300, -300);
                     hand2.transform.position = new Vector3(-300, -300, -300);
+
                     Prediction.transform.position = new Vector3(-300, -300, -300);
                     Union.tmpSprite = null;
 
@@ -284,24 +287,27 @@ public class PlayerControl : MonoBehaviour
             {
                 hand1.transform.position = new Vector3(-300, -300, -300);
                 hand2.transform.position = new Vector3(-300, -300, -300);
-                
+                Prediction.transform.position = new Vector3(-300, -300, -300);
+
+
             }
         }
-           
+
         if (delay < 0)
         {
-            delay = 80;
+            delay = 50;
             Instantiate(newUnit);
+            newUnit.tag = "Player";
             //
             isCreated = true;
             isWaiting = false;
 
         }
 
-        if(unionCoolTime > 0)
+        if (unionCoolTime > 0)
         {
-            unionCoolTime -= Time.deltaTime*5;
-            
+            unionCoolTime -= Time.deltaTime * 8;
+
         }
 
         pinch_num = 0;
@@ -311,7 +317,7 @@ public class PlayerControl : MonoBehaviour
         foreach (GameObject union in unions)
         {
             pinch_num++;
-            unionCost += union.GetComponent<States>().getCost(); 
+            unionCost += union.GetComponent<States>().getCost();
         }
 
         if (Area.gameObject.tag == "Pinched")
@@ -324,17 +330,25 @@ public class PlayerControl : MonoBehaviour
                     // 既存のユニットを破壊
                     Destroy(union);
                 }
+                pinch_num = 0;
             }
-            else
+
+            else if (pinch_num == 1)
             {
-               if( pinch_num == 1)
+                foreach (GameObject union in unions)
                 {
-                    foreach (GameObject union in unions)
-                    {
-                        // 既存のユニットを破壊
-                        Destroy(union);
-                    }
+                    Vector3 pos = union.transform.position;
+                    GameObject dead = Resources.Load<GameObject>("Prefabs/Destroy");
+                    dead.transform.position = pos;
+                    Instantiate(dead);
+
+
+                    // 既存のユニットを破壊
+                    Destroy(union);
+
+
                 }
+                pinch_num = 0;
             }
 
         }
