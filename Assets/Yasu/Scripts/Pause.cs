@@ -53,11 +53,13 @@ public class Pause : MonoBehaviour
         }
         else if(m_flag == true)
         {
-            m_flag = false;
-            Destroy(button.gameObject);
-            Time.timeScale = manager.GetSpd();
-            text.text = "||";
-           
+            if (m_flag == true)
+            {
+                m_flag = false;
+                Destroy(button.gameObject);
+                Time.timeScale = manager.GetSpd();
+                text.text = "||";
+            }
             
         }
     }
