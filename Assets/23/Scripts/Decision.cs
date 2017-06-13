@@ -193,7 +193,7 @@ public class Decision : MonoBehaviour {
                        
                     }
                    
-                        Singleton<SoundManager>.instance.playSE("se001");//挟撃サウンド
+                    Singleton<SoundManager>.instance.playSE("se001");//挟撃サウンド
                
                     states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage()　+ pincerBonusDamage);//ダメージ判定(挟撃ボーナス込み)
                    
@@ -202,7 +202,10 @@ public class Decision : MonoBehaviour {
 
                
             }
-            Destroy(col);//弾の消滅
+            if (col.gameObject.GetComponent<Bullet>().getFlag() == false)
+            {
+                Destroy(col);
+            }
         }
     }
 
@@ -218,8 +221,10 @@ public class Decision : MonoBehaviour {
             {
                 Instantiate(hitEffect);//エフェクト生成
             }
-
-            Destroy(col);
+            if (col.gameObject.GetComponent<Bullet>().getFlag() == false)
+            {
+                Destroy(col);
+            }
 
         }
 
