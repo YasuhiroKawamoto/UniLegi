@@ -41,24 +41,26 @@ public class Alert : MonoBehaviour {
         //Emitterのコンポーネント
         emitter = gameObject.GetComponent<Emitter>();
         m_gameManager = gameManager.GetComponent<GameManager>();
+        m_lastWave = emitter.GetWaveSize()-1;//最後のウェーブ取得
     }
 	
 	//  is called once per frame
-	void Update () {
+	void Update ()
+    {
 
 
         int CurrentWave = emitter.GetCurrentWave() + 1;
 
-        if (m_gameManager.IsLose() == true)
+        if (m_gameManager.IsLose() == false)
         {
-
             if (m_cnt != CurrentWave)
             {
                 //wave数の表示
                 if (m_lastWave == m_cnt)
                 {
-                    wave.text = "LASTWAVE";
+                    wave.text = "LAST";
                     Instantiate(wave, canvas.transform);
+                    Singleton<SoundManager>.instance.playSE("SE010");//ボスアラート音再生
                     Instantiate(gameObject1, transform.position + m_pos, transform.rotation);
                     Instantiate(gameObject2, transform.position - m_pos, transform.rotation);
                     m_cnt = CurrentWave;

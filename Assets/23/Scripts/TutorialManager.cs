@@ -8,7 +8,9 @@ public class TutorialManager : MonoBehaviour {
 
     GameObject TextBox;//文字表示オブジェクト
 
-    Collider2D Zone;//指定ゾーン
+   
+
+    private Vector3 Pos;//初期位置
 
     private bool IsClear;//条件を満たしているか？
 
@@ -24,6 +26,8 @@ public class TutorialManager : MonoBehaviour {
 
     GameObject TestEnemy2;//正面無効の敵(実体)
 
+    GameObject Monster;//召喚されたモンスター
+
     // Use this for initialization
     void Start () {
         //進行度の初期化
@@ -33,8 +37,7 @@ public class TutorialManager : MonoBehaviour {
         //ゲームマネージャの取得
         Manager = GameObject.Find("GameManager");
         Player = GameObject.Find("Player");
-        //指定位置の初期化
-        Zone = this.GetComponent<BoxCollider2D>();
+       
         //Tutorial用のエネミーの登録
         Enemy1 = (GameObject)Resources.Load("Prefabs/TestEnemy1");
         Enemy2 = (GameObject)Resources.Load("Prefabs/TestEnemy2");
@@ -60,17 +63,7 @@ public class TutorialManager : MonoBehaviour {
 	}
 
 
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        //ユニットを指定ゾーンに置いたら次のステップに
-        if (StepFlag == 1 && col.tag == ("HavingPlayer"))
-        {
-            StepFlag = 2;
-            IsClear = true;
-            Zone.transform.position = new Vector3(0, 30, 0);
-            //Destroy(Zone);
-        }
-    }
+   
 
     void ChangeStep()
     {
@@ -80,9 +73,13 @@ public class TutorialManager : MonoBehaviour {
             {
                 case 0:
                     Debug.Log("STEP0");
+                    
                     break;
                 case 1:
                     Debug.Log("STEP1");
+                    Monster = GameObject.FindGameObjectWithTag("Player");
+                    Pos = Monster.transform.position;
+
                     break;
                 case 2:
                     Debug.Log("STEP2");
@@ -115,7 +112,28 @@ public class TutorialManager : MonoBehaviour {
             StepFlag = 1;
         }
 
-        if (TestEnemy1 != null)
+        if (StepFlag == 1 )
+        {
+
+            if (Monster)
+            {
+
+                if (Mathf.Abs(Pos.x - Monster.transform.position.x) >= 1)
+                {
+                    IsClear = true;
+                    StepFlag = 2;
+                }
+
+                if (Mathf.Abs(Pos.y - Monster.transform.position.y) >= 1)
+                {
+                    IsClear = true;
+                    StepFlag = 2;
+                }
+            }
+
+        }
+
+            if (TestEnemy1 != null)
         {
             if (StepFlag == 2 && TestEnemy1.GetComponent<States>().getDead() == true)
             {

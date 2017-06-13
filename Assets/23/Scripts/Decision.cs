@@ -102,10 +102,11 @@ public class Decision : MonoBehaviour {
             {
                 if (col.GetComponent<Bullet>().getInverdFlag() == false)//被弾した弾の向きが反転していなければ
                 {
-
-                    //ガード音再生
-                    Singleton<SoundManager>.instance.playSE("se009");
-
+                    if (Singleton<SoundManager>.instance.getIsMute() == false)
+                    {
+                        //ガード音再生
+                        Singleton<SoundManager>.instance.playSE("se009");
+                    }
                     if (guardEffect != null)//エフェクトスロットに設定してある場合
                     {
                         guardEffect.transform.position = col.transform.position;//エフェクト位置設定
@@ -125,7 +126,10 @@ public class Decision : MonoBehaviour {
 
                         Instantiate(hitEffect);//エフェクト生成
                     }
-                    Singleton<SoundManager>.instance.playSE("se001");//サウンド
+
+                 
+                        Singleton<SoundManager>.instance.playSE("se001");//サウンド
+                    
                     states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());//ダメージ判定
 
                 }
@@ -158,7 +162,9 @@ public class Decision : MonoBehaviour {
                         hitEffect.transform.position = col.transform.position;//エフェクト位置設定
                         Instantiate(hitEffect);//エフェクト生成
                     }
-                    Singleton<SoundManager>.instance.playSE("se001");//サウンド
+                    
+                        Singleton<SoundManager>.instance.playSE("se001");//サウンド
+               
                     states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());//ダメージ判定
 
                 }
@@ -186,8 +192,9 @@ public class Decision : MonoBehaviour {
                         Instantiate(pincerEffect);//エフェクト生成
                        
                     }
-
-                    Singleton<SoundManager>.instance.playSE("se001");//挟撃サウンド
+                   
+                        Singleton<SoundManager>.instance.playSE("se001");//挟撃サウンド
+               
                     states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage()　+ pincerBonusDamage);//ダメージ判定(挟撃ボーナス込み)
                    
                 }

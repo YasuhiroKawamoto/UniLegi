@@ -17,6 +17,12 @@ public class SetBGM : MonoBehaviour
             Singleton<SoundManager>.instance.playBGM("BGM001", 0.0f);
         }
 
+        //タイトルシーン
+        if (SceneManager.GetActiveScene().name == "TutorialScene")
+        {
+            Singleton<SoundManager>.instance.playBGM("BGM004", 0.0f);
+        }
+
         //セレクトシーン
         if (SceneManager.GetActiveScene().name == "SelectScene")
         {
@@ -34,6 +40,13 @@ public class SetBGM : MonoBehaviour
             {
                 Singleton<SoundManager>.instance.playBGM("BGM001", 0.0f);
             }
+
+            if (Singleton<SceneData>.instance.getStageNumber() == 4)
+            {
+                Singleton<SoundManager>.instance.playBGM("BGM005", 0.0f);
+            }
+
+
         }
 
     }

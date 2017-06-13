@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Canvas canvas;
 
-    Fade fade;
+
     float m_WaitFade;
     bool fadeFlag;
 
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
 
         // コストが最大値以下ならコスト回復
         m_cnt++;
-        if (m_cnt > 10)
+        if (m_cnt > 13)
         {
             if (m_cost < m_maxCost)
             {
@@ -122,8 +122,10 @@ public class GameManager : MonoBehaviour
             LoseFlag = true;
             IsWaiting = true;
             Singleton<SoundManager>.instance.pauseBGM();
-            Singleton<SoundManager>.instance.playSE("se006");
-
+            if (Singleton<SoundManager>.instance.getIsMute() == false)
+            {
+                Singleton<SoundManager>.instance.playSE("se006");
+            }
 
             Lose.text = "LOSE...";
 

@@ -73,7 +73,8 @@ public class States : MonoBehaviour
     {
         DeadCnt = 0.5f;
         manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        DeadAction = (GameObject)Resources.Load("Prefabs/DeadA");
+        if (DeadAction == null)
+            DeadAction = (GameObject)Resources.Load("Prefabs/DeadA");
         LockOnCursor = (GameObject)Resources.Load("Prefabs/LockOnCursor");
 
     }
@@ -268,7 +269,17 @@ public class States : MonoBehaviour
         return IsDead;
     }
 
+    public void StatesUpEnemy(GameObject obj,int Cnt)
+    {
+       obj.GetComponent<States>().m_Attack += Cnt/10;
+        obj.GetComponent<States>().m_Hp += Cnt;
+    }
 
+    public void StatesUpBoss(GameObject obj, int Cnt)
+    {
+        obj.GetComponent<States>().m_Attack += Cnt *2;
+        obj.GetComponent<States>().m_Hp += Cnt*10;
+    }
     void OnDestroy()
     {
         if (IsLockonNow)

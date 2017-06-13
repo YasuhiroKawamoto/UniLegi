@@ -38,8 +38,6 @@ public class Near : MonoBehaviour {
 
         if (nearObject != null)//最も近いオブジェクトがnullじゃなかったら
         {
-            
-
                 if (nearObject.transform.position.y < this.transform.position.y)//最も近いオブジェクト距離とのを取得して反転
                 {
                     this.gameObject.GetComponent<Tap>().setInverd(true);

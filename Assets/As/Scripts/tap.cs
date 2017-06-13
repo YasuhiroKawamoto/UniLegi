@@ -122,7 +122,6 @@ public class Tap : MonoBehaviour
 
                         m_Cnt = 0.0f;
 
-                        Destroy(objState);
 
                     }
                 }
@@ -159,10 +158,13 @@ public class Tap : MonoBehaviour
                     m_Cnt = 0.0f;
 
                     Destroy(objCursor);
-                    Destroy(objState);
                 }
 
             }
+        }
+        else
+        {
+            Destroy(objState);
         }
     }
 
