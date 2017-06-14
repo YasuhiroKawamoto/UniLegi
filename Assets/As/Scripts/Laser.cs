@@ -10,13 +10,15 @@ public class Laser : MonoBehaviour {
     private float lifeTime;
     //測るタイマー
     private float m_time = 0.0f;
+    private float m_range = 0.0f;
+    private Vector3 vec;
 
-
+    
 	// Use this for initialization
 	void Start () {
 
         m_time = 0.0f;
-
+        vec = transform.localScale;
 	}
 	
 	// Update is called once per frame
@@ -24,11 +26,21 @@ public class Laser : MonoBehaviour {
 
         m_time += Time.deltaTime;
 
-        //消える時間になったら
-        if(m_time>lifeTime)
+        if(m_time < 1.0f)
         {
-            Destroy(gameObject);
+            vec.x += 0.1f;
+            transform.localScale = vec;
         }
+        else if(m_time > 3.0f && m_time< 4.0f)
+        {
+            vec.x -= 0.1f;
+            transform.localScale = vec;
+            if(vec.x<0.0f)
+            {
+                Destroy(gameObject);
+            }
+        }
+
 
 
 	}

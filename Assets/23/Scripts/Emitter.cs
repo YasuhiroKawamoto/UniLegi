@@ -15,11 +15,10 @@ public class Emitter : MonoBehaviour {
     [SerializeField]
     public GameObject[] stage3;
     [SerializeField]
-    public Text Clear;
-    [SerializeField]
     private Canvas canvas;
-
-  
+    [SerializeField]
+    public GameObject Clear;
+    
 
     public GameObject[][] Waves;
 
@@ -72,7 +71,7 @@ public class Emitter : MonoBehaviour {
                 Singleton<SoundManager>.instance.pauseBGM();
                 Singleton<SoundManager>.instance.playSE("se005");
 
-                Clear.text = "CLEAR";
+                Instantiate(Clear);
 
                 Instantiate(Clear, canvas.transform);
 
