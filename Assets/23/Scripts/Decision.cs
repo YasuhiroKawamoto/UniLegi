@@ -53,6 +53,7 @@ public class Decision : MonoBehaviour
 
         backCnt = 2.0f;
 
+        pincerEffect = (GameObject)Resources.Load("Prefabs/PincherA");
 
     }
 
@@ -180,13 +181,13 @@ public class Decision : MonoBehaviour
                     if (col.GetComponent<Bullet>().getInverdFlag() == false)//被弾した弾の向きが反転していなければ
                     {
 
-                        flontCnt = 2.0f;
+                        flontCnt = 1.0f;
                     }
 
                     if (col.GetComponent<Bullet>().getInverdFlag() == true)//被弾した弾の向きが反転していれば
                     {
 
-                        backCnt = 2.0f;
+                        backCnt = 1.0f;
 
                     }
 
@@ -195,7 +196,7 @@ public class Decision : MonoBehaviour
 
                     if (pincerEffect != null)//エフェクトスロットに設定してある場合
                     {
-                        pincerEffect.transform.position = col.transform.position;//エフェクト位置設定
+                        pincerEffect.transform.position = transform.position;//エフェクト位置設定
                         Instantiate(pincerEffect);//エフェクト生成
 
                     }
@@ -205,8 +206,6 @@ public class Decision : MonoBehaviour
                     states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage() + pincerBonusDamage);//ダメージ判定(挟撃ボーナス込み)
 
                 }
-
-
 
             }
             if (col.gameObject.GetComponent<Bullet>().getFlag() == false)
@@ -240,8 +239,6 @@ public class Decision : MonoBehaviour
             }
 
         }
-
-
 
     }
 

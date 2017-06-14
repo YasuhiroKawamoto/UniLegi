@@ -43,10 +43,6 @@ public class SideLine : MonoBehaviour
         //{
 
 
-        ////経過時間を初期化
-        //searchTime = 0;
-
-
         if (nearObject != null)//最も近いオブジェクトがnullじゃなかったら
         {
             if (LineObj == null)//ライン未精製時 
