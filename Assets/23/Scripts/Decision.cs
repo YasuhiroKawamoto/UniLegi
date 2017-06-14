@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Decision : MonoBehaviour {
+public class Decision : MonoBehaviour
+{
 
     //Statesコンポーネント
     States states;
@@ -15,9 +16,9 @@ public class Decision : MonoBehaviour {
     //背面被弾
     private bool backHit;
 
-    private float flontCnt;
+    private float flontCnt;//正面被弾判定待機時間
 
-    private float backCnt;
+    private float backCnt;//背面被弾判定待機時間
 
     //挟撃ボーナスダメージ
     private int pincerBonusDamage = 2;
@@ -36,7 +37,7 @@ public class Decision : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
 
         //Statesコンポーネントの取得
@@ -54,9 +55,9 @@ public class Decision : MonoBehaviour {
 
 
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
 
         if (flontHit && backHit)
@@ -109,17 +110,23 @@ public class Decision : MonoBehaviour {
                     }
                     if (guardEffect != null)//エフェクトスロットに設定してある場合
                     {
-                        guardEffect.transform.position = col.transform.position;//エフェクト位置設定
+                        if (col.gameObject.GetComponent<Bullet>().getFlag() == false)
+                        {
+                            guardEffect.transform.position = col.transform.position;//エフェクト位置設定
+                        }
+                        else {
+                            guardEffect.transform.position = this.transform.position;//エフェクト位置設定
 
+                        }
                         Instantiate(guardEffect);//ガードエフェクト生成
                     }
 
-                   
+
                 }
                 else
                 {
 
-      
+
                     if (hitEffect != null)//エフェクトスロットに設定してある場合
                     {
                         hitEffect.transform.position = col.transform.position;//エフェクト位置設定
@@ -127,9 +134,9 @@ public class Decision : MonoBehaviour {
                         Instantiate(hitEffect);//エフェクト生成
                     }
 
-                 
-                        Singleton<SoundManager>.instance.playSE("se001");//サウンド
-                    
+
+                    Singleton<SoundManager>.instance.playSE("se001");//サウンド
+
                     states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());//ダメージ判定
 
                 }
@@ -162,23 +169,23 @@ public class Decision : MonoBehaviour {
                         hitEffect.transform.position = col.transform.position;//エフェクト位置設定
                         Instantiate(hitEffect);//エフェクト生成
                     }
-                    
-                        Singleton<SoundManager>.instance.playSE("se001");//サウンド
-               
+
+                    Singleton<SoundManager>.instance.playSE("se001");//サウンド
+
                     states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());//ダメージ判定
 
                 }
-                else if(IsPincer == true)//挟撃成立時
+                else if (IsPincer == true)//挟撃成立時
                 {
                     if (col.GetComponent<Bullet>().getInverdFlag() == false)//被弾した弾の向きが反転していなければ
                     {
-                       
+
                         flontCnt = 2.0f;
                     }
 
                     if (col.GetComponent<Bullet>().getInverdFlag() == true)//被弾した弾の向きが反転していれば
                     {
-                       
+
                         backCnt = 2.0f;
 
                     }
@@ -190,36 +197,47 @@ public class Decision : MonoBehaviour {
                     {
                         pincerEffect.transform.position = col.transform.position;//エフェクト位置設定
                         Instantiate(pincerEffect);//エフェクト生成
-                       
-                    }
-                   
-                        Singleton<SoundManager>.instance.playSE("se001");//挟撃サウンド
-               
-                    states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage()　+ pincerBonusDamage);//ダメージ判定(挟撃ボーナス込み)
-                   
-                }
-                
 
-               
+                    }
+
+                    Singleton<SoundManager>.instance.playSE("se001");//挟撃サウンド
+
+                    states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage() + pincerBonusDamage);//ダメージ判定(挟撃ボーナス込み)
+
+                }
+
+
+
             }
-            Destroy(col);//弾の消滅
+            if (col.gameObject.GetComponent<Bullet>().getFlag() == false)
+            {
+                Destroy(col);
+            }
         }
     }
 
     void OnTriggerStay2D(Collider2D col)
     {
-
+        float cnt = 0;
         if (col.gameObject.tag == "Bullet")
         {
+            cnt = Time.deltaTime;
 
-            states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());
-
-            if (hitEffect != null)//エフェクトスロットに設定してある場合
+            if (cnt > 1.0f)
             {
-                Instantiate(hitEffect);//エフェクト生成
+                states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());
+                if (hitEffect != null)//エフェクトスロットに設定してある場合
+                {
+                    Debug.Log("継続ダメージ");
+                    hitEffect.transform.position = transform.position;//エフェクト位置設定
+                    Instantiate(hitEffect);//エフェクト生成
+                }
+                cnt = 0;
             }
-
-            Destroy(col);
+            if (col.gameObject.GetComponent<Bullet>().getFlag() == false)
+            {
+                Destroy(col);
+            }
 
         }
 
@@ -231,7 +249,7 @@ public class Decision : MonoBehaviour {
     {
 
 
-      
+
 
     }
 

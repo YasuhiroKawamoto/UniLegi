@@ -68,6 +68,11 @@ public class Tap : MonoBehaviour
             //タッチ開始時
             if (touch.phase == TouchPhase.Began)
             {
+                if (objState != null)
+                {
+                    Destroy(objState);
+                }
+
                 //タッチをした位置にオブジェクト判定
                 RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
 
