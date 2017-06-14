@@ -53,7 +53,6 @@ public class TutorialManager : MonoBehaviour {
         }
         else
         {
-
             Player.GetComponent<PlayerControl>().SetUnionCoolTime(0);
         }
         
@@ -73,7 +72,7 @@ public class TutorialManager : MonoBehaviour {
             {
                 case 0:
                     Debug.Log("STEP0");
-                    
+  
                     break;
                 case 1:
                     Debug.Log("STEP1");
@@ -118,13 +117,13 @@ public class TutorialManager : MonoBehaviour {
             if (Monster)
             {
 
-                if (Mathf.Abs(Pos.x - Monster.transform.position.x) >= 1)
+                if (Mathf.Abs(Pos.x - Monster.transform.position.x) >= 2)
                 {
                     IsClear = true;
                     StepFlag = 2;
                 }
 
-                if (Mathf.Abs(Pos.y - Monster.transform.position.y) >= 1)
+                if (Mathf.Abs(Pos.y - Monster.transform.position.y) >= 2)
                 {
                     IsClear = true;
                     StepFlag = 2;
