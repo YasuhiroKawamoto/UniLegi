@@ -51,8 +51,8 @@ public class SoundManager
         audioClips.Add("BGM003", new AudioClipInfo("BattleBGM2", "BGM003"));
         audioClips.Add("BGM004", new AudioClipInfo("TutorialBGM", "BGM004"));
         audioClips.Add("BGM005", new AudioClipInfo("Infinity", "BGM005"));
-        //audioClips.Add("BGM004", new AudioClipInfo("", ""));
-        //audioClips.Add("BGM005", new AudioClipInfo("", ""));
+        //audioClips.Add("BGM006", new AudioClipInfo("", ""));
+        //audioClips.Add("BGM007", new AudioClipInfo("", ""));
 
 
     }
