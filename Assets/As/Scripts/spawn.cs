@@ -13,7 +13,15 @@ public class spawn : MonoBehaviour
 
     [SerializeField]
     GameObject effect;
+    [SerializeField]
+    GameObject arrow;
+    GameObject arrowObj;
+    //デンジャーゾーン
+    [SerializeField]
+    GameObject DanjarZone;
 
+    //矢印が出ているかのフラグ
+    private bool m_arrowFlag;
     //触ったフラグ
     private int m_flag;
     //タッチ
@@ -48,7 +56,7 @@ public class spawn : MonoBehaviour
         IsWaiting = false;
 
         IsSummons = false;
-
+        m_arrowFlag = false;
     }
 
     // Update is called once per frame
@@ -63,6 +71,15 @@ public class spawn : MonoBehaviour
                 // 色を明るく
                 SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
 
+                Vector3 pos = transform.position;
+                pos.y = pos.y + 1.0f;
+
+                if (m_arrowFlag == false)
+                {
+                    arrowObj = Instantiate(arrow);
+                    arrowObj.transform.position = pos;
+                    m_arrowFlag = true;
+                }
                 sr.color = Color.white;
                 if (Input.touchCount > 0)
                 {
@@ -106,6 +123,8 @@ public class spawn : MonoBehaviour
                                     PlayerControl.canUnion = true;
 
                                     m_flag = 0;
+
+                                    m_arrowFlag = false;
                                 }
                                 else
                                 {
@@ -139,6 +158,9 @@ public class spawn : MonoBehaviour
                                     PlayerControl.canUnion = true;
 
                                     m_flag = 0;
+
+                                    m_arrowFlag = false;
+
                                 }
                             }
                         }
@@ -159,9 +181,13 @@ public class spawn : MonoBehaviour
 
                 // 色を暗く
                 SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
-
+                if (m_arrowFlag == true)
+                {
+                    Destroy(arrowObj.gameObject);
+                }
                 sr.color = Color.gray;
-
+                //フラグを折る
+                m_arrowFlag = false;
             }
 
             //1の時追従する
@@ -176,7 +202,11 @@ public class spawn : MonoBehaviour
 
             }
 
-
+            //デンジャーゾーンよりY軸が大きくなったら矢印を消す
+            if(this.transform.position.y>DanjarZone.transform.position.y)
+            {
+                Destroy(arrowObj.gameObject);
+            }
 
 
 

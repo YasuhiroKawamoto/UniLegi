@@ -42,10 +42,9 @@ public class GameManager : MonoBehaviour
 
     private bool LoseFlag;
 
-
-
     [SerializeField]
-    public Text Lose;
+    private GameObject Lose;
+
     [SerializeField]
     private Canvas canvas;
 
@@ -127,9 +126,7 @@ public class GameManager : MonoBehaviour
                 Singleton<SoundManager>.instance.playSE("se006");
             }
 
-            Lose.text = "LOSE...";
-
-            Instantiate(Lose, canvas.transform);
+            Instantiate(Lose);
         }
 
 
