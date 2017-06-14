@@ -123,7 +123,10 @@ public class spawn : MonoBehaviour
                                     PlayerControl.canUnion = true;
 
                                     m_flag = 0;
-
+                                    if(m_arrowFlag==true)
+                                    {
+                                        Destroy(arrowObj.gameObject);
+                                    }
                                     m_arrowFlag = false;
                                 }
                                 else
