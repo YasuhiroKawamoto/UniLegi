@@ -110,8 +110,14 @@ public class Decision : MonoBehaviour
                     }
                     if (guardEffect != null)//エフェクトスロットに設定してある場合
                     {
-                        guardEffect.transform.position = col.transform.position;//エフェクト位置設定
+                        if (col.gameObject.GetComponent<Bullet>().getFlag() == false)
+                        {
+                            guardEffect.transform.position = col.transform.position;//エフェクト位置設定
+                        }
+                        else {
+                            guardEffect.transform.position = this.transform.position;//エフェクト位置設定
 
+                        }
                         Instantiate(guardEffect);//ガードエフェクト生成
                     }
 
