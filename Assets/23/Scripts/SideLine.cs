@@ -88,7 +88,6 @@ public class SideLine : MonoBehaviour {
 
         }
         //最も近かったオブジェクトを返す
-
         return target;
     }
 }
