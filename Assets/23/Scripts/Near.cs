@@ -38,15 +38,20 @@ public class Near : MonoBehaviour {
 
         if (nearObject != null)//最も近いオブジェクトがnullじゃなかったら
         {
-                if (nearObject.transform.position.y < this.transform.position.y)//最も近いオブジェクト距離とのを取得して反転
-                {
-                    this.gameObject.GetComponent<Tap>().setInverd(true);
-                }
-                else
-                {
-                    this.gameObject.GetComponent<Tap>().setInverd(false);
-                }
+            //最も近いオブジェクト距離とのを取得して反転判定
+            if (nearObject.transform.position.y < this.transform.position.y)
+            {
+                this.gameObject.GetComponent<Tap>().setInverd(true);
+            }
+            else
+            {
+                this.gameObject.GetComponent<Tap>().setInverd(false);
+            }
 
+        }
+        else {
+            //近くにオブジェクトが無ければ正面判定にする
+            this.gameObject.GetComponent<Tap>().setInverd(false);
         }
     }
 
