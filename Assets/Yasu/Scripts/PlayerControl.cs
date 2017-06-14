@@ -229,12 +229,11 @@ public class PlayerControl : MonoBehaviour
                                         pinch_num = 0;
 
                                         // 手をどける
-
                                         isWaiting = true;
 
 
-                                        // コスト消費
-                                        manager.SpendCost(unionCost);
+                                        //// コスト消費
+                                        //manager.SpendCost(unionCost);
 
                                         canInstantiate = false;
                                     }
@@ -306,18 +305,16 @@ public class PlayerControl : MonoBehaviour
 
         if (unionCoolTime > 0)
         {
-            unionCoolTime -= Time.deltaTime * 8;
+            unionCoolTime -= Time.deltaTime * 3;
 
         }
 
         pinch_num = 0;
-        unionCost = 0;
 
         // 判定エリア内のユニット数をカウント
         foreach (GameObject union in unions)
         {
             pinch_num++;
-            unionCost += union.GetComponent<States>().getCost();
         }
 
         if (Area.gameObject.tag == "Pinched")

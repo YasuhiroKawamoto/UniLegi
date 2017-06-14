@@ -64,9 +64,9 @@ public class States : MonoBehaviour
 
     [SerializeField]
     private GameManager manager;
-   
 
 
+    GameObject Player;
 
     // Use this for initialization
     void Start()
@@ -76,6 +76,7 @@ public class States : MonoBehaviour
         if (DeadAction == null)
             DeadAction = (GameObject)Resources.Load("Prefabs/DeadA");
         LockOnCursor = (GameObject)Resources.Load("Prefabs/LockOnCursor");
+        Player = GameObject.Find("Player");
 
     }
 
@@ -84,25 +85,26 @@ public class States : MonoBehaviour
     {
 
         // HP0以下で消滅
-        if (getHp() <= 0 &&IsDead == false )
+        if (getHp() <= 0 && IsDead == false)
         {
-            
-                IsDead = true;
-                Debug.Log("死んだ");
-               
-                manager.RecoverCost(getCost());
+
+            IsDead = true;
+            Debug.Log("死んだ");
+
+            // コスト回復
+            PlayerControl plc = Player.GetComponent<PlayerControl>();
+            plc.SetUnionCoolTime(plc.GetUnionCoolTime() - getCost()/2.0f);
 
 
-                if (DeadAction != null)
-                {
-                    //死亡時動作
-                    DeadAction.transform.position = this.gameObject.transform.position;
-                    // コスト回復
-                    Instantiate<GameObject>(DeadAction);
-                }
+            if (DeadAction != null)
+            {
+                //死亡時動作
+                DeadAction.transform.position = this.gameObject.transform.position;
+                Instantiate<GameObject>(DeadAction);
+            }
 
-          
-           
+
+
         }
 
 
@@ -269,16 +271,16 @@ public class States : MonoBehaviour
         return IsDead;
     }
 
-    public void StatesUpEnemy(GameObject obj,int Cnt)
+    public void StatesUpEnemy(GameObject obj, int Cnt)
     {
-       obj.GetComponent<States>().m_Attack += Cnt/10;
+        obj.GetComponent<States>().m_Attack += Cnt / 10;
         obj.GetComponent<States>().m_Hp += Cnt;
     }
 
     public void StatesUpBoss(GameObject obj, int Cnt)
     {
-        obj.GetComponent<States>().m_Attack += Cnt *2;
-        obj.GetComponent<States>().m_Hp += Cnt*10;
+        obj.GetComponent<States>().m_Attack += Cnt * 2;
+        obj.GetComponent<States>().m_Hp += Cnt * 10;
     }
     void OnDestroy()
     {
