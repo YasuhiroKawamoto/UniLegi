@@ -15,7 +15,6 @@ public class Tap : MonoBehaviour
     Vector3 zone;
     //元の大きさを保存
     private Vector3 m_saveScale;
-    private Vector3 m_savePos;
     //反転してるかどうか
     private bool m_Invert = false;
     //タッチ
@@ -41,6 +40,13 @@ public class Tap : MonoBehaviour
     //マス
     GameObject[] grids;
 
+    // 現れるべき場所
+    Vector3 appearPos;
+
+    // 還るべき場所
+    private Vector3 m_savePos;
+
+
 
     // Use this for initialization
     void Start()
@@ -55,7 +61,6 @@ public class Tap : MonoBehaviour
         //大きさを保存
         m_saveScale = this.transform.localScale;
 
-        
     }
 
     // Update is called once per frame
@@ -106,7 +111,7 @@ public class Tap : MonoBehaviour
 
 
                             objState = Instantiate(state, canvas.transform);
-
+                            
                         }
                     }
                 }
@@ -116,7 +121,7 @@ public class Tap : MonoBehaviour
             else if (touch.phase == TouchPhase.Ended && m_moveFlag)
             {
                 bool inGrid = false;
-                Vector3 appearPos = Vector3.zero;
+
                 bool isExisting = false;
 
                 foreach (GameObject grid in grids)
@@ -135,6 +140,7 @@ public class Tap : MonoBehaviour
                             inGrid = true;
                             appearPos = gridPos;
                             m_savePos = appearPos;
+
                         }
                     }
                 }
@@ -157,23 +163,24 @@ public class Tap : MonoBehaviour
 
                         m_Cnt = 0.0f;
                     }
-                   
-                }
-                // 移動後が設置可能なマスでないとき
-                else
-                {
-                    PlayerControl.canUnion = true;
-                    this.gameObject.tag = "Player";
-                    //this.gameObject.layer = 0;
-                    //if (m_Cnt < 0.5f)
+                    // 移動後が設置可能なマスでないとき
+                    else
+                    {
+                        PlayerControl.canUnion = true;
+                        this.gameObject.tag = "Player";
+                        //this.gameObject.layer = 0;
+                        //if (m_Cnt < 0.5f)
 
-                    //this.transform.localScale = m_saveScale;
-                    m_moveFlag = false;
-                    gameObject.transform.position = appearPos;
-                    m_canShot = true;
+                        //this.transform.localScale = m_saveScale;
+                        m_moveFlag = false;
+                        gameObject.transform.position = m_savePos;
+                        m_canShot = true;
 
-                    m_Cnt = 0.0f;
+                        m_Cnt = 0.0f;
+                    }
+
                 }
+               
             }
 
             //オブジェクトが触っている時
@@ -213,6 +220,8 @@ public class Tap : MonoBehaviour
         }
         else
         {
+            m_savePos = transform.position;
+
             Destroy(objState);
         }
     }
