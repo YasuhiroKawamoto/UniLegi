@@ -83,12 +83,12 @@ public class TutorialManager : MonoBehaviour {
                 case 2:
                     Debug.Log("STEP2");
                     TestEnemy1 = Instantiate(Enemy1);
-                    TestEnemy1.transform.position = new Vector3(0, 0, 0);
+                    TestEnemy1.transform.position = new Vector3(0, -1, 0);
                     break;
                 case 3:
                     Debug.Log("STEP3");
                     TestEnemy2 = Instantiate(Enemy2);
-                    TestEnemy2.transform.position = new Vector3(0, 0, 0);
+                    TestEnemy2.transform.position = new Vector3(0, -1, 0);
                     break;
                 case 4:
                     Debug.Log("STEP4");

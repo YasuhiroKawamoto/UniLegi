@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 8df505ba7672e924782c99fd9bba3bae
-timeCreated: 1494231749
+timeCreated: 1497447717
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -86,6 +86,14 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -93,10 +101,10 @@ TextureImporter:
       name: armor_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 5
         y: 96
-        width: 32
-        height: 32
+        width: 23
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -106,10 +114,10 @@ TextureImporter:
       name: armor_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 37
         y: 96
-        width: 32
-        height: 32
+        width: 23
+        height: 31
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -119,10 +127,10 @@ TextureImporter:
       name: armor_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 69
         y: 96
-        width: 32
-        height: 32
+        width: 23
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,10 +140,10 @@ TextureImporter:
       name: armor_3
       rect:
         serializedVersion: 2
-        x: 0
+        x: 5
         y: 64
-        width: 32
-        height: 32
+        width: 22
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,10 +153,10 @@ TextureImporter:
       name: armor_4
       rect:
         serializedVersion: 2
-        x: 32
+        x: 37
         y: 64
-        width: 32
-        height: 32
+        width: 22
+        height: 31
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,10 +166,10 @@ TextureImporter:
       name: armor_5
       rect:
         serializedVersion: 2
-        x: 64
+        x: 69
         y: 64
-        width: 32
-        height: 32
+        width: 22
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -171,10 +179,10 @@ TextureImporter:
       name: armor_6
       rect:
         serializedVersion: 2
-        x: 0
+        x: 6
         y: 32
-        width: 32
-        height: 32
+        width: 22
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -184,10 +192,10 @@ TextureImporter:
       name: armor_7
       rect:
         serializedVersion: 2
-        x: 32
+        x: 38
         y: 32
-        width: 32
-        height: 32
+        width: 22
+        height: 31
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,10 +205,10 @@ TextureImporter:
       name: armor_8
       rect:
         serializedVersion: 2
-        x: 64
+        x: 70
         y: 32
-        width: 32
-        height: 32
+        width: 22
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -210,10 +218,10 @@ TextureImporter:
       name: armor_9
       rect:
         serializedVersion: 2
-        x: 0
+        x: 5
         y: 0
-        width: 32
-        height: 32
+        width: 24
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -223,10 +231,10 @@ TextureImporter:
       name: armor_10
       rect:
         serializedVersion: 2
-        x: 32
+        x: 37
         y: 0
-        width: 32
-        height: 32
+        width: 23
+        height: 31
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,10 +244,10 @@ TextureImporter:
       name: armor_11
       rect:
         serializedVersion: 2
-        x: 64
+        x: 68
         y: 0
-        width: 32
-        height: 32
+        width: 24
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
