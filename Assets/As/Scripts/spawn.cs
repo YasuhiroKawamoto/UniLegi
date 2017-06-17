@@ -41,6 +41,9 @@ public class spawn : MonoBehaviour
     private Vector3 savePos;
     Vector3 tmpPos;
 
+    //マス
+    GameObject[] grids;
+
     // Use this for initialization
     void Start()
     {
@@ -91,6 +94,9 @@ public class spawn : MonoBehaviour
                     //タッチ開始時
                     if (touch.phase == TouchPhase.Began)
                     {
+                        // マスオブジェクトを検出
+                        grids = GameObject.FindGameObjectsWithTag("Grid");
+
 
                         //タッチをした位置にオブジェクト判定
                         RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
@@ -111,7 +117,6 @@ public class spawn : MonoBehaviour
                     {
                         //タッチをした位置にオブジェクト判定
                         RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
-
                         if (hit)
                         {
                             if (hit.collider.gameObject == this.gameObject)
@@ -126,14 +131,35 @@ public class spawn : MonoBehaviour
 
                                     m_arrowFlag = false;
                                 }
-                                else
+                                else 
                                 {
+                                    bool inGrid = false;
+                                    Vector3 appearPos = Vector3.zero;
+                                    bool isExisting = false;
 
-
-
-                                    if (IsSummons == false)//召喚中ッで無ければ
+                                    foreach (GameObject grid in grids)
                                     {
-                                        AsPrefab.transform.position = m_worldPoint;
+                                        Vector3 gridPos = grid.transform.position;
+                                        Vector3 gridScl = grid.transform.localScale;
+                                        isExisting = grid.GetComponent<Grid>().GetIsExisting();
+
+                                        // タッチ座標がマスの中
+                                        if (m_worldPoint.x> gridPos.x - gridScl.x / 2 && m_worldPoint.y>gridPos.y - gridScl.y / 2 &&
+                                            m_worldPoint.x<gridPos.x + gridScl.x / 2 && m_worldPoint.y < gridPos.y + gridScl.y/2)
+                                        {
+                                            if (isExisting == false)
+                                            {
+                                                Debug.Log("マスの中");
+                                                inGrid = true;
+                                                appearPos = gridPos;
+                                            }
+                                        }
+                                    }
+
+
+                                    if (IsSummons == false && inGrid)//召喚中ッで無ければ　かつ　マスの中
+                                    {
+                                        AsPrefab.transform.position = appearPos;
 
                                         effect.transform.position = AsPrefab.transform.position;//エフェクト位置設定
 

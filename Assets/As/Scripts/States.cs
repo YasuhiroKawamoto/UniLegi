@@ -83,6 +83,8 @@ public class States : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // リジッドボディを強制起動
+        GetComponent<Rigidbody2D>().WakeUp();
 
         // HP0以下で消滅
         if (getHp() <= 0 && IsDead == false)
@@ -94,6 +96,7 @@ public class States : MonoBehaviour
             // コスト回復
             PlayerControl plc = Player.GetComponent<PlayerControl>();
             plc.SetUnionCoolTime(plc.GetUnionCoolTime() - getCost()/2.0f);
+            // manager.RecoverCost(getCost());
 
 
             if (DeadAction != null)
