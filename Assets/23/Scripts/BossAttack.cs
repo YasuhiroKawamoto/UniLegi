@@ -148,7 +148,7 @@ public class BossAttack : MonoBehaviour {
         if(col.gameObject.tag == "Player" || col.gameObject.tag == "HavingPlayer")
         {
             target.Clear();
-            col.gameObject.GetComponent<States>().SetLockOn(true);
+            col.gameObject.GetComponent<States>().SetLockOn(false);
             AttackFlag = false;//攻撃フラグOFF
             this.transform.parent.GetComponent<Mover>().setMoveFlag(true);//移動を開始
             Debug.Log("離脱");
@@ -159,7 +159,7 @@ public class BossAttack : MonoBehaviour {
         if (col.gameObject.tag == "DangerZone")
         {
             target.Clear();
-            col.gameObject.GetComponent<States>().SetLockOn(true);
+            col.gameObject.GetComponent<States>().SetLockOn(false);
             AttackFlag = false;//攻撃フラグOFF
             this.transform.parent.GetComponent<Mover>().setMoveFlag(true);//移動を開始
             Debug.Log("離脱");

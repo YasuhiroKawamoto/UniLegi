@@ -22,6 +22,8 @@ public class Emitter : MonoBehaviour {
 
     public GameObject[][] Waves;
 
+    GameObject Manager;
+
     int stageNum;
     // 現在のWave
     private int currentWave;
@@ -39,6 +41,8 @@ public class Emitter : MonoBehaviour {
 
         Debug.Log("currentWave" + currentWave);
         Debug.Log("Waves.Length" + Waves[stageNum].Length);
+
+        Manager = GameObject.Find("GameManager");
 
         // Waveが存在しなければコルーチンを終了する
         if (Waves[stageNum].Length == 0)
@@ -66,7 +70,7 @@ public class Emitter : MonoBehaviour {
             currentWave++;
 
             // 格納されているWaveを全て実行したらcurrentWaveを0にする（最初から -> ループ）
-            if (currentWave >= Waves[stageNum].Length)
+            if (currentWave >= Waves[stageNum].Length && Manager.GetComponent<GameManager>().IsLose()==false)
             {
                 Singleton<SoundManager>.instance.pauseBGM();
                 Singleton<SoundManager>.instance.playSE("se005");
