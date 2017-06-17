@@ -17,7 +17,6 @@ public class spawn : MonoBehaviour
     GameObject arrow;
     GameObject arrowObj;
     //デンジャーゾーン
-    [SerializeField]
     GameObject DanjarZone;
 
     //矢印が出ているかのフラグ
@@ -57,6 +56,9 @@ public class spawn : MonoBehaviour
 
         IsSummons = false;
         m_arrowFlag = false;
+
+        DanjarZone = GameObject.Find("SpriteDengerZone");
+
     }
 
     // Update is called once per frame
