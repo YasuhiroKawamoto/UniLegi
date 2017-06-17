@@ -17,6 +17,8 @@ public class Mover : MonoBehaviour
     GameObject MoveEffect;//移動時エフェクト
 
     private float WaitEffectTime = 0;//エフェクト待機時間
+    
+    private Animator walk;
 
     
 
@@ -41,7 +43,7 @@ public class Mover : MonoBehaviour
     {
 
         RB = this.gameObject.GetComponent<Rigidbody2D>();
-
+        this.walk = GetComponent<Animator>();
         
     }
 
@@ -50,7 +52,7 @@ public class Mover : MonoBehaviour
     {
         if (this.gameObject.GetComponent<States>().getDead() == false)
         {
-
+           
             if (this.gameObject.GetComponent<States>().GetMoveType() == 5)//ランダム指定タイプだった場合
             {
                 this.gameObject.GetComponent<States>().SetMoveType(Random.Range(1, 4));//移動タイプをランダムにする
@@ -64,6 +66,7 @@ public class Mover : MonoBehaviour
 
                 WaitEffectTime += Time.deltaTime;//経過時間取得
 
+                
 
                 if (MoveEffect != null)//エフェクトスロットに設定してある場合
                 {
@@ -83,11 +86,10 @@ public class Mover : MonoBehaviour
                 {
                     //速度加算
                     RB.velocity = Speed;
-
                 }
                 else if (this.gameObject.GetComponent<States>().GetMoveType() == 2)//移動タイプ2の場合
                 {
-
+                   
 
                     if (MC <= farstMoveTime)//第一指定時間に到達する前
                     {
@@ -98,8 +100,6 @@ public class Mover : MonoBehaviour
                     {
                         if (ReversFlag == false)
                         {
-
-
                             RB.velocity = Speed2; //速度加算
                         }
                         else
@@ -137,6 +137,7 @@ public class Mover : MonoBehaviour
                     }
                     else//第一指定時間に到達後、第二指定時間到達まで
                     {
+
                         if (ReversFlag == false)
                         {
                             RB.velocity = Speed2; //速度加算
@@ -166,6 +167,7 @@ public class Mover : MonoBehaviour
                 }
                 else if (this.gameObject.GetComponent<States>().GetMoveType() == 4)//移動タイプ4の場合
                 {
+
                     if (MC <= farstMoveTime)//第一指定時間に到達する前
                     {
 
@@ -192,10 +194,16 @@ public class Mover : MonoBehaviour
             else if (moveFlag == false)//フラグがfalseなら動かない
             {
                 RB.velocity = new Vector3(0, 0, 0);//停止
+                walk.SetTrigger("Stop");
             }
 
         }
        
+        if(moveFlag==true)
+        {
+            walk.SetTrigger("Walk");
+        }
+
     }
 
     //移動フラグセット関数
