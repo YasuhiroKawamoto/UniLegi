@@ -97,6 +97,13 @@ public class Decision : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
+        if (col.gameObject.tag == "Stoper")
+        {
+            gameObject.GetComponent<Mover>().setMoveFlag(false);
+            Debug.Log("停止");
+        }
+
+
         if (col.gameObject.tag == "Bullet")//弾との判定
         {
 
@@ -217,6 +224,11 @@ public class Decision : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D col)
     {
+        if (col.gameObject.tag == "Stoper")
+        {
+           gameObject.GetComponent<Mover>().setMoveFlag(false);
+        }
+
         float cnt = 0;
         if (col.gameObject.tag == "Bullet")
         {
@@ -242,10 +254,14 @@ public class Decision : MonoBehaviour
 
     }
 
-    void OnCollisionExit2D(Collision2D col)
+    void OnTriggerExit2D(Collider2D col)
     {
 
-
+        if (col.gameObject.tag == "Stoper")
+        {
+            gameObject.GetComponent<Mover>().setMoveFlag(true);
+            Debug.Log("移動開始");
+        }
 
 
     }

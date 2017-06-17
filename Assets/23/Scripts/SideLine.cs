@@ -64,7 +64,6 @@ public class SideLine : MonoBehaviour
                     LineObj.transform.position = new Vector3(this.gameObject.transform.position.x - 1f, this.gameObject.transform.position.y, 1);
                 }
 
-
                 LineObj.transform.parent = transform;
             }
 
