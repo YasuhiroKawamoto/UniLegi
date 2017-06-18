@@ -9,6 +9,25 @@ public class SceneData {
 
     private float time;
 
+    private int enemyCnt = 0;
+
+    public int getEnemyCnt()
+    {
+        return enemyCnt;
+    }
+    public void setEnemyCnt(int num)
+    {
+        int local = 0;
+
+        local = num;
+
+
+        enemyCnt += local;
+
+    }
+
+   
+
 
     public void setStageNumber(int num)
     {

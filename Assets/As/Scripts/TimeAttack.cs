@@ -7,23 +7,36 @@ public class TimeAttack : MonoBehaviour {
 
 
     //タイムカウント
-    private float m_timeCount = 0.0f;
+    private int m_timeCount = 0;
+
+    GameObject[] enemy;
+    private int enemyNum;
 
 	// Use this for initialization
 	void Start () {
-		
+        enemyNum = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
+       
+     
+
+       enemyNum = Singleton<SceneData>.instance.getEnemyCnt();
+
         //スタートしてからの秒数を代入
-        m_timeCount += Time.deltaTime;
-        GetComponent<Text>().text = m_timeCount.ToString("F2");
+
+        GetComponent<Text>().text = enemyNum.ToString();
         
 
 	}
 
+
+    void Check(string tag)
+    {
+
+    }
 
     void OnDestroy()
     {
