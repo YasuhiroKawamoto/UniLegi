@@ -77,7 +77,7 @@ public class Decision : MonoBehaviour
             if (flontCnt <= 0)
             {
                 flontHit = false;
-                Debug.Log("正面リセット");
+                //Debug.Log("正面リセット");
             }
         }
 
@@ -88,7 +88,7 @@ public class Decision : MonoBehaviour
             if (backCnt <= 0)
             {
                 backHit = false;
-                Debug.Log("背面リセット");
+                //Debug.Log("背面リセット");
             }
         }
 
@@ -100,7 +100,7 @@ public class Decision : MonoBehaviour
         if (col.gameObject.tag == "Stoper")
         {
             gameObject.GetComponent<Mover>().setMoveFlag(false);
-            Debug.Log("停止");
+            //Debug.Log("停止");
         }
 
 
@@ -160,14 +160,14 @@ public class Decision : MonoBehaviour
                     if (col.GetComponent<Bullet>().getInverdFlag() == false)//被弾した弾の向きが反転していなければ
                     {
                         flontHit = true;
-                        Debug.Log("正面被弾");
+                        //Debug.Log("正面被弾");
                         flontCnt = 2.0f;
                     }
 
                     if (col.GetComponent<Bullet>().getInverdFlag() == true)//被弾した弾の向きが反転していれば
                     {
                         backHit = true;
-                        Debug.Log("背面被弾");
+                        //Debug.Log("背面被弾");
                         backCnt = 2.0f;
 
                     }
@@ -199,7 +199,7 @@ public class Decision : MonoBehaviour
                     }
 
 
-                    Debug.Log("挟撃成功");
+                    //Debug.Log("挟撃成功");
 
                     if (pincerEffect != null)//エフェクトスロットに設定してある場合
                     {
@@ -239,7 +239,7 @@ public class Decision : MonoBehaviour
                 states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());
                 if (hitEffect != null)//エフェクトスロットに設定してある場合
                 {
-                    Debug.Log("継続ダメージ");
+                    //Debug.Log("継続ダメージ");
                     hitEffect.transform.position = transform.position;//エフェクト位置設定
                     Instantiate(hitEffect);//エフェクト生成
                 }
@@ -260,7 +260,7 @@ public class Decision : MonoBehaviour
         if (col.gameObject.tag == "Stoper")
         {
             gameObject.GetComponent<Mover>().setMoveFlag(true);
-            Debug.Log("移動開始");
+            //Debug.Log("移動開始");
         }
 
 

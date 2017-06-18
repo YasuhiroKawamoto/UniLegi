@@ -255,11 +255,11 @@ public class PlayerControl : MonoBehaviour
                 case TAP_STATE.SINGLE:
                 case TAP_STATE.MULTI:
                     Area.gameObject.tag = "Collider";
-                    Area.transform.position = new Vector3(-300, -300, -300);
-                    hand1.transform.position = new Vector3(-300, -300, -300);
-                    hand2.transform.position = new Vector3(-300, -300, -300);
+                        Area.transform.position = new Vector3(-300, -300, -300);
+                        hand1.transform.position = new Vector3(-300, -300, -300);
+                        hand2.transform.position = new Vector3(-300, -300, -300);
 
-                    Prediction.transform.position = new Vector3(-300, -300, -300);
+                        Prediction.transform.position = new Vector3(-300, -300, -300);
                     Union.tmpSprite = null;
 
 
@@ -282,7 +282,7 @@ public class PlayerControl : MonoBehaviour
         if (isWaiting)
         {
             delay--;
-            if (delay < 60)
+            if (delay < 20)
             {
                 hand1.transform.position = new Vector3(-300, -300, -300);
                 hand2.transform.position = new Vector3(-300, -300, -300);

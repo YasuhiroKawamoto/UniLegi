@@ -37,6 +37,16 @@ public class Tap : MonoBehaviour
     States unitStates;
     StateUI stateUI;
 
+    //マス
+    GameObject[] grids;
+
+    // 現れるべき場所
+    Vector3 appearPos;
+
+    // 還るべき場所
+    private Vector3 m_savePos;
+
+
 
     // Use this for initialization
     void Start()
@@ -51,7 +61,6 @@ public class Tap : MonoBehaviour
         //大きさを保存
         m_saveScale = this.transform.localScale;
 
-        
     }
 
     // Update is called once per frame
@@ -68,6 +77,9 @@ public class Tap : MonoBehaviour
             //タッチ開始時
             if (touch.phase == TouchPhase.Began)
             {
+                // マスオブジェクトを検出
+                grids = GameObject.FindGameObjectsWithTag("Grid");
+
                 if (objState != null)
                 {
                     Destroy(objState);
@@ -99,7 +111,7 @@ public class Tap : MonoBehaviour
 
 
                             objState = Instantiate(state, canvas.transform);
-
+                            
                         }
                     }
                 }
@@ -108,28 +120,67 @@ public class Tap : MonoBehaviour
             //離したとき
             else if (touch.phase == TouchPhase.Ended && m_moveFlag)
             {
+                bool inGrid = false;
+
+                bool isExisting = false;
+
+                foreach (GameObject grid in grids)
+                {
+                    Vector3 gridPos = grid.transform.position;
+                    Vector3 gridScl = grid.transform.localScale;
+                    isExisting = grid.GetComponent<Grid>().GetIsExisting();
+
+                    // タッチ座標がマスの中
+                    if (m_worldPoint.x > gridPos.x - gridScl.x / 2 && m_worldPoint.y > gridPos.y - gridScl.y / 2 &&
+                        m_worldPoint.x < gridPos.x + gridScl.x / 2 && m_worldPoint.y < gridPos.y + gridScl.y / 2)
+                    {
+                        if (isExisting == false)
+                        {
+                            Debug.Log("マスの中");
+                            inGrid = true;
+                            appearPos = gridPos;
+                            m_savePos = appearPos;
+
+                        }
+                    }
+                }
 
                 //タッチをした位置にオブジェクト判定
                 RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
                 if (hit.collider.gameObject == this.gameObject && hit.collider.gameObject.tag != "isPinched")
                 {
-                    if (hit)
+                    if (hit && inGrid)
                     {
                         PlayerControl.canUnion = true;
                         this.gameObject.tag = "Player";
                         //this.gameObject.layer = 0;
-                        if (m_Cnt < 0.5f)
+                        //if (m_Cnt < 0.5f)
 
-                            this.transform.localScale = m_saveScale;
+                        //this.transform.localScale = m_saveScale;
                         m_moveFlag = false;
-
+                        gameObject.transform.position = appearPos;
                         m_canShot = true;
 
                         m_Cnt = 0.0f;
-
-
                     }
+                    // 移動後が設置可能なマスでないとき
+                    else
+                    {
+                        PlayerControl.canUnion = true;
+                        this.gameObject.tag = "Player";
+                        //this.gameObject.layer = 0;
+                        //if (m_Cnt < 0.5f)
+
+                        //this.transform.localScale = m_saveScale;
+                        m_moveFlag = false;
+                        gameObject.transform.position = m_savePos;
+                        m_canShot = true;
+
+                        m_Cnt = 0.0f;
+                    }
+
                 }
+               
             }
 
             //オブジェクトが触っている時
@@ -169,6 +220,8 @@ public class Tap : MonoBehaviour
         }
         else
         {
+            m_savePos = transform.position;
+
             Destroy(objState);
         }
     }
