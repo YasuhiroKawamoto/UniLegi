@@ -39,7 +39,6 @@ public class FlontLineMove : MonoBehaviour
         else
         {
 
-
             if (moveFlag == true)
             {
                 RB.velocity = Speed;//加工
@@ -50,6 +49,16 @@ public class FlontLineMove : MonoBehaviour
             }
 
 
+        }
+
+        if (this.gameObject.transform.position.y > 4.0f)
+        {
+            backFlag = false;
+            if (moveFlag)
+            {
+                moveFlag = false;
+            }
+       
         }
 
     }
@@ -72,7 +81,6 @@ public class FlontLineMove : MonoBehaviour
                 backFlag = false;
                 moveFlag = true;
             }
-
         }
 
     }
@@ -88,9 +96,7 @@ public class FlontLineMove : MonoBehaviour
 
         if (col.gameObject.tag == "Player")
         {
-
             moveFlag = false;
-
         }
     }
 

@@ -14,15 +14,15 @@ public class Grid : MonoBehaviour {
     int row;
 
     GameObject square;//内側マス
+    GameObject square2;//内側マス
 
     GameObject FlontLine;
 
     // Use this for initialization
     void Start () {
         square = gameObject.transform.FindChild("grid2").gameObject;
-
+        square2 = gameObject.transform.FindChild("grid").gameObject;
         FlontLine = GameObject.Find("FlontLine");
-
     }
 	
 	// Update is called once per frame
@@ -30,14 +30,15 @@ public class Grid : MonoBehaviour {
 
         GetComponent<Rigidbody2D>().WakeUp();
 
-        if (transform.position.y > FlontLine.transform.position.y - 0.5f)
+        if (transform.position.y > FlontLine.transform.position.y )
         {
 
             isExisting = true;//ユニット配置不可にする
+            square2.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);//不可視
 
         }
         else {
-
+            square2.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0.5f);//可視
 
             if (checkPlayer)
             {
@@ -57,6 +58,7 @@ public class Grid : MonoBehaviour {
         if (isExisting)//ユニット配置不可なら
         {
             square.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);//不可視
+            
         }
         else
         {
