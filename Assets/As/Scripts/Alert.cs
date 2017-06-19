@@ -20,6 +20,10 @@ public class Alert : MonoBehaviour {
     public GameObject gameObject1;
     public GameObject gameObject2;
 
+    GameObject start;
+    GameObject Next;
+    GameObject Last;
+
     private int m_cnt = 0;
 
     private float m_time = 0;
@@ -35,6 +39,8 @@ public class Alert : MonoBehaviour {
     [SerializeField]
     private int m_lastWave;
 
+    private bool m_startFlag = true;
+
     // Use this for initialization
     void Start () {
 
@@ -42,6 +48,11 @@ public class Alert : MonoBehaviour {
         emitter = gameObject.GetComponent<Emitter>();
         m_gameManager = gameManager.GetComponent<GameManager>();
         m_lastWave = emitter.GetWaveSize()-1;//最後のウェーブ取得
+
+        start = (GameObject)Resources.Load("Prefabs/start");
+        Next = (GameObject)Resources.Load("Prefabs/next");
+        Last = (GameObject)Resources.Load("Prefabs/last");
+
     }
 	
 	//  is called once per frame
@@ -55,22 +66,35 @@ public class Alert : MonoBehaviour {
         {
             if (m_cnt != CurrentWave)
             {
+                m_startFlag = true;
                 //wave数の表示
                 if (m_lastWave == m_cnt)
                 {
-                    wave.text = "LAST";
-                    Instantiate(wave, canvas.transform);
+                   
+                    Instantiate(Last);
+                    m_startFlag = false;
+                    
                     Singleton<SoundManager>.instance.playSE("SE010");//ボスアラート音再生
-                    Instantiate(gameObject1, transform.position + m_pos, transform.rotation);
-                    Instantiate(gameObject2, transform.position - m_pos, transform.rotation);
+                    //Instantiate(gameObject1, transform.position + m_pos, transform.rotation);
+                    //Instantiate(gameObject2, transform.position - m_pos, transform.rotation);
                     m_cnt = CurrentWave;
                     m_flag = true;
                     m_time = 0.0f;
                 }
-                else if (m_lastWave > m_cnt)
+                else if (m_lastWave > m_cnt && 1 < m_cnt)
                 {
-                    wave.text = "WAVE " + CurrentWave.ToString();
-                    Instantiate(wave, canvas.transform);
+                    //wave.text = "WAVE " + CurrentWave.ToString();
+                   
+                    Instantiate(Next);
+                    m_startFlag = false;
+                    m_cnt = CurrentWave;
+                    m_flag = true;
+                    m_time = 0.0f;
+                }
+                else if (CurrentWave == 1)
+                {
+                  
+                    Instantiate(start); 
                     m_cnt = CurrentWave;
                     m_flag = true;
                     m_time = 0.0f;
