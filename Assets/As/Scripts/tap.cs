@@ -46,7 +46,8 @@ public class Tap : MonoBehaviour
     // 還るべき場所
     private Vector3 m_savePos;
 
-
+    // 今何行目にいるか
+    int row;
 
     // Use this for initialization
     void Start()
@@ -134,12 +135,13 @@ public class Tap : MonoBehaviour
                     if (m_worldPoint.x > gridPos.x - gridScl.x / 2 && m_worldPoint.y > gridPos.y - gridScl.y / 2 &&
                         m_worldPoint.x < gridPos.x + gridScl.x / 2 && m_worldPoint.y < gridPos.y + gridScl.y / 2)
                     {
-                        if (isExisting == false)
+                        if (isExisting == false && row == grid.GetComponent<Grid>().GetRow())
                         {
                             Debug.Log("マスの中");
                             inGrid = true;
                             appearPos = gridPos;
                             m_savePos = appearPos;
+
 
                         }
                     }
@@ -245,6 +247,11 @@ public class Tap : MonoBehaviour
     public void setInverd(bool flag)
     {
         m_Invert = flag;
+    }
+
+    public void SetRow(int row)
+    {
+        this.row = row;
     }
 
 }
