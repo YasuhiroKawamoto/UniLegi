@@ -32,8 +32,8 @@ public class FlontLineMove : MonoBehaviour
     void Update()
     {
         GetComponent<Rigidbody2D>().WakeUp();
-        //if (Player.GetComponent<PlayerControl>().IsUnion() == false)
-        //{
+        if (Player.GetComponent<PlayerControl>().IsUnion() == false)
+        {
 
             if (backFlag == true)
             {
@@ -67,7 +67,7 @@ public class FlontLineMove : MonoBehaviour
                 }
 
             }
-        //}
+        }
     
     }
 
