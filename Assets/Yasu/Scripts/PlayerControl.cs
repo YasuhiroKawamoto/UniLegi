@@ -67,6 +67,10 @@ public class PlayerControl : MonoBehaviour
 
     Sprite deleteSpr;
 
+    //マス
+    GameObject[] grids;
+    Grid currentGrid;
+
     // Use this for initialization
     void Start()
     {
@@ -132,6 +136,8 @@ public class PlayerControl : MonoBehaviour
 
                 case TAP_STATE.DOUBLE:
 
+
+
                     // コライダの大きさを設定
                     Vector2 size = new Vector2(Mathf.Abs(touch_pos1.x - touch_pos2.x), 1.0f);
 
@@ -158,8 +164,17 @@ public class PlayerControl : MonoBehaviour
                         if (size.x > 1)
                         {
                             // 手が出現
-                            hand1.transform.position = new Vector3(pos.x - size.x / 2.0f, pos.y, 0);
-                            hand2.transform.position = new Vector3(pos.x + size.x / 2.0f, pos.y, 0);
+                            Vector3 hpos1 = new Vector3(pos.x - size.x / 2.0f, pos.y, 0);
+                            Vector3 hpos2 = new Vector3(pos.x + size.x / 2.0f, pos.y, 0);
+
+                            hpos1.x = Mathf.Clamp(hpos1.x, -2.7f, 2.7f);
+                            hpos2.x = Mathf.Clamp(hpos2.x, -2.7f, 2.7f);
+
+                            // マスオブジェクトを検出
+                            grids = GameObject.FindGameObjectsWithTag("Grid");
+
+                            hand1.transform.position = hpos1;
+                            hand2.transform.position = hpos2;
                             Prediction.transform.position = new Vector3(-300, -300, -300);
 
                         }
@@ -236,6 +251,29 @@ public class PlayerControl : MonoBehaviour
                                         //manager.SpendCost(unionCost);
 
                                         canInstantiate = false;
+
+                                        Vector3 appearPos = Vector3.zero;
+                                        bool isExisting = false;
+
+                                        foreach (GameObject grid in grids)
+                                        {
+                                            Vector3 gridPos = grid.transform.position;
+                                            Vector3 gridScl = grid.transform.localScale;
+                                            isExisting = grid.GetComponent<Grid>().GetIsExisting();
+
+                                            // タッチ座標がマスの中
+                                            if (newUnit.transform.position.x > gridPos.x - gridScl.x / 2 && newUnit.transform.position.y > gridPos.y - gridScl.y / 2 &&
+                                                 newUnit.transform.position.x < gridPos.x + gridScl.x / 2 && newUnit.transform.position.y < gridPos.y + gridScl.y / 2)
+                                            {
+                                                if (isExisting == false)
+                                                {
+                                                    Debug.Log("マスの中");
+                                                    newUnit.transform.position = gridPos;
+                                                    currentGrid = grid.GetComponent<Grid>();
+                                                    int row = grid.GetComponent<Grid>().GetRow();
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
