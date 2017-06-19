@@ -7,7 +7,7 @@ public class FlontLineMove : MonoBehaviour
 
     Rigidbody2D RB;//リジットボディ
 
-    private Vector2 Speed = new Vector2(0.0f, -0.5f);//速度１
+    private Vector2 Speed = new Vector2(0.0f, -0.3f);//速度１
 
     private bool moveFlag = true;
 
@@ -25,6 +25,7 @@ public class FlontLineMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GetComponent<Rigidbody2D>().WakeUp();
 
         if (backFlag == true)
         {
