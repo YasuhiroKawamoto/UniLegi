@@ -83,27 +83,27 @@ public class GameManager : MonoBehaviour
             m_cnt = 0;
         }
 
-        // ユニット数を制御
+        //// ユニット数を制御
 
-        GameObject[] unions = GameObject.FindGameObjectsWithTag("Player");
+        //GameObject[] unions = GameObject.FindGameObjectsWithTag("Player");
 
 
-        m_unitNum = 0;
-        foreach (GameObject union in unions)
-        {
-            m_unitNum++;
-        }
-        unions = GameObject.FindGameObjectsWithTag("HavingPlayer");
-        foreach (GameObject union in unions)
-        {
-            m_unitNum++;
-        }
+        //m_unitNum = 0;
+        //foreach (GameObject union in unions)
+        //{
+        //    m_unitNum++;
+        //}
+        //unions = GameObject.FindGameObjectsWithTag("HavingPlayer");
+        //foreach (GameObject union in unions)
+        //{
+        //    m_unitNum++;
+        //}
 
-        unions = GameObject.FindGameObjectsWithTag("isPinched");
-        foreach (GameObject union in unions)
-        {
-            m_unitNum++;
-        }
+        //unions = GameObject.FindGameObjectsWithTag("isPinched");
+        //foreach (GameObject union in unions)
+        //{
+        //    m_unitNum++;
+        //}
 
         // UIの更新
         text_hp.GetComponent<Text>().text = "HP:" + m_hp.ToString();

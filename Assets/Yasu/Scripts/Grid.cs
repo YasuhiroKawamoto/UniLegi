@@ -6,7 +6,12 @@ public class Grid : MonoBehaviour {
 
     // マスにユニとがいるかどうか
     bool isExisting;
+
     bool checkPlayer;
+
+    // 何行目か
+    [SerializeField]
+    int row;
 
     // Use this for initialization
     void Start () {
@@ -43,5 +48,10 @@ public class Grid : MonoBehaviour {
     public  void SetIsExisting(bool flag)
     {
         isExisting = flag;
+    }
+
+    public int GetRow()
+    {
+        return row;
     }
 }

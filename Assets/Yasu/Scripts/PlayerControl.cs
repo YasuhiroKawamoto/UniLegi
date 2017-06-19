@@ -209,7 +209,7 @@ public class PlayerControl : MonoBehaviour
                                 if (manager.GetCost() >= newUnit.gameObject.GetComponent<States>().getCost())
                                 {
                                     // クールタイムが終了いているとき
-                                    if (unionCoolTime <= 0)
+                                    //if (unionCoolTime <= 0)
                                     {
                                         // 合体ユニット設定
                                         newUnit.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);

@@ -42,6 +42,7 @@ public class spawn : MonoBehaviour
 
     //マス
     GameObject[] grids;
+    Grid currentGrid;
 
     // Use this for initialization
     void Start()
@@ -157,6 +158,8 @@ public class spawn : MonoBehaviour
                                                 Debug.Log("マスの中");
                                                 inGrid = true;
                                                 appearPos = gridPos;
+                                                currentGrid = grid.GetComponent<Grid>();
+                                                int row = grid.GetComponent<Grid>().GetRow();
                                             }
                                         }
                                     }
@@ -249,14 +252,12 @@ public class spawn : MonoBehaviour
             }
             if (waitTime < 0)
             {
-
-
-
                 Instantiate(AsPrefab);//ユニット生成
+                AsPrefab.GetComponent<Tap>().SetRow(currentGrid.GetComponent<Grid>().GetRow());
+                
                 IsWaiting = false;//エフェクト待機解除
                 waitTime = 30;//待機カウントリセット
                 IsSummons = false;//召喚待機状態に設定
-
             }
         }
 
@@ -268,11 +269,11 @@ public class spawn : MonoBehaviour
 
     bool CanInstantiate()
     {
-        // ユニット数が5以上の時生成不可
-        if (manager.GetNum() >= 5)
-        {
-            return false;
-        }
+        //// ユニット数が5以上の時生成不可
+        //if (manager.GetNum() >= 5)
+        //{
+        //    return false;
+        //}
 
         // コストが足りていないとき生成不可
         if (manager.GetCost() < AsPrefab.gameObject.GetComponent<States>().getCost())
