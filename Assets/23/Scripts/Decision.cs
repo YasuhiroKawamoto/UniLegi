@@ -32,8 +32,6 @@ public class Decision : MonoBehaviour
         //Statesコンポーネントの取得
         states = GetComponent<States>();
 
-     
-
         pincerEffect = (GameObject)Resources.Load("Prefabs/PincherA");
 
     }
@@ -41,7 +39,7 @@ public class Decision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        GetComponent<Rigidbody2D>().WakeUp();
 
 
     }
