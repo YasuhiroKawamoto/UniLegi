@@ -7,27 +7,38 @@ public class FlontLineMove : MonoBehaviour
 
     Rigidbody2D RB;//リジットボディ
 
-    private Vector2 Speed = new Vector2(0.0f, -0.1f);//速度１
+    private Vector2 Speed = new Vector2(0.0f, -0.5f);//速度１
 
     private bool moveFlag = true;
 
     private bool backFlag = true;
 
+    private float changeCnt;
+
     // Use this for initialization
     void Start()
     {
+        changeCnt = 0;
         RB = this.gameObject.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (backFlag == true)
         {
-            RB.velocity = new Vector2(0, 4);//上方に戻る
+            changeCnt += Time.deltaTime;
+
+            if (changeCnt > 0.5f)
+            {
+                RB.velocity = new Vector2(0, 3);//上方に戻る
+            }
         }
         else
         {
+
+
             if (moveFlag == true)
             {
                 RB.velocity = Speed;//加工
@@ -37,12 +48,9 @@ public class FlontLineMove : MonoBehaviour
                 RB.velocity = new Vector2(0, 0);//停止
             }
 
+
         }
 
-
-        
-
-       
     }
 
 
@@ -50,74 +58,55 @@ public class FlontLineMove : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            backFlag = false;
             moveFlag = false;
             Debug.Log("前線停止");
         }
 
 
-      
 
+        if (col.gameObject.tag == "Enemy")
+        {
+            if (backFlag)
+            {
+                backFlag = false;
+                moveFlag = true;
+            }
+
+        }
 
     }
 
     void OnTriggerStay2D(Collider2D col)
     {
+
+
+        if (col.gameObject.tag == "Enemy")
+        {
+            backFlag = false;
+        }
+
         if (col.gameObject.tag == "Player")
         {
+
             moveFlag = false;
-            Debug.Log("前線停止");
+
         }
     }
 
     void OnTriggerExit2D(Collider2D col)
     {
+
+        if (col.gameObject.tag == "Enemy")
+        {
+            Debug.Log("上昇");
+            changeCnt = 0;
+            backFlag = true;
+        }
+
         if (col.gameObject.tag == "Player")
         {
-            
+            Debug.Log("停止");
             moveFlag = true;
-            Debug.Log("可動");
-        }
-
-
-       
-
-    }
-
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "Enemy")
-        {
-            if (backFlag)
-            {
-                backFlag = false;
-            }
-
-        }
-
-    }
-
-    void OnCollisionStay2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "Enemy")
-        {
-            if (backFlag)
-            {
-                backFlag = false;
-            }
-
-        }
-
-    }
-
-    void OnCollisionExit2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "Enemy")
-        {
-            if (backFlag == false)
-            {
-                backFlag = true;
-            }
         }
 
     }
