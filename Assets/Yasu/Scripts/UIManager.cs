@@ -28,6 +28,12 @@ public class UIManager : MonoBehaviour {
     [SerializeField]
     GameObject unionGage2;
 
+    [SerializeField]
+    GameObject overLoadGage;
+
+    [SerializeField]
+    GameObject overLoadGage2;
+
     // ゲージの表示割合
     float rate;
 
@@ -76,8 +82,37 @@ public class UIManager : MonoBehaviour {
         costGage.GetComponent<Image>().fillAmount = (float)manager.GetCost() / manager.GetMaxCost();
 
 
+        UnionGage();
 
-        unionGage.GetComponent<Image>().fillAmount = 1- (float)player.GetUnionCoolTime() / player.GetCoolTime();
+        OverLoadGage();
+        
+    }
+
+    // 線形補間用関数
+    static float Lerp(float startNum, float targetNum, float t, Func<float, float> v)
+    {
+        float retNum = 0.0f;
+
+
+        retNum = (1 - v(t)) * startNum + v(t) * targetNum;
+
+        return retNum;
+    }
+
+    static float TimeStep(float stepTime)
+    {
+        float m_currentTime = 0;
+        if (m_currentTime < stepTime)
+        {
+            m_currentTime += 0.1f;
+        }
+
+        return m_currentTime;
+    }
+
+    void UnionGage()
+    {
+        unionGage.GetComponent<Image>().fillAmount = 1 - (float)player.GetUnionCoolTime() / player.GetCoolTime();
         unionGage2.GetComponent<Image>().fillAmount = 1 - (float)player.GetUnionCoolTime() / player.GetCoolTime(); ;
         if (unionGage.GetComponent<Image>().fillAmount >= 1)
         {
@@ -87,7 +122,7 @@ public class UIManager : MonoBehaviour {
                 Singleton<SoundManager>.instance.playSE("se008");
                 SoundFlag = true;
             }
-          
+
             // 最大時画像
             //unionGage.GetComponent<Image>().sprite = Resources.Load<Sprite>("gage2");
         }
@@ -116,26 +151,46 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    // 線形補間用関数
-    static float Lerp(float startNum, float targetNum, float t, Func<float, float> v)
+
+    void OverLoadGage()
     {
-        float retNum = 0.0f;
-
-
-        retNum = (1 - v(t)) * startNum + v(t) * targetNum;
-
-        return retNum;
-    }
-
-    static float TimeStep(float stepTime)
-    {
-        float m_currentTime = 0;
-        if (m_currentTime < stepTime)
+        overLoadGage.GetComponent<Image>().fillAmount = (float)player.GetOverload() / player.GetOverMAX();
+        overLoadGage2.GetComponent<Image>().fillAmount = (float)player.GetOverload() / player.GetOverMAX(); ;
+        if (overLoadGage.GetComponent<Image>().fillAmount >= 1)
         {
-            m_currentTime += 0.1f;
+
+            if (SoundFlag == false)
+            {
+                Singleton<SoundManager>.instance.playSE("se008");
+                SoundFlag = true;
+            }
+
+            // 最大時画像
+            //unionGage.GetComponent<Image>().sprite = Resources.Load<Sprite>("gage2");
+        }
+        else
+        {
+            SoundFlag = false;
+            //最大時じゃない画像
+            //unionGage.GetComponent<Image>().sprite = Resources.Load<Sprite>("gage");
         }
 
-        return m_currentTime;
-    }
+        if (overLoadGage2.GetComponent<Image>().fillAmount >= 1)
+        {
 
+            if (SoundFlag == false)
+            {
+                Singleton<SoundManager>.instance.playSE("se008");
+            }
+
+            // 最大時画像
+            //unionGage.GetComponent<Image>().sprite = Resources.Load<Sprite>("gage2");
+        }
+        else
+        {
+            //最大時じゃない画像
+            //unionGage.GetComponent<Image>().sprite = Resources.Load<Sprite>("gage");
+        }
+    }
 }
+
