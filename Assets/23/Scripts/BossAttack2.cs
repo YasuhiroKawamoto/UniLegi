@@ -83,8 +83,6 @@ public class BossAttack2 : MonoBehaviour {
            
 
             AttackFlag = true;//攻撃フラグON
-
-         
             Debug.Log("接敵");
 
         }

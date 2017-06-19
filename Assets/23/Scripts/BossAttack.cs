@@ -7,9 +7,8 @@ public class BossAttack : MonoBehaviour {
     //Statesコンポーネント
     States states;
 
-    Collider2D C;
 
-    Vector2 pos;
+   
     private List<GameObject> target;
        
 
@@ -21,7 +20,7 @@ public class BossAttack : MonoBehaviour {
 
     private float cnt;
 
-    private int PlayerCnt;
+  
 
     private bool AttackFlag;
 
@@ -33,16 +32,13 @@ public class BossAttack : MonoBehaviour {
         this.gameObject.transform.position = new Vector3(this.gameObject.transform.parent.position.x,
             (this.gameObject.transform.parent.position.y - 0.2f), this.gameObject.transform.parent.position.z);
 
-        C = this.gameObject.GetComponent<Collider2D>();
-
-        C.transform.localScale = new Vector3(1.0f, states.getRenge(), 0.0f);
+       
 
         rate = states.getrate();
 
         cnt = 0;
 
 
-        PlayerCnt = 0;
 
         AttackFlag = false;
 
@@ -120,13 +116,10 @@ public class BossAttack : MonoBehaviour {
             AttackFlag = true;//攻撃フラグON
                 Debug.Log("拠点接敵");
               
-                this.transform.parent.GetComponent<Mover>().setMoveFlag(false);//移動を止める
+               
             }
 
-            if (col.gameObject.tag == "HavingPlayer")//接触オブジェクトタグがHavingPlayer
-            {
-                this.transform.parent.GetComponent<Mover>().setMoveFlag(false);//移動を止める
-            }
+           
        
     }
 
@@ -163,7 +156,6 @@ public class BossAttack : MonoBehaviour {
             AttackFlag = false;//攻撃フラグOFF
             this.transform.parent.GetComponent<Mover>().setMoveFlag(true);//移動を開始
             Debug.Log("離脱");
-
         }
     }
 }

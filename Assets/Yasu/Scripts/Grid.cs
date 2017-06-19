@@ -13,22 +13,57 @@ public class Grid : MonoBehaviour {
     [SerializeField]
     int row;
 
+    GameObject square;//内側マス
+
+    GameObject FlontLine;
+
     // Use this for initialization
     void Start () {
+        square = gameObject.transform.FindChild("grid2").gameObject;
+
+        FlontLine = GameObject.Find("FlontLine");
 
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if(checkPlayer)
+
+        GetComponent<Rigidbody2D>().WakeUp();
+
+        if (transform.position.y > FlontLine.transform.position.y - 0.5f)
         {
-            isExisting = true;
-            checkPlayer = false;
+
+            isExisting = true;//ユニット配置不可にする
+
+        }
+        else {
+
+
+            if (checkPlayer)
+            {
+                isExisting = true;
+                checkPlayer = false;
+
+            }
+            else
+            {
+                isExisting = false;
+
+            }
+        }
+      
+
+
+        if (isExisting)//ユニット配置不可なら
+        {
+            square.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);//不可視
         }
         else
         {
-            isExisting = false;
+            square.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);//可視
         }
+
+
     }
 
     private void OnTriggerStay2D(Collider2D collision)
