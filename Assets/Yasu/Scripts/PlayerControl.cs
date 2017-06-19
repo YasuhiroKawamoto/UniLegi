@@ -51,6 +51,9 @@ public class PlayerControl : MonoBehaviour
     private float unionCoolTime;
     const int COOL_TIME = 100;
 
+    private float overload;
+    const float MAX_OVERLOAD = 3.0f;
+
 
     private float delay;
     private bool isWaiting;
@@ -138,6 +141,8 @@ public class PlayerControl : MonoBehaviour
 
 
 
+
+
                     // コライダの大きさを設定
                     Vector2 size = new Vector2(Mathf.Abs(touch_pos1.x - touch_pos2.x), 1.0f);
 
@@ -219,59 +224,62 @@ public class PlayerControl : MonoBehaviour
                             // 2体以上はさんだ時
                             if (pinch_num >= 2)
                             {
-                                tmpId = newUnit.GetComponent<States>().GetTypeId();
-                                // コストが足りているとき
-                                if (manager.GetCost() >= newUnit.gameObject.GetComponent<States>().getCost())
+                                if (unionCoolTime <= 0)
                                 {
-                                    // クールタイムが終了いているとき
-                                    //if (unionCoolTime <= 0)
+                                    overload += 0.2f;
+                                }
+                                if (overload >= MAX_OVERLOAD)
+                                {
+                                    // すーぱーがったい
+                                }
+                                else
+                                {
+
+                                    tmpId = newUnit.GetComponent<States>().GetTypeId();
+                                    // コストが足りているとき
+
+
+                                    // 合体ユニット設定
+                                    newUnit.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
+                                    newUnit.transform.localScale = new Vector3(1, 1, 1);
+                                    //newUnit.tag = "isPinched";
+
+                                    // エフェクト設定
+                                    effect.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
+                                    effect.transform.localScale = new Vector3(1, 1, 1);
+
+                                    // エフェクト発生
+                                    Instantiate(effect);
+                                    Singleton<SoundManager>.instance.playSE("se002");
+                                    unionCoolTime = COOL_TIME;
+
+                                    delay = 50;
+                                    pinch_num = 0;
+
+                                    // 手をどける
+                                    isWaiting = true;
+
+                                    canInstantiate = false;
+
+                                    Vector3 appearPos = Vector3.zero;
+                                    bool isExisting = false;
+
+                                    foreach (GameObject grid in grids)
                                     {
-                                        // 合体ユニット設定
-                                        newUnit.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
-                                        newUnit.transform.localScale = new Vector3(1, 1, 1);
-                                        //newUnit.tag = "isPinched";
+                                        Vector3 gridPos = grid.transform.position;
+                                        Vector3 gridScl = grid.transform.localScale;
+                                        isExisting = grid.GetComponent<Grid>().GetIsExisting();
 
-                                        // エフェクト設定
-                                        effect.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
-                                        effect.transform.localScale = new Vector3(1, 1, 1);
-
-                                        // エフェクト発生
-                                        Instantiate(effect);
-                                        Singleton<SoundManager>.instance.playSE("se002");
-                                        unionCoolTime = COOL_TIME;
-
-                                        delay = 50;
-                                        pinch_num = 0;
-
-                                        // 手をどける
-                                        isWaiting = true;
-
-
-                                        //// コスト消費
-                                        //manager.SpendCost(unionCost);
-
-                                        canInstantiate = false;
-
-                                        Vector3 appearPos = Vector3.zero;
-                                        bool isExisting = false;
-
-                                        foreach (GameObject grid in grids)
+                                        // タッチ座標がマスの中
+                                        if (newUnit.transform.position.x > gridPos.x - gridScl.x / 2 && newUnit.transform.position.y > gridPos.y - gridScl.y / 2 &&
+                                             newUnit.transform.position.x < gridPos.x + gridScl.x / 2 && newUnit.transform.position.y < gridPos.y + gridScl.y / 2)
                                         {
-                                            Vector3 gridPos = grid.transform.position;
-                                            Vector3 gridScl = grid.transform.localScale;
-                                            isExisting = grid.GetComponent<Grid>().GetIsExisting();
-
-                                            // タッチ座標がマスの中
-                                            if (newUnit.transform.position.x > gridPos.x - gridScl.x / 2 && newUnit.transform.position.y > gridPos.y - gridScl.y / 2 &&
-                                                 newUnit.transform.position.x < gridPos.x + gridScl.x / 2 && newUnit.transform.position.y < gridPos.y + gridScl.y / 2)
+                                            if (isExisting == false)
                                             {
-                                                if (isExisting == false)
-                                                {
-                                                    Debug.Log("マスの中");
-                                                    newUnit.transform.position = gridPos;
-                                                    currentGrid = grid.GetComponent<Grid>();
-                                                    int row = grid.GetComponent<Grid>().GetRow();
-                                                }
+                                                Debug.Log("マスの中");
+                                                newUnit.transform.position = gridPos;
+                                                currentGrid = grid.GetComponent<Grid>();
+                                                int row = grid.GetComponent<Grid>().GetRow();
                                             }
                                         }
                                     }
@@ -293,11 +301,12 @@ public class PlayerControl : MonoBehaviour
                 case TAP_STATE.SINGLE:
                 case TAP_STATE.MULTI:
                     Area.gameObject.tag = "Collider";
-                        Area.transform.position = new Vector3(-300, -300, -300);
-                        hand1.transform.position = new Vector3(-300, -300, -300);
-                        hand2.transform.position = new Vector3(-300, -300, -300);
 
-                        Prediction.transform.position = new Vector3(-300, -300, -300);
+                    overload = 0;
+                    Area.transform.position = new Vector3(-300, -300, -300);
+                    hand1.transform.position = new Vector3(-300, -300, -300);
+                    hand2.transform.position = new Vector3(-300, -300, -300);
+                    Prediction.transform.position = new Vector3(-300, -300, -300);
                     Union.tmpSprite = null;
 
 
@@ -449,8 +458,21 @@ public class PlayerControl : MonoBehaviour
         return COOL_TIME;
     }
 
+    public float GetOverload()
+    {
+        return overload;
+    }
+
+    public float GetOverMAX()
+    {
+        return MAX_OVERLOAD;
+    }
     public bool getIsCreated()
     {
         return isCreated;
+    }
+    public bool IsUnion()
+    {
+        return isWaiting;
     }
 }
