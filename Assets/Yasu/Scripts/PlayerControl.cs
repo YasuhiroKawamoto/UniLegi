@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 enum TAP_STATE
@@ -15,6 +17,10 @@ public class PlayerControl : MonoBehaviour
 
     [SerializeField]
     public GameObject newUnit;
+
+
+    [SerializeField]
+    public GameObject newUnitSuper;
 
     [SerializeField]
     public GameObject Prediction;
@@ -67,6 +73,7 @@ public class PlayerControl : MonoBehaviour
     // タップ状態
     private TAP_STATE tap_state;
 
+    bool superUnion;
 
     Sprite deleteSpr;
 
@@ -138,13 +145,8 @@ public class PlayerControl : MonoBehaviour
             {
 
                 case TAP_STATE.DOUBLE:
-
-
-
-
-
                     // コライダの大きさを設定
-                    Vector2 size = new Vector2(Mathf.Abs(touch_pos1.x - touch_pos2.x), 1.0f);
+                    Vector2 size = new Vector2(Mathf.Abs(touch_pos1.x - touch_pos2.x), 0.4f);
 
                     if (start_size.x > 0.0f)
                     {
@@ -205,12 +207,37 @@ public class PlayerControl : MonoBehaviour
                     {
                         sprPreOp.sprite = deleteSpr;
                     }
+                    else if (pinch_num >= 2)
+                    {
+                        if (unionCoolTime <= 0)
+                        {
+                            // オバロゲージ増大
+                            overload += 0.2f;
 
+                            //　でっかい手を出す
+                            Vector2 handScale = Lerp(hand1.transform.localScale, new Vector2(-1.5f, 2.0f), 1.5f, TimeStep);
+                            Vector2 handScale2 = Lerp(hand2.transform.localScale, new Vector2(1.5f, 2.0f), 1.5f, TimeStep);
+                            Vector2 handPos1 = Lerp(hand1.transform.position, new Vector2(-3.5f, -1.0f), 1.5f, TimeStep);
+                            Vector2 handPos2 = Lerp(hand2.transform.position, new Vector2(3.5f, -1.0f), 1.5f, TimeStep);
+
+                            hand1.transform.localScale = handScale;
+                            hand2.transform.localScale = handScale2;
+                            hand1.transform.position = handPos1;
+                            hand2.transform.position = handPos2;
+
+
+                            // 生成ユニットの差し替え
+                            newUnit = newUnitSuper;
+
+                            // エフェクトの差し替え
+                        }
+                    }
                     else
                     {
                         sprPreOp.sprite = null;
-
                     }
+
+
                     // 合体
                     if (Area.gameObject.tag == "Pinched" && Area.transform.localScale.x < 1.5f)
                     {
@@ -224,20 +251,64 @@ public class PlayerControl : MonoBehaviour
                             // 2体以上はさんだ時
                             if (pinch_num >= 2)
                             {
-                                if (unionCoolTime <= 0)
-                                {
-                                    overload += 0.2f;
-                                }
+
                                 if (overload >= MAX_OVERLOAD)
                                 {
                                     // すーぱーがったい
+                                    superUnion = true;
+
+                                    tmpId = newUnit.GetComponent<States>().GetTypeId();
+
+                                    // 合体ユニット設定
+                                    newUnit.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
+                                    newUnit.transform.localScale = new Vector3(1, 1, 1);
+                                    //newUnit.tag = "isPinched";
+
+                                    // エフェクト設定
+                                    effect.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
+                                    effect.transform.localScale = new Vector3(1, 1, 1);
+
+                                    // エフェクト発生
+                                    Instantiate(effect);
+                                    Singleton<SoundManager>.instance.playSE("se002");
+                                    unionCoolTime = COOL_TIME;
+
+                                    delay = 50;
+
+                                    // 手をどける
+                                    isWaiting = true;
+                                    hand1.transform.localScale = new Vector2(-1, 1);
+                                    hand2.transform.localScale = new Vector2(1, 1);
+
+                                    canInstantiate = false;
+
+                                    Vector3 appearPos = Vector3.zero;
+                                    bool isExisting = false;
+
+                                    foreach (GameObject grid in grids)
+                                    {
+                                        Vector3 gridPos = grid.transform.position;
+                                        Vector3 gridScl = grid.transform.localScale;
+                                        isExisting = grid.GetComponent<Grid>().GetIsExisting();
+
+                                        // ユニットがマスの中
+                                        if (newUnit.transform.position.x > gridPos.x - gridScl.x / 2 && newUnit.transform.position.y > gridPos.y - gridScl.y / 2 &&
+                                             newUnit.transform.position.x < gridPos.x + gridScl.x / 2 && newUnit.transform.position.y < gridPos.y + gridScl.y / 2)
+                                        {
+                                            if (isExisting == false)
+                                            {
+                                                Debug.Log("マスの中");
+                                                newUnit.transform.position = gridPos;
+                                                currentGrid = grid.GetComponent<Grid>();
+                                                int row = grid.GetComponent<Grid>().GetRow();
+                                            }
+                                        }
+                                    }
                                 }
                                 else
                                 {
 
                                     tmpId = newUnit.GetComponent<States>().GetTypeId();
-                                    // コストが足りているとき
-
 
                                     // 合体ユニット設定
                                     newUnit.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
@@ -270,7 +341,7 @@ public class PlayerControl : MonoBehaviour
                                         Vector3 gridScl = grid.transform.localScale;
                                         isExisting = grid.GetComponent<Grid>().GetIsExisting();
 
-                                        // タッチ座標がマスの中
+                                        // ユニットがマスの中
                                         if (newUnit.transform.position.x > gridPos.x - gridScl.x / 2 && newUnit.transform.position.y > gridPos.y - gridScl.y / 2 &&
                                              newUnit.transform.position.x < gridPos.x + gridScl.x / 2 && newUnit.transform.position.y < gridPos.y + gridScl.y / 2)
                                         {
@@ -301,6 +372,9 @@ public class PlayerControl : MonoBehaviour
                 case TAP_STATE.SINGLE:
                 case TAP_STATE.MULTI:
                     Area.gameObject.tag = "Collider";
+
+                    hand1.transform.localScale = new Vector2(-1, 1);
+                    hand2.transform.localScale = new Vector2(1, 1);
 
                     overload = 0;
                     Area.transform.position = new Vector3(-300, -300, -300);
@@ -377,6 +451,25 @@ public class PlayerControl : MonoBehaviour
                 pinch_num = 0;
             }
 
+            // スーパー合体
+            if (superUnion)
+            {
+                foreach (GameObject union in unions)
+                {
+                    union.tag = "Player";
+                }
+                unions = GameObject.FindGameObjectsWithTag("Player");
+
+                foreach (GameObject union in unions)
+                {
+                    // 既存のユニットを破壊
+                    Destroy(union);
+                }
+                pinch_num = 0;
+                superUnion = false;
+                overload = 0;
+            }
+
             else if (pinch_num == 1)
             {
                 foreach (GameObject union in unions)
@@ -441,6 +534,40 @@ public class PlayerControl : MonoBehaviour
         {
             tap_state = TAP_STATE.NONE;
         }
+    }
+
+
+    // 線形補間用関数
+    static float Lerp(float startNum, float targetNum, float t, Func<float, float> v)
+    {
+        float retNum = 0.0f;
+
+
+        retNum = (1 - v(t)) * startNum + v(t) * targetNum;
+
+        return retNum;
+    }
+
+    static Vector2 Lerp(Vector2 startNum, Vector2 targetNum, float t, Func<float, float> v)
+    {
+        Vector2 retNum = Vector2.zero;
+
+
+        retNum = (1 - v(t)) * startNum + v(t) * targetNum;
+
+        return retNum;
+    }
+
+
+    static float TimeStep(float stepTime)
+    {
+        float m_currentTime = 0;
+        if (m_currentTime < stepTime)
+        {
+            m_currentTime += 0.1f;
+        }
+
+        return m_currentTime;
     }
 
     public float GetUnionCoolTime()
