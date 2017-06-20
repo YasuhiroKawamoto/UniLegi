@@ -34,9 +34,13 @@ public class Derector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
         float timeStep = (Time.time - m_time) / 25.0f;
 
         GameObject effect = GameObject.FindGameObjectWithTag("Effect"); ;
+
+
         if (effect != null)
         {
             state = CameraState.ZOOMIN;
@@ -44,7 +48,6 @@ public class Derector : MonoBehaviour
 
 
         }
-
         else
         {
             state = CameraState.STAY;
@@ -60,6 +63,7 @@ public class Derector : MonoBehaviour
         switch (state)
         {
             case CameraState.STAY:
+                
                 break;
             case CameraState.ZOOMIN:
                 Vector3 pos = Vector3.zero;

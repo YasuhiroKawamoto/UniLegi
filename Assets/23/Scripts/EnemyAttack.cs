@@ -17,8 +17,6 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField]
     GameObject effect;
 
-
-
     private float rate;
 
     private float cnt;
@@ -152,8 +150,6 @@ public class EnemyAttack : MonoBehaviour
             col.gameObject.GetComponent<States>().SetLockOn(false);
 
         }
-
-
 
         if (col.gameObject.tag == "DangerZone")
         {

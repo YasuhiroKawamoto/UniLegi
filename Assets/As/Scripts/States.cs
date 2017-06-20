@@ -11,6 +11,9 @@ public class States : MonoBehaviour
     //HP
     [SerializeField]
     private int m_Hp;
+
+    [SerializeField]
+    private int m_MaxHp;
     //コスト
     [SerializeField]
     private int m_Cost;
@@ -78,6 +81,8 @@ public class States : MonoBehaviour
         LockOnCursor = (GameObject)Resources.Load("Prefabs/LockOnCursor");
         Player = GameObject.Find("Player");
 
+        m_MaxHp = m_Hp;
+
     }
 
     // Update is called once per frame
@@ -85,6 +90,14 @@ public class States : MonoBehaviour
     {
         // リジッドボディを強制起動
         GetComponent<Rigidbody2D>().WakeUp();
+
+        if (m_Hp > m_MaxHp)
+        {
+
+            m_Hp = m_MaxHp;
+        }
+        
+        
 
         // HP0以下で消滅
         if (getHp() <= 0 && IsDead == false)
@@ -147,6 +160,12 @@ public class States : MonoBehaviour
 
     }
 
+
+    public float getMaxHp()
+    {
+        return m_MaxHp;
+
+    }
     //
     public float getrate()
     {
@@ -265,6 +284,11 @@ public class States : MonoBehaviour
     public void SetLockOn(bool f)
     {
         IsLockon = f;
+    }
+
+    public bool GetLockOn()
+    {
+        return IsLockon;
     }
 
     //死んでいるかどうか？
