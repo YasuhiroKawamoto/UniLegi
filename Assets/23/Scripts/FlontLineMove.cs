@@ -32,8 +32,8 @@ public class FlontLineMove : MonoBehaviour
     void Update()
     {
         GetComponent<Rigidbody2D>().WakeUp();
-        //if (Player.GetComponent<PlayerControl>().IsUnion() == false)
-        //{
+        if (Player.GetComponent<PlayerControl>().IsUnion() == false)
+        {
 
             if (backFlag == true)
             {
@@ -67,7 +67,7 @@ public class FlontLineMove : MonoBehaviour
                 }
 
             }
-        //}
+        }
     
     }
 
@@ -78,6 +78,7 @@ public class FlontLineMove : MonoBehaviour
         {
             IsHitPlayer = true;//プレイヤー接触
             moveFlag = false;
+            col.gameObject.GetComponent<States>().setLineHit(true);
             Debug.Log("前線停止");
         }
 
@@ -111,6 +112,7 @@ public class FlontLineMove : MonoBehaviour
         {
             this.gameObject.transform.position = new Vector3(0, col.gameObject.transform.position.y+0.5f, 1);
             IsHitPlayer = true;
+            col.gameObject.GetComponent<States>().setLineHit(true);
             moveFlag = false;
         }
     }
@@ -130,6 +132,7 @@ public class FlontLineMove : MonoBehaviour
             Debug.Log("停止");
             moveFlag = true;
             IsHitPlayer = false;
+            col.gameObject.GetComponent<States>().setLineHit(false);
         }
 
     }

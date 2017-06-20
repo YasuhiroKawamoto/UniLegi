@@ -121,10 +121,9 @@ public class GameManager : MonoBehaviour
             LoseFlag = true;
             IsWaiting = true;
             Singleton<SoundManager>.instance.pauseBGM();
-            if (Singleton<SoundManager>.instance.getIsMute() == false)
-            {
+           
                 Singleton<SoundManager>.instance.playSE("se006");
-            }
+            
 
             Instantiate(Lose);
         }
