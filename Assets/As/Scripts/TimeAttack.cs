@@ -20,16 +20,10 @@ public class TimeAttack : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-       
+        enemyNum = Singleton<SceneData>.instance.getEnemyCnt();
+        //倒した敵の数を表示
+        GetComponent<Text>().text = enemyNum.ToString()+" Kills";
      
-
-       enemyNum = Singleton<SceneData>.instance.getEnemyCnt();
-
-        //スタートしてからの秒数を代入
-
-        GetComponent<Text>().text = enemyNum.ToString();
-        
-
 	}
 
 
