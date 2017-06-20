@@ -24,7 +24,7 @@ public class FollowEnemy : MonoBehaviour {
         {
             parentPos = parent.transform.position;
             pos = new Vector3(parentPos.x, parentPos.y + diff, parentPos.z);
-            pos = RectTransformUtility.WorldToScreenPoint(Camera.main, pos);
+            //pos = RectTransformUtility.WorldToScreenPoint(Camera.main, pos);
             gameObject.GetComponent<RectTransform>().position = pos;
         }
 

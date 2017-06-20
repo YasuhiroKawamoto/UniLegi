@@ -9,7 +9,7 @@ public class UnionSkil : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
+        Instantiate(AttackPrefab);
     }
 	
 	// Update is called once per frame
