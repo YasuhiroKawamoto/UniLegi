@@ -68,7 +68,6 @@ public class States : MonoBehaviour
     [SerializeField]
     private GameManager manager;
 
-
     GameObject Player;
 
     // Use this for initialization
@@ -117,6 +116,12 @@ public class States : MonoBehaviour
                 //死亡時動作
                 DeadAction.transform.position = this.gameObject.transform.position;
                 Instantiate<GameObject>(DeadAction);
+
+                if(this.gameObject.tag=="Enemy")
+                {
+                    Singleton<SceneData>.instance.setEnemyCnt(1);
+                }
+
             }
 
 
