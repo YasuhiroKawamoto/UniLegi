@@ -65,6 +65,10 @@ public class States : MonoBehaviour
     private bool IsLockonNow = false;
     private float m_currentCharge;
 
+    private bool hitFlontLine = false;
+
+    private float lineCnt;
+
     [SerializeField]
     private GameManager manager;
 
@@ -74,6 +78,7 @@ public class States : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        lineCnt = 1.0f;
         DeadCnt = 0.5f;
         manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         if (DeadAction == null)
@@ -123,7 +128,17 @@ public class States : MonoBehaviour
 
         }
 
+        if (hitFlontLine&&IsLockon== false)
+        {
+            lineCnt -= Time.deltaTime;
 
+            if (lineCnt <= 0)
+            {
+                m_Hp -= 2;//前線に触れていることによる継続ダメージ
+                lineCnt = 2;
+            }
+
+        }
 
         if (IsDead)
         {
@@ -309,6 +324,12 @@ public class States : MonoBehaviour
         obj.GetComponent<States>().m_Attack += Cnt * 2;
         obj.GetComponent<States>().m_Hp += Cnt * 10;
     }
+
+    public void setLineHit(bool f)
+    {
+        hitFlontLine = f;
+    }
+
     void OnDestroy()
     {
         if (IsLockonNow)
