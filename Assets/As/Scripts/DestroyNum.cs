@@ -29,11 +29,14 @@ public class DestroyNum : MonoBehaviour
     [SerializeField]
     Text text;
 
+    GameObject gameObject;
 
     // Use this for initialization
     void Start () {
-		
-	}
+
+        gameObject = (GameObject)Resources.Load("Prefabs/KillBack");
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -53,7 +56,7 @@ public class DestroyNum : MonoBehaviour
         else if(m_Flag == true)
         {
             time += Time.deltaTime ;
-            if(time <= 3.0f)
+            if(time <= 2.0f)
             {
                 cnt = num - m_save;
             }
@@ -64,12 +67,11 @@ public class DestroyNum : MonoBehaviour
                 {
                     text.text = cnt.ToString() + "Kills";
                     Instantiate(text, canvas.transform);
+                    Instantiate(gameObject);
                 }
-                Debug.Log(cnt);
-                //cnt = 0;
+                //Debug.Log(cnt);
                 time = 0.0f;
                 m_save = num;
-                //save = m_save;
                 m_Flag = false;
             }
         }
