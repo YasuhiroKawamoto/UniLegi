@@ -117,11 +117,11 @@ public class UIManager : MonoBehaviour {
         if (unionGage.GetComponent<Image>().fillAmount >= 1)
         {
 
-            if (SoundFlag == false)
-            {
-                Singleton<SoundManager>.instance.playSE("se008");
-                SoundFlag = true;
-            }
+            //if (SoundFlag == false)
+            //{
+            //    Singleton<SoundManager>.instance.playSE("se008");
+            //    SoundFlag = true;
+            //}
 
             // 最大時画像
             //unionGage.GetComponent<Image>().sprite = Resources.Load<Sprite>("gage2");
@@ -136,10 +136,7 @@ public class UIManager : MonoBehaviour {
         if (unionGage2.GetComponent<Image>().fillAmount >= 1)
         {
 
-            if (SoundFlag == false)
-            {
-                Singleton<SoundManager>.instance.playSE("se008");
-            }
+           
 
             // 最大時画像
             //unionGage.GetComponent<Image>().sprite = Resources.Load<Sprite>("gage2");
@@ -159,11 +156,7 @@ public class UIManager : MonoBehaviour {
         if (overLoadGage.GetComponent<Image>().fillAmount >= 1)
         {
 
-            if (SoundFlag == false)
-            {
-                Singleton<SoundManager>.instance.playSE("se008");
-                SoundFlag = true;
-            }
+            
 
             // 最大時画像
             //unionGage.GetComponent<Image>().sprite = Resources.Load<Sprite>("gage2");
@@ -178,10 +171,7 @@ public class UIManager : MonoBehaviour {
         if (overLoadGage2.GetComponent<Image>().fillAmount >= 1)
         {
 
-            if (SoundFlag == false)
-            {
-                Singleton<SoundManager>.instance.playSE("se008");
-            }
+           
 
             // 最大時画像
             //unionGage.GetComponent<Image>().sprite = Resources.Load<Sprite>("gage2");
