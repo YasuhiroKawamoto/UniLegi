@@ -277,8 +277,7 @@ public class PlayerControl : MonoBehaviour
 
                                     // 手をどける
                                     isWaiting = true;
-                                    hand1.transform.localScale = new Vector2(-1, 1);
-                                    hand2.transform.localScale = new Vector2(1, 1);
+
 
                                     canInstantiate = false;
 
@@ -464,10 +463,13 @@ public class PlayerControl : MonoBehaviour
                 {
                     // 既存のユニットを破壊
                     Destroy(union);
+
                 }
                 pinch_num = 0;
                 superUnion = false;
                 overload = 0;
+
+
             }
 
             else if (pinch_num == 1)
