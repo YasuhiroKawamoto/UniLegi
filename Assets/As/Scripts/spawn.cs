@@ -113,7 +113,7 @@ public class spawn : MonoBehaviour
                             putEffect = Resources.Load<GameObject>("Prefabs/Put");
                             putEffect.transform.position = new Vector3(-300, -300, -300);
 
-                            putEffect = Instantiate(putEffect);
+                            
                             if (hit.collider.gameObject == this.gameObject)
                             {
                                 PlayerControl.canUnion = false;
@@ -159,11 +159,7 @@ public class spawn : MonoBehaviour
                     //離したとき
                     else if (touch.phase == TouchPhase.Ended)
                     {
-                        if (putEffect != null)
-                        {
-                            Destroy(putEffect);
-                            putEffect = null;
-                        }
+                        putEffect.transform.position = new Vector3(-300, -300, -300);
 
                         //タッチをした位置にオブジェクト判定
                         RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);

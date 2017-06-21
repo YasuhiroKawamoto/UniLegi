@@ -250,13 +250,25 @@ public class PlayerControl : MonoBehaviour
 
 
                             // 生成ユニットの差し替え
-                            if (diff < -20)
+                            if (diff < -5)
                             {
-                                newUnit = Resources.Load<GameObject>("voidUnitSuper");
+                                newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper1");
                             }
-                            else if(diff >= -20 && diff <10)
+                            else if (diff >= -5 && diff <= -1)
                             {
-                                newUnit = Resources.Load<GameObject>("voidUnitSuper");
+                                newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper2");
+                            }
+                            else if (diff >-1 && diff <= 1)
+                            {
+                                newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper3");
+                            }
+                            else if (diff <= 5 && diff > 1)
+                            {
+                                newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper4");
+                            }
+                            else if (diff > 5)
+                            {
+                                newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper5");
                             }
 
 
@@ -317,7 +329,7 @@ public class PlayerControl : MonoBehaviour
 
                                     foreach (GameObject grid in grids)
                                     {
-                                        Vector3 gridPos = grid.transform.position;
+                                        Vector3 gridPos = grid.transform.position + new Vector3(0.5f, 0.5f, 0.0f);
                                         Vector3 gridScl = grid.transform.localScale;
                                         isExisting = grid.GetComponent<Grid>().GetIsExisting();
 
