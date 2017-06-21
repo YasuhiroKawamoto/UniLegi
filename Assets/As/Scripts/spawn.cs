@@ -11,6 +11,7 @@ public class spawn : MonoBehaviour
     [SerializeField]
     private GameManager manager;
 
+
     [SerializeField]
     GameObject effect;
     [SerializeField]
@@ -18,6 +19,8 @@ public class spawn : MonoBehaviour
     GameObject arrowObj;
     //デンジャーゾーン
     GameObject DanjarZone;
+
+    GameObject putEffect;
 
     //矢印が出ているかのフラグ
     private bool m_arrowFlag;
@@ -50,6 +53,7 @@ public class spawn : MonoBehaviour
 
         m_flag = 0;
 
+        putEffect = Resources.Load<GameObject>("Prefabs/Put");
 
         tmpPos = (this.transform.position);
         tmpPos.z = -1;
@@ -106,6 +110,10 @@ public class spawn : MonoBehaviour
 
                         if (hit)
                         {
+                            putEffect = Resources.Load<GameObject>("Prefabs/Put");
+                            putEffect.transform.position = new Vector3(-300, -300, -300);
+
+                            putEffect = Instantiate(putEffect);
                             if (hit.collider.gameObject == this.gameObject)
                             {
                                 PlayerControl.canUnion = false;
@@ -115,9 +123,48 @@ public class spawn : MonoBehaviour
                         }
 
                     }
+
+                    if (touch.phase == TouchPhase.Moved)
+                    {
+                        // マスオブジェクトを検出
+                        grids = GameObject.FindGameObjectsWithTag("Grid");
+
+
+                        //タッチをした位置にオブジェクト判定
+                        RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
+
+                        if (hit)
+                        {
+                            if (hit.collider.gameObject == this.gameObject)
+                            {
+
+                                foreach (GameObject grid in grids)
+                                {
+                                    Vector3 gridPos = grid.transform.position;
+                                    Vector3 gridScl = grid.transform.localScale;
+
+                                    // タッチ座標がマスの中
+                                    if (m_worldPoint.x > gridPos.x - gridScl.x / 2 && m_worldPoint.y > gridPos.y - gridScl.y / 2 &&
+                                        m_worldPoint.x < gridPos.x + gridScl.x / 2 && m_worldPoint.y < gridPos.y + gridScl.y / 2)
+                                    {
+                                        // エフェクト
+                                        putEffect.transform.position = gridPos;
+                                    }
+                                }
+                            }
+
+                        }
+                        
+                    }
                     //離したとき
                     else if (touch.phase == TouchPhase.Ended)
                     {
+                        if (putEffect != null)
+                        {
+                            Destroy(putEffect);
+                            putEffect = null;
+                        }
+
                         //タッチをした位置にオブジェクト判定
                         RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
                         if (hit)
@@ -131,13 +178,13 @@ public class spawn : MonoBehaviour
                                     PlayerControl.canUnion = true;
 
                                     m_flag = 0;
-                                    if(m_arrowFlag==true)
+                                    if (m_arrowFlag == true)
                                     {
                                         Destroy(arrowObj.gameObject);
                                     }
                                     m_arrowFlag = false;
                                 }
-                                else 
+                                else
                                 {
                                     bool inGrid = false;
                                     Vector3 appearPos = Vector3.zero;
@@ -150,8 +197,8 @@ public class spawn : MonoBehaviour
                                         isExisting = grid.GetComponent<Grid>().GetIsExisting();
 
                                         // タッチ座標がマスの中
-                                        if (m_worldPoint.x> gridPos.x - gridScl.x / 2 && m_worldPoint.y>gridPos.y - gridScl.y / 2 &&
-                                            m_worldPoint.x<gridPos.x + gridScl.x / 2 && m_worldPoint.y < gridPos.y + gridScl.y/2)
+                                        if (m_worldPoint.x > gridPos.x - gridScl.x / 2 && m_worldPoint.y > gridPos.y - gridScl.y / 2 &&
+                                            m_worldPoint.x < gridPos.x + gridScl.x / 2 && m_worldPoint.y < gridPos.y + gridScl.y / 2)
                                         {
                                             if (isExisting == false)
                                             {

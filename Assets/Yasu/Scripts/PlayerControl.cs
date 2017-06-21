@@ -225,9 +225,40 @@ public class PlayerControl : MonoBehaviour
                             hand1.transform.position = handPos1;
                             hand2.transform.position = handPos2;
 
+                            foreach (GameObject union in unions)
+                            {
+                                union.tag = "Player";
+                            }
+                            unions = GameObject.FindGameObjectsWithTag("Player");
+
+                            int totalATK = 0;
+                            int totalHP = 0;
+                            int diff = 0;
+
+
+                            foreach (GameObject union in unions)
+                            {
+                                // 全ユニットの値を抽出
+                                totalATK += union.GetComponent<States>().getAttack();
+
+                                // 全ユニットをはさまれた状態に
+                                totalHP += union.GetComponent<States>().getHp();
+                            }
+
+                            diff = totalHP - totalATK;
+
+
 
                             // 生成ユニットの差し替え
-                            newUnit = newUnitSuper;
+                            if (diff < -20)
+                            {
+                                newUnit = Resources.Load<GameObject>("voidUnitSuper");
+                            }
+                            else if(diff >= -20 && diff <10)
+                            {
+                                newUnit = Resources.Load<GameObject>("voidUnitSuper");
+                            }
+
 
                             // エフェクトの差し替え
                         }
@@ -455,21 +486,13 @@ public class PlayerControl : MonoBehaviour
             {
                 foreach (GameObject union in unions)
                 {
-                    union.tag = "Player";
-                }
-                unions = GameObject.FindGameObjectsWithTag("Player");
-
-                foreach (GameObject union in unions)
-                {
-                    // 既存のユニットを破壊
+                    // 既存のユニットを全て破壊
                     Destroy(union);
 
                 }
                 pinch_num = 0;
                 superUnion = false;
                 overload = 0;
-
-
             }
 
             else if (pinch_num == 1)
