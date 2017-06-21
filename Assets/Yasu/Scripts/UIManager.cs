@@ -61,7 +61,7 @@ public class UIManager : MonoBehaviour {
         float timeStep = (Time.time - m_autoMoveTime)/ followTime;
 
 
-
+        // ===================================================================================
         // 移動終点(現在の値)
        targetRate = hpGreen.GetComponent<Image>().fillAmount = manager.GetHp() / 150.0f;
 
@@ -71,11 +71,12 @@ public class UIManager : MonoBehaviour {
         // 線形補間で計算  
         rate = Lerp(startRate, targetRate, followTime, TimeStep);
 
-
-        //if (startRate != targetRate)
         {
             hpRed.GetComponent<Image>().fillAmount = rate;
         }
+
+        // ===================================================================================
+
 
 
         // コストゲージ
