@@ -81,6 +81,11 @@ public class PlayerControl : MonoBehaviour
     GameObject[] grids;
     Grid currentGrid;
 
+    // スーパーユニット召喚中
+    bool isSummon;
+    //
+   GameObject superUnit;
+
     // Use this for initialization
     void Start()
     {
@@ -93,6 +98,7 @@ public class PlayerControl : MonoBehaviour
         unionCost = 0;
         pinch_num = 0;
         unionCoolTime = COOL_TIME;
+        superUnit = null;
 
         canUnion = true;
         tap_state = TAP_STATE.NONE;
@@ -235,44 +241,49 @@ public class PlayerControl : MonoBehaviour
                             int totalHP = 0;
                             int diff = 0;
 
+                         
+                                foreach (GameObject union in unions)
+                                {
+                                    // 全ユニットの値を抽出
+                                    totalATK += union.GetComponent<States>().getAttack();
+                                    totalHP += union.GetComponent<States>().getHp();
 
-                            foreach (GameObject union in unions)
+                                    // 全ユニットをはさまれた状態に
+                                    union.tag = "isPinched";
+                                }
+
+                                diff = totalHP / 10 - totalATK;
+
+                            if (overload >= MAX_OVERLOAD)
                             {
-                                // 全ユニットの値を抽出
-                                totalATK += union.GetComponent<States>().getAttack();
+                                // 生成ユニットの差し替え
+                                if (diff < -5)
+                                {
+                                    newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper1");
+                                }
+                                else if (diff >= -5 && diff <= -1)
+                                {
+                                    newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper2");
+                                }
+                                else if (diff > -1 && diff <= 1)
+                                {
+                                    newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper3");
+                                }
+                                else if (diff <= 5 && diff > 1)
+                                {
+                                    newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper4");
+                                }
+                                else
+                                {
+                                    newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper5");
+                                }
 
-                                // 全ユニットをはさまれた状態に
-                                totalHP += union.GetComponent<States>().getHp();
+                                // 予測の差し替え
+                                sprPre.sprite = newUnit.GetComponent<SpriteRenderer>().sprite;
+
+
+                                // エフェクトの差し替え
                             }
-
-                            diff = totalHP - totalATK;
-
-
-
-                            // 生成ユニットの差し替え
-                            if (diff < -5)
-                            {
-                                newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper1");
-                            }
-                            else if (diff >= -5 && diff <= -1)
-                            {
-                                newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper2");
-                            }
-                            else if (diff >-1 && diff <= 1)
-                            {
-                                newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper3");
-                            }
-                            else if (diff <= 5 && diff > 1)
-                            {
-                                newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper4");
-                            }
-                            else if (diff > 5)
-                            {
-                                newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper5");
-                            }
-
-
-                            // エフェクトの差し替え
                         }
                     }
                     else
@@ -299,6 +310,8 @@ public class PlayerControl : MonoBehaviour
                                 {
                                     // すーぱーがったい
                                     superUnion = true;
+                                    isSummon = true;
+                                    superUnit = newUnit;
 
                                     tmpId = newUnit.GetComponent<States>().GetTypeId();
 
@@ -314,7 +327,6 @@ public class PlayerControl : MonoBehaviour
                                     // エフェクト発生
                                     Instantiate(effect);
                                     Singleton<SoundManager>.instance.playSE("se002");
-                                    unionCoolTime = COOL_TIME;
 
                                     delay = 50;
 
@@ -466,10 +478,25 @@ public class PlayerControl : MonoBehaviour
 
         }
 
-        if (unionCoolTime > 0)
+        if (unionCoolTime > 0 && !isSummon)
         {
             unionCoolTime -= Time.deltaTime * 3;
 
+        }
+
+        if (unionCoolTime <= COOL_TIME && isSummon)
+        {
+            unionCoolTime += Time.deltaTime * 15;
+        }
+        
+       else  if(unionCoolTime > COOL_TIME)
+        {
+            isSummon = false;
+            unionCoolTime = COOL_TIME;
+        }
+        if(unionCoolTime <= 0)
+        {
+            unionCoolTime = 0;
         }
 
         pinch_num = 0;
@@ -502,6 +529,7 @@ public class PlayerControl : MonoBehaviour
                     Destroy(union);
 
                 }
+                superUnit = newUnit;
                 pinch_num = 0;
                 superUnion = false;
                 overload = 0;
@@ -638,5 +666,10 @@ public class PlayerControl : MonoBehaviour
     public bool IsUnion()
     {
         return isWaiting;
+    }
+
+    public bool IsSummon()
+    {
+        return isSummon;
     }
 }

@@ -196,7 +196,7 @@ public class Tap : MonoBehaviour
 
                     Vector3 pos = gameObject.transform.position;
                     pos.y = pos.y + 1.0f;
-                    objState.transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, pos);
+                    objState.transform.position = pos;
 
                     //撃てない
                     m_canShot = false;
