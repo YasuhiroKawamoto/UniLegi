@@ -45,7 +45,7 @@ public class FlontLineMove : MonoBehaviour
                 }
 
 
-                if (this.gameObject.transform.position.y >= 4.0f)
+                if (this.gameObject.transform.position.y >= 3.5f)
                 {
 
                     moveFlag = false;
