@@ -112,8 +112,13 @@ public class States : MonoBehaviour
 
             // コスト回復
             PlayerControl plc = Player.GetComponent<PlayerControl>();
-            plc.SetUnionCoolTime(plc.GetUnionCoolTime() - getCost()/2.0f);
-            // manager.RecoverCost(getCost());
+
+            if (plc.IsSummon() == false)
+            {
+
+                plc.SetUnionCoolTime(plc.GetUnionCoolTime() - getCost() / 2.0f);
+                // manager.RecoverCost(getCost());
+            }
 
 
             if (DeadAction != null)
