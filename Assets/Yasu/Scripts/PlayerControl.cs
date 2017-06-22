@@ -241,8 +241,7 @@ public class PlayerControl : MonoBehaviour
                             int totalHP = 0;
                             int diff = 0;
 
-                            if (overload >= MAX_OVERLOAD)
-                            {
+                         
                                 foreach (GameObject union in unions)
                                 {
                                     // 全ユニットの値を抽出
@@ -255,8 +254,8 @@ public class PlayerControl : MonoBehaviour
 
                                 diff = totalHP / 10 - totalATK;
 
-
-
+                            if (overload >= MAX_OVERLOAD)
+                            {
                                 // 生成ユニットの差し替え
                                 if (diff < -5)
                                 {
@@ -274,10 +273,13 @@ public class PlayerControl : MonoBehaviour
                                 {
                                     newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper4");
                                 }
-                                else if (diff > 5)
+                                else
                                 {
                                     newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper5");
                                 }
+
+                                // 予測の差し替え
+                                sprPre.sprite = newUnit.GetComponent<SpriteRenderer>().sprite;
 
 
                                 // エフェクトの差し替え
@@ -484,7 +486,7 @@ public class PlayerControl : MonoBehaviour
 
         if (unionCoolTime <= COOL_TIME && isSummon)
         {
-            unionCoolTime += Time.deltaTime * 20;
+            unionCoolTime += Time.deltaTime * 15;
         }
         
        else  if(unionCoolTime > COOL_TIME)
