@@ -140,7 +140,7 @@ public class States : MonoBehaviour
             if (lineCnt <= 0)
             {
                 m_Hp -= 2;//前線に触れていることによる継続ダメージ
-                lineCnt = 2;
+                lineCnt = 1;
             }
 
         }
