@@ -70,7 +70,6 @@ public class FlontLineMove : MonoBehaviour
         }
         else
         {
-
             RB.velocity = new Vector2(0, 0);//停止
         }
     
