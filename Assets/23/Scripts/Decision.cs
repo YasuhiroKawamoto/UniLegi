@@ -75,6 +75,12 @@ public class Decision : MonoBehaviour
                     states.setDamege(col.gameObject.GetComponent<Bullet>().getBulletDamage());//ダメージ判定
                     Instantiate(guardEffect);//ガードエフェクト生成
                 }
+
+                if (col.gameObject.GetComponent<Bullet>().getFlag() == true)
+                {
+                    Destroy(col);
+                }
+
             }
             else
             {

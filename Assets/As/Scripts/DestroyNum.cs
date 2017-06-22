@@ -46,8 +46,8 @@ public class DestroyNum : MonoBehaviour
         if (m_Flag == false)
         {
             save = num;
-
             cnt = save - m_save;
+
             if(0 < cnt)
             {
                 m_Flag = true;
@@ -62,14 +62,14 @@ public class DestroyNum : MonoBehaviour
             }
             else
             {
-
+                //撃破数が10以上なら
                 if (cnt > 9)
                 {
                     text.text = cnt.ToString() + "Kills";
                     Instantiate(text, canvas.transform);
                     Instantiate(gameObject);
                 }
-                //Debug.Log(cnt);
+               
                 time = 0.0f;
                 m_save = num;
                 m_Flag = false;

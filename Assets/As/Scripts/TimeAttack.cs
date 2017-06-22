@@ -9,7 +9,6 @@ public class TimeAttack : MonoBehaviour {
     //タイムカウント
     private int m_timeCount = 0;
 
-    GameObject[] enemy;
     private int enemyNum;
 
 	// Use this for initialization

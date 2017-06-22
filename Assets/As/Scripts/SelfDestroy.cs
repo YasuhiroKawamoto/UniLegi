@@ -14,8 +14,6 @@ public class SelfDestroy : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
-        
 		
 	}
 	

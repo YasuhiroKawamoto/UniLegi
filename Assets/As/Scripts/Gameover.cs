@@ -22,6 +22,5 @@ public class Gameover : MonoBehaviour {
         m_alha += Time.deltaTime * 0.4f;
 
         sprite.color = new Color(255, 255, 255, m_alha);
-		
 	}
 }
