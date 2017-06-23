@@ -13,14 +13,14 @@ public class Union : MonoBehaviour
 
     GameObject newBullet;
 
-    int dragonFlagBit;
+    int UnitFlagBit;
     const int DRAGON = 7;        // 0b0111
 
 
     // Use this for initialization
     void Start()
     {
-        dragonFlagBit = 0;
+        UnitFlagBit = 0;
         newUnit = GameObject.Find("Player").GetComponent<PlayerControl>().newUnit;
 
     }
@@ -67,19 +67,19 @@ public class Union : MonoBehaviour
         List<int> typeIDs = new List<int>();
         int returnID = 0;
 
-        dragonFlagBit = 0;
+        UnitFlagBit = 0;
         foreach (GameObject union in unions)
         {
             States state = union.GetComponent<States>();
 
-            dragonFlagBit = dragonFlagBit | state.GetTypePoint();
+            UnitFlagBit = UnitFlagBit | state.GetTypePoint();
 
             typeIDs.Add(state.GetTypeId());
         }
 
 
         // ドラゴン判定成功
-        if((dragonFlagBit & DRAGON) == DRAGON)
+        if((UnitFlagBit & DRAGON) == DRAGON)
         {
             returnID = 7;
         }
