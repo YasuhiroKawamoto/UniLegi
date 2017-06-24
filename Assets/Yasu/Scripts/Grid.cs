@@ -18,11 +18,24 @@ public class Grid : MonoBehaviour {
 
     GameObject FlontLine;
 
+    GameObject putEffect;
+
+    GameObject putEffectReal = null;
+
+    GameObject generator;
+
+    bool IsWaiting;
+
+    static float cnt; 
+
     // Use this for initialization
     void Start () {
         square = gameObject.transform.FindChild("grid2").gameObject;
         square2 = gameObject.transform.FindChild("grid").gameObject;
         FlontLine = GameObject.Find("FlontLine");
+        generator = GameObject.Find("Generator");
+        putEffect = Resources.Load<GameObject>("Prefabs/Put");
+        IsWaiting = false;
     }
 	
 	// Update is called once per frame
@@ -63,8 +76,25 @@ public class Grid : MonoBehaviour {
         else
         {
             square.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);//可視
+            if (generator.GetComponent<spawn>().getIsPut() == true)
+            {
+                if (this.transform.parent.GetComponentInParent<GridManager>().getIsWaiting() == false)
+                {
+                   
+                    this.transform.parent.GetComponentInParent<GridManager>().setIsWaiting(true);
+                    //putEffectReal = Instantiate(putEffect);
+                    //putEffectReal.transform.position = gameObject.transform.position;  
+                }
+                else
+                {
+
+                    square.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, this.transform.parent.GetComponentInParent<GridManager>().getCnt());//可視
+                }
+            }
         }
 
+      
+       
 
     }
 

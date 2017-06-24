@@ -21,7 +21,7 @@ public class TimeAttack : MonoBehaviour {
 
         enemyNum = Singleton<SceneData>.instance.getEnemyCnt();
         //倒した敵の数を表示
-        GetComponent<Text>().text = enemyNum.ToString()+" Kills";
+        GetComponent<Text>().text = enemyNum.ToString()+" Kill";
      
 	}
 

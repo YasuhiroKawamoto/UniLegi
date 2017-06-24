@@ -13,7 +13,7 @@ public class BackGround : MonoBehaviour {
         switch (stage)
         {
             case 1:
-                GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Back1");
+                GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("map1");
                 break;
             case 2:
                 GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Back2");

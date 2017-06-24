@@ -22,8 +22,8 @@ public class spawn : MonoBehaviour
 
     GameObject putEffect;
 
-    //矢印が出ているかのフラグ
-    private bool m_arrowFlag;
+    ////矢印が出ているかのフラグ
+    //private bool m_arrowFlag;
     //触ったフラグ
     private int m_flag;
     //タッチ
@@ -40,6 +40,11 @@ public class spawn : MonoBehaviour
     private int waitTime = 30;
     private bool IsWaiting;
     private bool IsSummons;//召喚中か？
+
+    static bool IsPut;//触っているか？
+
+
+
     private Vector3 savePos;
     Vector3 tmpPos;
 
@@ -53,7 +58,7 @@ public class spawn : MonoBehaviour
 
         m_flag = 0;
 
-        putEffect = Resources.Load<GameObject>("Prefabs/Put");
+        //putEffect = Resources.Load<GameObject>("Prefabs/Put");
 
         tmpPos = (this.transform.position);
         tmpPos.z = -1;
@@ -63,8 +68,8 @@ public class spawn : MonoBehaviour
         IsWaiting = false;
 
         IsSummons = false;
-        m_arrowFlag = false;
-
+        //m_arrowFlag = false;
+        IsPut = false;
         DanjarZone = GameObject.Find("SpriteDengerZone");
 
     }
@@ -84,15 +89,17 @@ public class spawn : MonoBehaviour
                 Vector3 pos = transform.position;
                 pos.y = pos.y + 1.0f;
 
-                if (m_arrowFlag == false)
-                {
-                    arrowObj = Instantiate(arrow);
-                    arrowObj.transform.position = pos;
-                    m_arrowFlag = true;
-                }
+                //if (m_arrowFlag == false)
+                //{
+                //    arrowObj = Instantiate(arrow);
+                //    arrowObj.transform.position = pos;
+                //    m_arrowFlag = true;
+                //}
                 sr.color = Color.white;
                 if (Input.touchCount > 0)
                 {
+                 
+
                     touch = Input.GetTouch(0);
 
                     m_worldPoint = Camera.main.ScreenToWorldPoint(touch.position);
@@ -110,10 +117,10 @@ public class spawn : MonoBehaviour
 
                         if (hit)
                         {
-                            putEffect = Resources.Load<GameObject>("Prefabs/Put");
-                            putEffect.transform.position = new Vector3(-300, -300, -300);
+                            //putEffect = Resources.Load<GameObject>("Prefabs/Put");
+                            //putEffect.transform.position = new Vector3(-300, -300, -300);
 
-                            
+
                             if (hit.collider.gameObject == this.gameObject)
                             {
                                 PlayerControl.canUnion = false;
@@ -137,7 +144,7 @@ public class spawn : MonoBehaviour
                         {
                             if (hit.collider.gameObject == this.gameObject)
                             {
-
+                                IsPut = true;
                                 foreach (GameObject grid in grids)
                                 {
                                     Vector3 gridPos = grid.transform.position;
@@ -148,25 +155,26 @@ public class spawn : MonoBehaviour
                                         m_worldPoint.x < gridPos.x + gridScl.x / 2 && m_worldPoint.y < gridPos.y + gridScl.y / 2)
                                     {
                                         // エフェクト
-                                        putEffect.transform.position = gridPos;
+                                        //putEffect.transform.position = gridPos;
                                     }
                                 }
                             }
 
                         }
-                        
+
                     }
                     //離したとき
                     else if (touch.phase == TouchPhase.Ended)
                     {
-                        putEffect.transform.position = new Vector3(-300, -300, -300);
-
+                        //putEffect.transform.position = new Vector3(-300, -300, -300);
+                        IsPut = false;
                         //タッチをした位置にオブジェクト判定
                         RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
                         if (hit)
                         {
                             if (hit.collider.gameObject == this.gameObject)
                             {
+                                
                                 if (m_worldPoint.y < zone)
                                 {
                                     //元いた位置に戻る
@@ -174,11 +182,11 @@ public class spawn : MonoBehaviour
                                     PlayerControl.canUnion = true;
 
                                     m_flag = 0;
-                                    if (m_arrowFlag == true)
-                                    {
-                                        Destroy(arrowObj.gameObject);
-                                    }
-                                    m_arrowFlag = false;
+                                    //if (m_arrowFlag == true)
+                                    //{
+                                    //    Destroy(arrowObj.gameObject);
+                                    //}
+                                    //m_arrowFlag = false;
                                 }
                                 else
                                 {
@@ -236,7 +244,7 @@ public class spawn : MonoBehaviour
 
                                     m_flag = 0;
 
-                                    m_arrowFlag = false;
+                                    //m_arrowFlag = false;
 
                                 }
                             }
@@ -258,13 +266,13 @@ public class spawn : MonoBehaviour
 
                 // 色を暗く
                 SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
-                if (m_arrowFlag == true)
-                {
-                    Destroy(arrowObj.gameObject);
-                }
+                //if (m_arrowFlag == true)
+                //{
+                //    Destroy(arrowObj.gameObject);
+                //}
                 sr.color = Color.gray;
                 //フラグを折る
-                m_arrowFlag = false;
+                //m_arrowFlag = false;
             }
 
             //1の時追従する
@@ -280,9 +288,9 @@ public class spawn : MonoBehaviour
             }
 
             //デンジャーゾーンよりY軸が大きくなったら矢印を消す
-            if(this.transform.position.y>DanjarZone.transform.position.y)
-            {
-                Destroy(arrowObj.gameObject);
+            if (this.transform.position.y > DanjarZone.transform.position.y)
+            { 
+                        //    Destroy(arrowObj.gameObject);
             }
 
 
@@ -297,7 +305,7 @@ public class spawn : MonoBehaviour
             {
                 Instantiate(AsPrefab);//ユニット生成
                 AsPrefab.GetComponent<Tap>().SetRow(currentGrid.GetComponent<Grid>().GetRow());
-                
+
                 IsWaiting = false;//エフェクト待機解除
                 waitTime = 30;//待機カウントリセット
                 IsSummons = false;//召喚待機状態に設定
@@ -325,6 +333,13 @@ public class spawn : MonoBehaviour
         }
 
         return true;
+    }
+
+
+
+    public bool getIsPut()
+    {
+        return IsPut;
     }
 }
 
