@@ -13,7 +13,7 @@ public class Union : MonoBehaviour
 
     GameObject newBullet;
 
-    int UnitFlagBit;
+    int UnitFlagBit;             // 0b00000000000000000000000000000000
     const int DRAGON = 7;        // 0b0111
 
 
