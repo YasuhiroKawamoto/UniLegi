@@ -47,12 +47,24 @@ public class UIManager : MonoBehaviour {
 
     bool SoundFlag;
 
+    float EnemyMax;
 
     // Use this for initialization
     void Start () {
         m_autoMoveTime = Time.time;
 
+        switch (Singleton<SceneData>.instance.getStageNumber())
+        {
+            case 1:
+                EnemyMax = 116.0f;
+                break;
+            default:
+                EnemyMax = 100.0f;
+                break;
 
+        }
+
+        
 
     }
 
@@ -63,7 +75,7 @@ public class UIManager : MonoBehaviour {
 
         // ===================================================================================
         // 移動終点(現在の値)
-        targetRate = hpGreen.GetComponent<Image>().fillAmount = (59 -Singleton<SceneData>.instance.getEnemyCnt()) / 59.0f;
+        targetRate = hpGreen.GetComponent<Image>().fillAmount = (EnemyMax -Singleton<SceneData>.instance.getEnemyCnt()) / EnemyMax;
 
         // 移動始点(古い値)
         startRate = hpRed.GetComponent<Image>().fillAmount;

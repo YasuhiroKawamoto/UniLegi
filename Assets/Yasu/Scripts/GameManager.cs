@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Canvas canvas;
 
+    GameObject Line;
 
     float m_WaitFade;
     bool fadeFlag;
@@ -64,6 +65,9 @@ public class GameManager : MonoBehaviour
         m_cnt = 0;
         //fade = GameObject.Find("SceneData").GetComponent<SceneDataManager>().GetFade();
         m_WaitFade = 1.0f;
+
+
+        Line = GameObject.Find("FlontLine");
     }
 
     // Update is called once per frame
@@ -116,7 +120,7 @@ public class GameManager : MonoBehaviour
 
 
         // シーン遷移
-        if (m_hp < 0 && IsWaiting == false&&LoseFlag == false)
+        if (Line.transform.position.y <= -3.7f&& IsWaiting == false&&LoseFlag == false)
         {
             LoseFlag = true;
             IsWaiting = true;
