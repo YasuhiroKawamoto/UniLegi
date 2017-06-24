@@ -195,6 +195,8 @@ public class PlayerControl : MonoBehaviour
                         // ピンチエリア移動
                         start_size = size;
                         start_pos = pos;
+
+
                         Area.transform.position = pos;
 
                         // 予測ユニット表示
@@ -256,6 +258,11 @@ public class PlayerControl : MonoBehaviour
 
                             if (overload >= MAX_OVERLOAD)
                             {
+
+                                // 移動済み
+                                print("通ってる●");
+                                Area.transform.position = new Vector3(0, 0, 0);
+                                
                                 // 生成ユニットの差し替え
                                 if (diff < -5)
                                 {
@@ -308,6 +315,9 @@ public class PlayerControl : MonoBehaviour
 
                                 if (overload >= MAX_OVERLOAD)
                                 {
+                                    // 真ん中に行く
+                                    Area.transform.position = new Vector3(0, 0, 0);
+
                                     // すーぱーがったい
                                     superUnion = true;
                                     isSummon = true;
@@ -316,12 +326,12 @@ public class PlayerControl : MonoBehaviour
                                     tmpId = newUnit.GetComponent<States>().GetTypeId();
 
                                     // 合体ユニット設定
-                                    newUnit.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
+                                    newUnit.transform.position = new Vector3(0.0f, start_pos.y + size.y / 2.0f, 0.0f);
                                     newUnit.transform.localScale = new Vector3(1, 1, 1);
                                     //newUnit.tag = "isPinched";
 
                                     // エフェクト設定
-                                    effect.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
+                                    effect.transform.position = new Vector3(0.0f, start_pos.y + size.y / 2.0f, 0.0f);
                                     effect.transform.localScale = new Vector3(1, 1, 1);
 
                                     // エフェクト発生
@@ -533,6 +543,7 @@ public class PlayerControl : MonoBehaviour
                 pinch_num = 0;
                 superUnion = false;
                 overload = 0;
+
             }
 
             else if (pinch_num == 1)
