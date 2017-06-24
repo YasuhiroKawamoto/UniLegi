@@ -67,8 +67,9 @@ public class Alert : MonoBehaviour {
             if (m_cnt != CurrentWave)
             {
                 m_startFlag = true;
+               
                 //wave数の表示
-                if (m_lastWave == m_cnt)
+                if (m_lastWave == CurrentWave)
                 {
                    
                     Instantiate(Last);
@@ -77,17 +78,17 @@ public class Alert : MonoBehaviour {
                     Singleton<SoundManager>.instance.playSE("SE010");//ボスアラート音再生
                     //Instantiate(gameObject1, transform.position + m_pos, transform.rotation);
                     //Instantiate(gameObject2, transform.position - m_pos, transform.rotation);
-                    m_cnt = CurrentWave;
+                
                     m_flag = true;
                     m_time = 0.0f;
                 }
-                else if (m_lastWave > m_cnt && 1 < m_cnt)
+                else if (CurrentWave > 1)
                 {
                     //wave.text = "WAVE " + CurrentWave.ToString();
                    
                     Instantiate(Next);
                     m_startFlag = false;
-                    m_cnt = CurrentWave;
+                
                     m_flag = true;
                     m_time = 0.0f;
                 }
@@ -95,7 +96,7 @@ public class Alert : MonoBehaviour {
                 {
                   
                     Instantiate(start); 
-                    m_cnt = CurrentWave;
+       
                     m_flag = true;
                     m_time = 0.0f;
                 }
