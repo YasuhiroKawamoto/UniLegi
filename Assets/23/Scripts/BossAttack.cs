@@ -74,17 +74,7 @@ public class BossAttack : MonoBehaviour {
                             }
 
                         }
-                        else if (obj.gameObject.tag == "DangerZone")//接触オブジェクトタグがDangerZone
-                        {
-                            obj.GetComponent<DangerZone>().SetHp(obj.GetComponent<DangerZone>().GetHp() - states.getAttack());//ダメージ判定
-
-                            effect.transform.position = new Vector3(this.gameObject.transform.position.x, obj.transform.position.y);//エフェクト位置設定
-
-                            if (effect != null)//エフェクトスロットに設定してある場合
-                            {
-                                Instantiate(effect);//エフェクト生成
-                            }
-                        }
+                      
 
                     }
 
@@ -110,14 +100,7 @@ public class BossAttack : MonoBehaviour {
 
             }
 
-            if (col.gameObject.tag == "DangerZone")//接触オブジェクトがDangerZone
-            {
-            target.Add(col.gameObject);
-            AttackFlag = true;//攻撃フラグON
-                Debug.Log("拠点接敵");
-              
-               
-            }
+            
 
            
        
@@ -126,13 +109,7 @@ public class BossAttack : MonoBehaviour {
     void OnTriggerStay2D(Collider2D col)
     {
 
-        if (col.gameObject.tag == "DangerZone")//接触オブジェクトタグがPlayer
-        {
-            AttackFlag = true;//攻撃フラグON
-            Debug.Log("接敵");
-           
-            this.transform.parent.GetComponent<Mover>().setMoveFlag(false);//移動を止める
-        }
+       
 
     }
 
@@ -149,13 +126,6 @@ public class BossAttack : MonoBehaviour {
 
 
 
-        if (col.gameObject.tag == "DangerZone")
-        {
-            target.Clear();
-            col.gameObject.GetComponent<States>().SetLockOn(false);
-            AttackFlag = false;//攻撃フラグOFF
-            this.transform.parent.GetComponent<Mover>().setMoveFlag(true);//移動を開始
-            Debug.Log("離脱");
-        }
+        
     }
 }
