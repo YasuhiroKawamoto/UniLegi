@@ -40,6 +40,9 @@ public class spawn : MonoBehaviour
     private int waitTime = 30;
     private bool IsWaiting;
     private bool IsSummons;//召喚中か？
+
+    private bool IsPut;//触っているか？
+
     private Vector3 savePos;
     Vector3 tmpPos;
 
@@ -53,7 +56,7 @@ public class spawn : MonoBehaviour
 
         m_flag = 0;
 
-        putEffect = Resources.Load<GameObject>("Prefabs/Put");
+        //putEffect = Resources.Load<GameObject>("Prefabs/Put");
 
         tmpPos = (this.transform.position);
         tmpPos.z = -1;
@@ -64,7 +67,7 @@ public class spawn : MonoBehaviour
 
         IsSummons = false;
         m_arrowFlag = false;
-
+        IsPut = false;
         DanjarZone = GameObject.Find("SpriteDengerZone");
 
     }
@@ -110,8 +113,8 @@ public class spawn : MonoBehaviour
 
                         if (hit)
                         {
-                            putEffect = Resources.Load<GameObject>("Prefabs/Put");
-                            putEffect.transform.position = new Vector3(-300, -300, -300);
+                            //putEffect = Resources.Load<GameObject>("Prefabs/Put");
+                            //putEffect.transform.position = new Vector3(-300, -300, -300);
 
                             
                             if (hit.collider.gameObject == this.gameObject)
@@ -148,7 +151,7 @@ public class spawn : MonoBehaviour
                                         m_worldPoint.x < gridPos.x + gridScl.x / 2 && m_worldPoint.y < gridPos.y + gridScl.y / 2)
                                     {
                                         // エフェクト
-                                        putEffect.transform.position = gridPos;
+                                        //putEffect.transform.position = gridPos;
                                     }
                                 }
                             }
@@ -159,7 +162,7 @@ public class spawn : MonoBehaviour
                     //離したとき
                     else if (touch.phase == TouchPhase.Ended)
                     {
-                        putEffect.transform.position = new Vector3(-300, -300, -300);
+                        //putEffect.transform.position = new Vector3(-300, -300, -300);
 
                         //タッチをした位置にオブジェクト判定
                         RaycastHit2D hit = Physics2D.Raycast(m_worldPoint, Vector2.zero);
