@@ -51,7 +51,7 @@ public class Alert : MonoBehaviour {
 
         start = (GameObject)Resources.Load("Prefabs/start");
         Next = (GameObject)Resources.Load("Prefabs/next");
-        Last = (GameObject)Resources.Load("Prefabs/last");
+        Last = (GameObject)Resources.Load("Prefabs/warning");
 
     }
 	
@@ -88,15 +88,15 @@ public class Alert : MonoBehaviour {
                    
                     Instantiate(Next);
                     m_startFlag = false;
-                
+                    m_cnt = CurrentWave;
                     m_flag = true;
                     m_time = 0.0f;
                 }
                 else if (CurrentWave == 1)
                 {
                   
-                    Instantiate(start); 
-       
+                    Instantiate(start);
+                    m_cnt = CurrentWave;
                     m_flag = true;
                     m_time = 0.0f;
                 }
