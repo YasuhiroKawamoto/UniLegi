@@ -18,9 +18,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     public GameObject newUnit;
 
-
-    [SerializeField]
-    public GameObject newUnitSuper;
+    private GameObject InstantiateUnit;
 
     [SerializeField]
     public GameObject Prediction;
@@ -84,7 +82,6 @@ public class PlayerControl : MonoBehaviour
     // スーパーユニット召喚中
     bool isSummon;
     //
-   GameObject superUnit;
 
     // Use this for initialization
     void Start()
@@ -98,7 +95,6 @@ public class PlayerControl : MonoBehaviour
         unionCost = 0;
         pinch_num = 0;
         unionCoolTime = COOL_TIME;
-        superUnit = null;
 
         canUnion = true;
         tap_state = TAP_STATE.NONE;
@@ -107,6 +103,7 @@ public class PlayerControl : MonoBehaviour
         predictionOption = GameObject.Find("Prediction/Option");
 
         deleteSpr = Resources.Load<Sprite>("delete");
+        InstantiateUnit = newUnit;
     }
 
     // Update is called once per frame
@@ -238,13 +235,13 @@ public class PlayerControl : MonoBehaviour
                                 union.tag = "Player";
                             }
                             unions = GameObject.FindGameObjectsWithTag("Player");
-
                             int totalATK = 0;
                             int totalHP = 0;
                             int diff = 0;
 
-                         
-                                foreach (GameObject union in unions)
+                            foreach (GameObject union in unions)
+                            {
+                                if (overload >= MAX_OVERLOAD)
                                 {
                                     // 全ユニットの値を抽出
                                     totalATK += union.GetComponent<States>().getAttack();
@@ -253,44 +250,45 @@ public class PlayerControl : MonoBehaviour
                                     // 全ユニットをはさまれた状態に
                                     union.tag = "isPinched";
                                 }
+                            }
+                            diff = totalHP / 10 - totalATK;
 
-                                diff = totalHP / 10 - totalATK;
+
+                            InstantiateUnit = newUnit;
 
                             if (overload >= MAX_OVERLOAD)
                             {
-
                                 // 移動済み
-                                print("通ってる●");
                                 Area.transform.position = new Vector3(0, 0, 0);
-                                
+
                                 // 生成ユニットの差し替え
                                 if (diff < -5)
                                 {
-                                    newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper1");
+                                    InstantiateUnit = Resources.Load<GameObject>("Prefabs/SuperDragon");
                                 }
                                 else if (diff >= -5 && diff <= -1)
                                 {
-                                    newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper2");
+                                    InstantiateUnit = Resources.Load<GameObject>("Prefabs/SuperLilith");
                                 }
                                 else if (diff > -1 && diff <= 1)
                                 {
-                                    newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper3");
+                                    InstantiateUnit = Resources.Load<GameObject>("Prefabs/SuperParadin");
                                 }
                                 else if (diff <= 5 && diff > 1)
                                 {
-                                    newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper4");
+                                    InstantiateUnit = Resources.Load<GameObject>("Prefabs/SuperLich");
                                 }
                                 else
                                 {
-                                    newUnit = Resources.Load<GameObject>("Prefabs/voidUnitSuper5");
+                                    InstantiateUnit = Resources.Load<GameObject>("Prefabs/SuperKraken");
                                 }
 
-                                // 予測の差し替え
-                                sprPre.sprite = newUnit.GetComponent<SpriteRenderer>().sprite;
 
 
                                 // エフェクトの差し替え
                             }
+                            // 予測の差し替え
+                            sprPre.sprite = InstantiateUnit.GetComponent<SpriteRenderer>().sprite;
                         }
                     }
                     else
@@ -321,13 +319,13 @@ public class PlayerControl : MonoBehaviour
                                     // すーぱーがったい
                                     superUnion = true;
                                     isSummon = true;
-                                    superUnit = newUnit;
+
 
                                     tmpId = newUnit.GetComponent<States>().GetTypeId();
 
                                     // 合体ユニット設定
-                                    newUnit.transform.position = new Vector3(0.0f, start_pos.y + size.y / 2.0f, 0.0f);
-                                    newUnit.transform.localScale = new Vector3(1, 1, 1);
+                                    InstantiateUnit.transform.position = new Vector3(0.0f, start_pos.y + size.y / 2.0f, 0.0f);
+                                    InstantiateUnit.transform.localScale = new Vector3(1, 1, 1);
                                     //newUnit.tag = "isPinched";
 
                                     // エフェクト設定
@@ -356,27 +354,29 @@ public class PlayerControl : MonoBehaviour
                                         isExisting = grid.GetComponent<Grid>().GetIsExisting();
 
                                         // ユニットがマスの中
-                                        if (newUnit.transform.position.x > gridPos.x - gridScl.x / 2 && newUnit.transform.position.y > gridPos.y - gridScl.y / 2 &&
-                                             newUnit.transform.position.x < gridPos.x + gridScl.x / 2 && newUnit.transform.position.y < gridPos.y + gridScl.y / 2)
+                                        if (InstantiateUnit.transform.position.x > gridPos.x - gridScl.x / 2 && InstantiateUnit.transform.position.y > gridPos.y - gridScl.y / 2 &&
+                                             InstantiateUnit.transform.position.x < gridPos.x + gridScl.x / 2 && InstantiateUnit.transform.position.y < gridPos.y + gridScl.y / 2)
                                         {
                                             if (isExisting == false)
                                             {
                                                 Debug.Log("マスの中");
-                                                newUnit.transform.position = gridPos;
+                                                InstantiateUnit.transform.position = gridPos;
                                                 currentGrid = grid.GetComponent<Grid>();
                                                 int row = grid.GetComponent<Grid>().GetRow();
                                             }
                                         }
                                     }
                                 }
+
+                                // 通常合体
                                 else
                                 {
 
-                                    tmpId = newUnit.GetComponent<States>().GetTypeId();
+                                    tmpId = InstantiateUnit.GetComponent<States>().GetTypeId();
 
                                     // 合体ユニット設定
-                                    newUnit.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
-                                    newUnit.transform.localScale = new Vector3(1, 1, 1);
+                                    InstantiateUnit.transform.position = new Vector3(start_pos.x + size.x / 2.0f, start_pos.y + size.y / 2.0f, 0.0f);
+                                    InstantiateUnit.transform.localScale = new Vector3(1, 1, 1);
                                     //newUnit.tag = "isPinched";
 
                                     // エフェクト設定
@@ -386,7 +386,6 @@ public class PlayerControl : MonoBehaviour
                                     // エフェクト発生
                                     Instantiate(effect);
                                     Singleton<SoundManager>.instance.playSE("se002");
-                                    unionCoolTime = COOL_TIME;
 
                                     delay = 50;
                                     pinch_num = 0;
@@ -406,13 +405,13 @@ public class PlayerControl : MonoBehaviour
                                         isExisting = grid.GetComponent<Grid>().GetIsExisting();
 
                                         // ユニットがマスの中
-                                        if (newUnit.transform.position.x > gridPos.x - gridScl.x / 2 && newUnit.transform.position.y > gridPos.y - gridScl.y / 2 &&
-                                             newUnit.transform.position.x < gridPos.x + gridScl.x / 2 && newUnit.transform.position.y < gridPos.y + gridScl.y / 2)
+                                        if (InstantiateUnit.transform.position.x > gridPos.x - gridScl.x / 2 && InstantiateUnit.transform.position.y > gridPos.y - gridScl.y / 2 &&
+                                             InstantiateUnit.transform.position.x < gridPos.x + gridScl.x / 2 && InstantiateUnit.transform.position.y < gridPos.y + gridScl.y / 2)
                                         {
                                             if (isExisting == false)
                                             {
                                                 Debug.Log("マスの中");
-                                                newUnit.transform.position = gridPos;
+                                                InstantiateUnit.transform.position = gridPos;
                                                 currentGrid = grid.GetComponent<Grid>();
                                                 int row = grid.GetComponent<Grid>().GetRow();
                                             }
@@ -480,8 +479,8 @@ public class PlayerControl : MonoBehaviour
         if (delay < 0)
         {
             delay = 50;
-            Instantiate(newUnit);
-            newUnit.tag = "Player";
+            Instantiate(InstantiateUnit);
+            InstantiateUnit.tag = "Player";
             //
             isCreated = true;
             isWaiting = false;
@@ -490,7 +489,7 @@ public class PlayerControl : MonoBehaviour
 
         if (unionCoolTime > 0 && !isSummon)
         {
-            unionCoolTime -= Time.deltaTime * 3;
+            unionCoolTime -= Time.deltaTime * 100;
 
         }
 
@@ -498,13 +497,13 @@ public class PlayerControl : MonoBehaviour
         {
             unionCoolTime += Time.deltaTime * 15;
         }
-        
-       else  if(unionCoolTime > COOL_TIME)
+
+        else if (unionCoolTime > COOL_TIME)
         {
             isSummon = false;
             unionCoolTime = COOL_TIME;
         }
-        if(unionCoolTime <= 0)
+        if (unionCoolTime <= 0)
         {
             unionCoolTime = 0;
         }
@@ -539,7 +538,7 @@ public class PlayerControl : MonoBehaviour
                     Destroy(union);
 
                 }
-                superUnit = newUnit;
+
                 pinch_num = 0;
                 superUnion = false;
                 overload = 0;

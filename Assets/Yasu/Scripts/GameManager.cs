@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
         m_WaitFade = 1.0f;
 
 
-        Line = GameObject.Find("FlontLine");
+        Line = GameObject.Find("FrontLine");
     }
 
     // Update is called once per frame
