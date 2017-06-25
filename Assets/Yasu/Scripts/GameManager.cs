@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
 
         // コストが最大値以下ならコスト回復
         m_cnt++;
-        if (m_cnt > 13)
+        if (m_cnt > 8)
         {
             if (m_cost < m_maxCost)
             {

@@ -73,10 +73,13 @@ public class EnemyAttack : MonoBehaviour
                     }
                     else if (target.gameObject.tag == "DangerZone")//接触オブジェクトタグがDangerZone
                     {
-                        target.GetComponent<DangerZone>().SetHp(target.GetComponent<DangerZone>().GetHp() - states.getAttack());//ダメージ判定
+                        if (gameObject.transform.parent.GetComponent<States>().GetAbilityType() != 2)
+                        {
+                            target.GetComponent<DangerZone>().SetHp(target.GetComponent<DangerZone>().GetHp() - states.getAttack());//ダメージ判定
 
 
-                        effect.transform.position = new Vector3(this.gameObject.transform.position.x, target.transform.position.y);//エフェクト位置設定
+                            effect.transform.position = new Vector3(this.gameObject.transform.position.x, target.transform.position.y);//エフェクト位置設定
+                        }
                     }
 
 

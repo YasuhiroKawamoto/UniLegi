@@ -129,7 +129,7 @@ public class States : MonoBehaviour
 
                 if(this.gameObject.tag=="Enemy")
                 {
-                    Singleton<SceneData>.instance.setEnemyCnt(1);
+                    Singleton<SceneData>.instance.setEnemyCnt(Singleton<SceneData>.instance.getEnemyCnt()+1);
                 }
 
             }

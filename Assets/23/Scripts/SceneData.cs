@@ -17,12 +17,10 @@ public class SceneData {
     }
     public void setEnemyCnt(int num)
     {
-        int local = 0;
-
-        local = num;
+       
 
 
-        enemyCnt += local;
+        enemyCnt = num;
 
     }
 

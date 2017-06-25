@@ -44,6 +44,8 @@ public class SceneButton : UIBehaviour
         flag = true;
         MyFade fade_ = Resources.Load<MyFade>("Prefabs/MyFade");
         fade = Instantiate(fade_, GameObject.Find("Canvas").transform);
+
+        Singleton<SceneData>.instance.setEnemyCnt(0);//敵撃破数初期化
     }
 
 
