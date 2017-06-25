@@ -217,7 +217,7 @@ public class PlayerControl : MonoBehaviour
                         if (unionCoolTime <= 0)
                         {
                             // オバロゲージ増大
-                            overload += 0.2f;
+                            overload += 0.15f;
 
                             //　でっかい手を出す
                             Vector2 handScale = Lerp(hand1.transform.localScale, new Vector2(-1.5f, 2.0f), 1.5f, TimeStep);
@@ -230,19 +230,20 @@ public class PlayerControl : MonoBehaviour
                             hand1.transform.position = handPos1;
                             hand2.transform.position = handPos2;
 
-                            foreach (GameObject union in unions)
-                            {
-                                union.tag = "Player";
-                            }
-                            unions = GameObject.FindGameObjectsWithTag("Player");
                             int totalATK = 0;
                             int totalHP = 0;
                             int diff = 0;
-
-                            foreach (GameObject union in unions)
+                            if (overload >= MAX_OVERLOAD)
                             {
-                                if (overload >= MAX_OVERLOAD)
+                                foreach (GameObject union in unions)
                                 {
+                                    union.tag = "Player";
+                                }
+                                unions = GameObject.FindGameObjectsWithTag("Player");
+
+                                foreach (GameObject union in unions)
+                                {
+
                                     // 全ユニットの値を抽出
                                     totalATK += union.GetComponent<States>().getAttack();
                                     totalHP += union.GetComponent<States>().getHp();
@@ -250,8 +251,8 @@ public class PlayerControl : MonoBehaviour
                                     // 全ユニットをはさまれた状態に
                                     union.tag = "isPinched";
                                 }
+                                diff = totalHP / 10 - totalATK;
                             }
-                            diff = totalHP / 10 - totalATK;
 
 
                             InstantiateUnit = newUnit;
@@ -489,7 +490,7 @@ public class PlayerControl : MonoBehaviour
 
         if (unionCoolTime > 0 && !isSummon)
         {
-            unionCoolTime -= Time.deltaTime * 100;
+            unionCoolTime -= Time.deltaTime * 5;
 
         }
 
