@@ -13,8 +13,24 @@ public class Union : MonoBehaviour
 
     GameObject newBullet;
 
-    int UnitFlagBit;             // 0b00000000000000000000000000000000
-    const int DRAGON = 7;        // 0b0111
+    int UnitFlagBit = 0;        // 0b0000
+    const int Evolved = 0;      // 0b1000
+
+    const int GOHST = 1;        // 0b0001
+    const int GOHST2 = 9;       // 0b1001
+    const int KERBEROS = 2;     // 0b0010
+    const int KERBEROS2 = 10;   // 0b1010
+    const int GOLEM = 4;        // 0b0100
+    const int GOLEM2 = 12;      // 0b1100
+    const int SALAMANDER = 3;   // 0b0011
+    const int SALAMANDER2 = 11; // 0b1011
+    const int HARPY = 6;        // 0b0110
+    const int HARPY2 = 14;      // 0b1110
+    const int SUCCUBUS = 5;     // 0b0101
+    const int SUCCUBUS2 = 13;    // 0b1101
+
+
+
 
 
     // Use this for initialization
@@ -79,10 +95,13 @@ public class Union : MonoBehaviour
 
 
         // ドラゴン判定成功
-        if((UnitFlagBit & DRAGON) == DRAGON)
+        if((UnitFlagBit & SALAMANDER) == SALAMANDER2)
         {
             returnID = 7;
         }
+
+
+
         // 最頻値が0のとき(最頻値が複数ある時)
        else if (Mode(typeIDs) == 0)
         {

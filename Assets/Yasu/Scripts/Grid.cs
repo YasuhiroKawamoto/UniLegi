@@ -16,7 +16,7 @@ public class Grid : MonoBehaviour {
     GameObject square;//内側マス
     GameObject square2;//内側マス
 
-    GameObject FrontLine;
+    GameObject FlontLine;
 
     GameObject putEffect;
 
@@ -32,7 +32,7 @@ public class Grid : MonoBehaviour {
     void Start () {
         square = gameObject.transform.FindChild("grid2").gameObject;
         square2 = gameObject.transform.FindChild("grid").gameObject;
-        FrontLine = GameObject.Find("FrontLine");
+        FlontLine = GameObject.Find("FrontLine");
         generator = GameObject.Find("Generator");
         putEffect = Resources.Load<GameObject>("Prefabs/Put");
         IsWaiting = false;
@@ -43,7 +43,7 @@ public class Grid : MonoBehaviour {
 
         GetComponent<Rigidbody2D>().WakeUp();
 
-        if (transform.position.y > FrontLine.transform.position.y )
+        if (transform.position.y > FlontLine.transform.position.y )
         {
 
             isExisting = true;//ユニット配置不可にする
