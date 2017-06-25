@@ -7,7 +7,11 @@ public class UnionSkil : MonoBehaviour {
     [SerializeField]
     GameObject AttackPrefab;
 
+    [SerializeField]
+    GameObject CutIn;
+
     GameObject frontLine;
+    Canvas canvas;
 
     [SerializeField]
     GameObject ParentObj;
@@ -15,6 +19,7 @@ public class UnionSkil : MonoBehaviour {
     private void Awake()
     {
         frontLine = GameObject.Find("FrontLine");
+        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
     }
 
     // Use this for initialization
@@ -26,10 +31,12 @@ public class UnionSkil : MonoBehaviour {
         ParentObj.transform.position = pos;
         Instantiate(ParentObj);
         Instantiate(AttackPrefab.transform);
+        Instantiate(CutIn, canvas.transform);
+
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 }
