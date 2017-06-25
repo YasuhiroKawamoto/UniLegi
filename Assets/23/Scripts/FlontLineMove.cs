@@ -35,37 +35,48 @@ public class FlontLineMove : MonoBehaviour
         if (Player.GetComponent<PlayerControl>().IsUnion() == false)
         {
 
-            if (backFlag == true)
-            {
-                changeCnt += Time.deltaTime;
-
-                if (changeCnt > 0.5f)
-                {
-                    RB.velocity = new Vector2(0, 3);//上方に戻る
-                }
-
-
-                if (this.gameObject.transform.position.y >= 3.5f)
-                {
-
-                    moveFlag = false;
-                    backFlag = false;
-
-                }
-
-            }
-            else
+            if (transform.position.y >= -3.7f)
             {
 
-                if (moveFlag == true)
+
+
+
+                if (backFlag == true)
                 {
-                    RB.velocity = Speed;//加工
+                    changeCnt += Time.deltaTime;
+
+                    if (changeCnt > 0.5f)
+                    {
+                        RB.velocity = new Vector2(0, 3);//上方に戻る
+                    }
+
+
+                    if (this.gameObject.transform.position.y >= 3.5f)
+                    {
+
+                        moveFlag = false;
+                        backFlag = false;
+
+                    }
+
                 }
                 else
                 {
-                    RB.velocity = new Vector2(0, 0);//停止
-                }
 
+                    if (moveFlag == true)
+                    {
+                        RB.velocity = Speed;//加工
+                    }
+                    else
+                    {
+                        RB.velocity = new Vector2(0, 0);//停止
+                    }
+
+                }
+            }
+            else
+            {
+                RB.velocity = new Vector2(0, 0);//停止
             }
         }
         else
