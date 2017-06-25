@@ -32,7 +32,7 @@ public class Grid : MonoBehaviour {
     void Start () {
         square = gameObject.transform.FindChild("grid2").gameObject;
         square2 = gameObject.transform.FindChild("grid").gameObject;
-        FlontLine = GameObject.Find("FlontLine");
+        FlontLine = GameObject.Find("FrontLine");
         generator = GameObject.Find("Generator");
         putEffect = Resources.Load<GameObject>("Prefabs/Put");
         IsWaiting = false;

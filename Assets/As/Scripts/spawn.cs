@@ -5,8 +5,7 @@ using UnityEngine;
 public class spawn : MonoBehaviour
 {
 
-    [SerializeField]
-    private float zone;
+   
 
     [SerializeField]
     private GameManager manager;
@@ -175,7 +174,7 @@ public class spawn : MonoBehaviour
                             if (hit.collider.gameObject == this.gameObject)
                             {
                                 
-                                if (m_worldPoint.y < zone)
+                                if (m_worldPoint.y < DanjarZone.transform.position.y)
                                 {
                                     //元いた位置に戻る
                                     transform.position = savePos;
