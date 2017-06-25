@@ -268,10 +268,6 @@ public class Union : MonoBehaviour
             cmp.SetAng(150.0f);
             cmp.SetSpd(3.0f);
             cmp.SetBullet(newBullet);
-
-
-
-
         }
     }
 
