@@ -113,14 +113,14 @@ public class GameManager : MonoBehaviour
         text_hp.GetComponent<Text>().text = "HP:" + m_hp.ToString();
 
         m_cost = Mathf.Clamp(m_cost, 0, m_maxCost);
-        text_cost.GetComponent<Text>().text = m_cost.ToString() + "\n" + m_maxCost.ToString();
+        text_cost.GetComponent<Text>().text = m_cost.ToString() + "/" + m_maxCost.ToString();
 
         text_unit.GetComponent<Text>().text = "UNIT:" + m_unitNum.ToString() + "/" + 5;
 
 
 
         // シーン遷移
-        if (Line.transform.position.y <= -3.7f&& IsWaiting == false&&LoseFlag == false)
+        if ((Line.transform.position.y <= -3.7f||GetHp() <= 0)&& IsWaiting == false&&LoseFlag == false)
         {
             LoseFlag = true;
             IsWaiting = true;

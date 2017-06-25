@@ -30,7 +30,7 @@ public class WideRangeAttack : MonoBehaviour
     {
         states = GetComponentInParent<States>();
 
-        Line = GameObject.Find("FlontLine");
+        Line = GameObject.Find("FrontLine");
 
         BC = this.GetComponent<BoxCollider2D>();
         attackCnt = 0;
