@@ -17,22 +17,16 @@ public class SceneData {
     }
     public void setEnemyCnt(int num)
     {
-       
-
-
         enemyCnt = num;
 
     }
 
-   
-
-
-    public void setStageNumber(int num)
+    public void setStageNumber(int num)//ステージ番号設定
     {
         StageNumber = num;
     }
 
-    public int getStageNumber()
+    public int getStageNumber()//ステージ番号取得
     {
         return StageNumber;
 

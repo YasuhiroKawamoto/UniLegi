@@ -2,59 +2,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// グリッド全体での共通データ
+/// </summary>
 public class GridManager : MonoBehaviour {
 
+
     
-    private float WaitCnt;
+    private float WaitCnt;//点滅用のカウント
     [SerializeField]
-    private float MaxCnt;
+    private float MaxCnt;//カウント最大値
 
 
-   static bool IsWaiting = false;
+    GameObject FlontLine;
 
 	// Use this for initialization
 	void Start () {
-
+        FlontLine = GameObject.Find("FrontLine");
         WaitCnt = MaxCnt;
 
     }
 	
 	// Update is called once per frame
-	void Update () {
-
-        if (IsWaiting)
-        {
-            WaitCnt -= Time.deltaTime;
+	void Update ()
+    {
+           WaitCnt -= Time.deltaTime;
 
             if (WaitCnt <= 0)
             {
-                IsWaiting = false;
+                WaitCnt = MaxCnt;//リセット
             }
+
+
+
+
+        foreach (Transform child in gameObject.transform)
+        {
+            child.GetComponentInChildren<Grid>().ChangeGridState(FlontLine);
         }
 
-        if (!IsWaiting)
-        {
-            WaitCnt = MaxCnt;    
-        }
-		
-	}
+        //transform.GetComponentInChildren<Grid>().ChangeGridState(FlontLine);
+
+       
+    }
 
     public float getCnt()
     {
-
         return WaitCnt;
     }
 
-
-    public void setIsWaiting(bool f)
-    {
-        IsWaiting = f;
-    }
-
-    public bool getIsWaiting()
-    {
-        return IsWaiting;
-    }
 
 
 }
