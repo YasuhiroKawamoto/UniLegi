@@ -1,33 +1,39 @@
 fileFormatVersion: 2
-guid: 6609b526064b47b4c80e784af5f58d4b
-timeCreated: 1498471370
+guid: 25d506aeaf64424488660745b8e6bcb6
+timeCreated: 1498472639
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: PutKai_0
-    21300002: PutKai_1
-    21300004: PutKai_2
-    21300006: PutKai_3
-    21300008: PutKai_4
-    21300010: PutKai_5
-    21300012: PutKai_6
-    21300014: PutKai_7
-    21300016: PutKai_8
-    21300018: PutKai_9
-    21300020: PutKai_10
-    21300022: PutKai_11
-    21300024: PutKai_12
-    21300026: PutKai_13
-    21300028: PutKai_14
-    21300030: PutKai_15
-    21300032: PutKai_16
-    21300034: PutKai_17
-    21300036: PutKai_18
-    21300038: PutKai_19
-    21300040: PutKai_20
-    21300042: PutKai_21
-    21300044: PutKai_22
-    21300046: PutKai_23
+    21300000: PutKai 1_0
+    21300002: PutKai 1_1
+    21300004: PutKai 1_2
+    21300006: PutKai 1_3
+    21300008: PutKai 1_4
+    21300010: PutKai 1_5
+    21300012: PutKai 1_6
+    21300014: PutKai 1_7
+    21300016: PutKai 1_8
+    21300018: PutKai 1_9
+    21300020: PutKai 1_10
+    21300022: PutKai 1_11
+    21300024: PutKai 1_12
+    21300026: PutKai 1_13
+    21300028: PutKai 1_14
+    21300030: PutKai 1_15
+    21300032: PutKai 1_16
+    21300034: PutKai 1_17
+    21300036: PutKai 1_18
+    21300038: PutKai 1_19
+    21300040: PutKai 1_20
+    21300042: PutKai 1_21
+    21300044: PutKai 1_22
+    21300046: PutKai 1_23
+    21300048: PutKai 1_24
+    21300050: PutKai 1_25
+    21300052: PutKai 1_26
+    21300054: PutKai 1_27
+    21300056: PutKai 1_28
+    21300058: PutKai 1_29
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -110,7 +116,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PutKai_0
+      name: PutKai 1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -123,7 +129,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_1
+      name: PutKai 1_1
       rect:
         serializedVersion: 2
         x: 256
@@ -136,7 +142,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_2
+      name: PutKai 1_2
       rect:
         serializedVersion: 2
         x: 512
@@ -149,7 +155,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_3
+      name: PutKai 1_3
       rect:
         serializedVersion: 2
         x: 768
@@ -162,7 +168,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_4
+      name: PutKai 1_4
       rect:
         serializedVersion: 2
         x: 1024
@@ -175,7 +181,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_5
+      name: PutKai 1_5
       rect:
         serializedVersion: 2
         x: 0
@@ -188,7 +194,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_6
+      name: PutKai 1_6
       rect:
         serializedVersion: 2
         x: 256
@@ -201,7 +207,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_7
+      name: PutKai 1_7
       rect:
         serializedVersion: 2
         x: 512
@@ -214,7 +220,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_8
+      name: PutKai 1_8
       rect:
         serializedVersion: 2
         x: 768
@@ -227,7 +233,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_9
+      name: PutKai 1_9
       rect:
         serializedVersion: 2
         x: 1024
@@ -240,7 +246,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_10
+      name: PutKai 1_10
       rect:
         serializedVersion: 2
         x: 0
@@ -253,7 +259,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_11
+      name: PutKai 1_11
       rect:
         serializedVersion: 2
         x: 256
@@ -266,7 +272,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_12
+      name: PutKai 1_12
       rect:
         serializedVersion: 2
         x: 512
@@ -279,7 +285,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_13
+      name: PutKai 1_13
       rect:
         serializedVersion: 2
         x: 768
@@ -292,7 +298,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_14
+      name: PutKai 1_14
       rect:
         serializedVersion: 2
         x: 1024
@@ -305,7 +311,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_15
+      name: PutKai 1_15
       rect:
         serializedVersion: 2
         x: 0
@@ -318,7 +324,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_16
+      name: PutKai 1_16
       rect:
         serializedVersion: 2
         x: 256
@@ -331,7 +337,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_17
+      name: PutKai 1_17
       rect:
         serializedVersion: 2
         x: 512
@@ -344,7 +350,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_18
+      name: PutKai 1_18
       rect:
         serializedVersion: 2
         x: 768
@@ -357,7 +363,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_19
+      name: PutKai 1_19
       rect:
         serializedVersion: 2
         x: 1024
@@ -370,7 +376,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_20
+      name: PutKai 1_20
       rect:
         serializedVersion: 2
         x: 0
@@ -383,7 +389,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_21
+      name: PutKai 1_21
       rect:
         serializedVersion: 2
         x: 256
@@ -396,7 +402,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_22
+      name: PutKai 1_22
       rect:
         serializedVersion: 2
         x: 512
@@ -409,11 +415,89 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PutKai_23
+      name: PutKai 1_23
       rect:
         serializedVersion: 2
         x: 768
         y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PutKai 1_24
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PutKai 1_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PutKai 1_26
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PutKai 1_27
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PutKai 1_28
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PutKai 1_29
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
         width: 256
         height: 256
       alignment: 0
