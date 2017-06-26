@@ -41,7 +41,7 @@ public class GridManager : MonoBehaviour {
             child.GetComponentInChildren<Grid>().ChangeGridState(FlontLine);
         }
 
-        //transform.GetComponentInChildren<Grid>().ChangeGridState(FlontLine);
+      
 
        
     }

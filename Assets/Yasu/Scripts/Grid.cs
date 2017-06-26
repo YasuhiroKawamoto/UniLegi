@@ -18,8 +18,8 @@ public class Grid : MonoBehaviour {
 
     GameObject FlontLine;
 
-    //GameObject putEffect;
-    //GameObject putEffectReal = null;
+    GameObject putEffect;
+    GameObject putEffectReal = null;
 
     GameObject generator;
     
@@ -28,19 +28,15 @@ public class Grid : MonoBehaviour {
     void Start () {
         square = gameObject.transform.FindChild("grid2").gameObject;
         square2 = gameObject.transform.FindChild("grid").gameObject;
-        //FlontLine = GameObject.Find("FrontLine");
+     
         generator = GameObject.Find("Generator");
-        //putEffect = Resources.Load<GameObject>("Prefabs/Put");
-   
+        putEffect = Resources.Load<GameObject>("Prefabs/Put");
+
     }
 	
 	// Update is called once per frame
-	void Update () {
-
-
-        //ChangeGridState(FlontLine);//グリッドの色変更
-
-
+	void Update ()
+    {
 
     }
 
@@ -53,7 +49,6 @@ public class Grid : MonoBehaviour {
             isExisting = true;//ユニット配置不可にする
             square2.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);//不可視（外枠）
             square.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);//不可視（外枠）
-
         }
         else
         {
@@ -74,6 +69,8 @@ public class Grid : MonoBehaviour {
             {
                 if (generator.GetComponent<spawn>().getIsPut() == true)//generatorに触れている場合
                 {
+                    putEffectReal = Instantiate(putEffect);
+                    putEffectReal.transform.position = gameObject.transform.position;
                     square.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, transform.parent.GetComponent<GridManager>().getCnt());//点滅   
                 }
             }
