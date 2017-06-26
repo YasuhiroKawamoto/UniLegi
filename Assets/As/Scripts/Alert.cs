@@ -67,10 +67,10 @@ public class Alert : MonoBehaviour {
 
         if (m_gameManager.IsLose() == false)
         {
-            Debug.Log(CurrentWave);
+            //Debug.Log(CurrentWave);
             if (m_cnt != CurrentWave)
             {
-                Debug.Log(m_lastWave);
+                //Debug.Log(m_lastWave);
                 //wave数の表示
                 if (m_lastWave == CurrentWave && m_lastFlag==false)
                 {
