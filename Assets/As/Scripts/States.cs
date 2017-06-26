@@ -116,7 +116,7 @@ public class States : MonoBehaviour
             if (plc.IsSummon() == false)
             {
 
-                plc.SetUnionCoolTime(plc.GetUnionCoolTime() - getCost() / 2.0f);
+                plc.SetUnionCoolTime(plc.GetUnionCoolTime() - getCost() / 10.0f);
                 // manager.RecoverCost(getCost());
             }
 
