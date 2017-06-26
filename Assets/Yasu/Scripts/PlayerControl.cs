@@ -217,7 +217,7 @@ public class PlayerControl : MonoBehaviour
                         if (unionCoolTime <= 0)
                         {
                             // オバロゲージ増大
-                            overload += 0.15f;
+                            overload += 0.1f;
 
                             //　でっかい手を出す
                             Vector2 handScale = Lerp(hand1.transform.localScale, new Vector2(-1.5f, 2.0f), 1.5f, TimeStep);
@@ -490,7 +490,7 @@ public class PlayerControl : MonoBehaviour
 
         if (unionCoolTime > 0 && !isSummon)
         {
-            unionCoolTime -= Time.deltaTime * 5;
+            unionCoolTime -= Time.deltaTime * 2;
 
         }
 
