@@ -92,9 +92,12 @@ public class FlontLineMove : MonoBehaviour
         if (col.gameObject.tag == "Player" || col.gameObject.tag == "isPinched")
         {
             IsHitPlayer = true;//プレイヤー接触
-            moveFlag = false;
+            if (backFlag == false)
+            {
+                moveFlag = false;
+            }
             col.gameObject.GetComponent<States>().setLineHit(true);
-            Debug.Log("前線停止");
+            //Debug.Log("前線停止");
         }
 
 
@@ -125,10 +128,14 @@ public class FlontLineMove : MonoBehaviour
 
         if (col.gameObject.tag == "Player"|| col.gameObject.tag == "isPinched")
         {
-            this.gameObject.transform.position = new Vector3(0, col.gameObject.transform.position.y+0.5f, 1);
+            if (backFlag == false)
+            {
+                this.gameObject.transform.position = new Vector3(0, col.gameObject.transform.position.y+0.5f, 1);
             IsHitPlayer = true;
             col.gameObject.GetComponent<States>().setLineHit(true);
-            moveFlag = false;
+            
+                moveFlag = false;
+            }
         }
     }
 
@@ -137,15 +144,18 @@ public class FlontLineMove : MonoBehaviour
 
         if (col.gameObject.tag == "Enemy")
         {
-            Debug.Log("上昇");
+            //Debug.Log("上昇");
             changeCnt = 0;
             backFlag = true;
         }
 
         if (col.gameObject.tag == "Player" || col.gameObject.tag == "HavingPlayer" || col.gameObject.tag == "isPinched")
         {
-            Debug.Log("停止");
-            moveFlag = true;
+         
+            if (backFlag == false)
+            {
+                moveFlag = true;
+             }
             IsHitPlayer = false;
             col.gameObject.GetComponent<States>().setLineHit(false);
         }

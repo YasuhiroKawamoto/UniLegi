@@ -14,88 +14,70 @@ public class Grid : MonoBehaviour {
     int row;
 
     GameObject square;//内側マス
-    GameObject square2;//内側マス
+    GameObject square2;//外側マス
 
     GameObject FlontLine;
-
     GameObject putEffect;
-
-    GameObject putEffectReal = null;
-
     GameObject generator;
-
-    bool IsWaiting;
-
-    static float cnt; 
-
+    
+    
     // Use this for initialization
     void Start () {
         square = gameObject.transform.FindChild("grid2").gameObject;
         square2 = gameObject.transform.FindChild("grid").gameObject;
-        FlontLine = GameObject.Find("FrontLine");
+     
         generator = GameObject.Find("Generator");
-        putEffect = Resources.Load<GameObject>("Prefabs/Put");
-        IsWaiting = false;
+        putEffect = Instantiate(Resources.Load<GameObject>("Prefabs/Put"),transform);
+        putEffect.transform.position = gameObject.transform.position;
+
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 
-        GetComponent<Rigidbody2D>().WakeUp();
+    }
 
-        if (transform.position.y > FlontLine.transform.position.y )
+
+
+    public void ChangeGridState(GameObject obj)
+    {
+        if (transform.position.y > obj.transform.position.y)//フロントラインより上にある場合
         {
-
             isExisting = true;//ユニット配置不可にする
-            square2.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);//不可視
-
-        }
-        else {
-            square2.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0.5f);//可視
-
-            if (checkPlayer)
-            {
-                isExisting = true;
-                checkPlayer = false;
-
-            }
-            else
-            {
-                isExisting = false;
-
-            }
-        }
-      
-
-
-        if (isExisting)//ユニット配置不可なら
-        {
-            square.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);//不可視
-            
+            square2.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);//不可視（外枠）
+            square.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);//不可視（外枠）
+            putEffect.transform.GetComponent<SpriteRenderer>().enabled = false;
         }
         else
         {
-            square.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);//可視
-            if (generator.GetComponent<spawn>().getIsPut() == true)
+            square2.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0.5f);//可視(外枠)
+
+            if (checkPlayer)//プレイヤーが乗っていたら
             {
-                if (this.transform.parent.GetComponentInParent<GridManager>().getIsWaiting() == false)
+                square.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);//不可視（中枠）
+                putEffect.transform.GetComponent<SpriteRenderer>().enabled = false;
+                isExisting = true;//ユニット配置不可
+            }
+            else
+            {
+                square.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);//可視（中枠）
+                isExisting = false;//ユニット配置可能
+            }
+
+            if (!isExisting)//ユニット配置不可でなければ
+            {
+                if (generator.GetComponent<spawn>().getIsPut() == true)//generatorに触れている場合
                 {
-                   
-                    this.transform.parent.GetComponentInParent<GridManager>().setIsWaiting(true);
-                    //putEffectReal = Instantiate(putEffect);
-                    //putEffectReal.transform.position = gameObject.transform.position;  
+                    putEffect.transform.GetComponent<SpriteRenderer>().enabled = true;
+                      
                 }
                 else
                 {
-
-                    square.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, this.transform.parent.GetComponentInParent<GridManager>().getCnt());//可視
+                    putEffect.transform.GetComponent<SpriteRenderer>().enabled = false;
                 }
             }
         }
-
-      
-       
-
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -103,6 +85,18 @@ public class Grid : MonoBehaviour {
         if (collision.gameObject.tag == "Player")
         {
             checkPlayer = true;
+        }
+        if (collision.gameObject.tag == "isPinched")
+        {
+            checkPlayer = false;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player"||collision.gameObject.tag == "HavingPlayer" || collision.gameObject.tag == "isPinched")
+        {
+            checkPlayer = false;
         }
     }
 

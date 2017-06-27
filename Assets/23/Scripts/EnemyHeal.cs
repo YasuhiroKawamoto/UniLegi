@@ -69,7 +69,7 @@ public class EnemyHeal : MonoBehaviour {
                                 if (obj.gameObject.GetComponent<States>().getHp() < obj.gameObject.GetComponent<States>().getMaxHp())
                                 {
                                     obj.GetComponent<States>().setDamege(-states.getAttack());//回復判定
-
+                                    Debug.Log("回復");
                                     effect.transform.position = obj.transform.position;//エフェクトの位置を設定
                                     if (effect != null)//エフェクトスロットに設定してある場合
                                     {
@@ -81,7 +81,7 @@ public class EnemyHeal : MonoBehaviour {
 
                         }
                     }
-                    Debug.Log("回復");
+                  
                     cnt = 0;//カウントリセット
                     target.Clear();
 

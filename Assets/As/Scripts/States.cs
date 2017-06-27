@@ -116,7 +116,7 @@ public class States : MonoBehaviour
             if (plc.IsSummon() == false)
             {
 
-                plc.SetUnionCoolTime(plc.GetUnionCoolTime() - getCost() / 2.0f);
+                plc.SetUnionCoolTime(plc.GetUnionCoolTime() - getCost() / 10.0f);
                 // manager.RecoverCost(getCost());
             }
 
@@ -129,7 +129,7 @@ public class States : MonoBehaviour
 
                 if(this.gameObject.tag=="Enemy")
                 {
-                    Singleton<SceneData>.instance.setEnemyCnt(1);
+                    Singleton<SceneData>.instance.setEnemyCnt(Singleton<SceneData>.instance.getEnemyCnt()+1);
                 }
 
             }
@@ -319,20 +319,23 @@ public class States : MonoBehaviour
     //死んでいるかどうか？
     public bool getDead()
     {
-
         return IsDead;
     }
 
-    public void StatesUpEnemy(GameObject obj, int Cnt)
+    public void StatesUpEnemy(GameObject obj, int Level)
     {
-        obj.GetComponent<States>().m_Attack += Cnt / 10;
-        obj.GetComponent<States>().m_Hp += Cnt;
+        //攻撃力
+        obj.GetComponent<States>().m_Attack += Level;
+        //体力
+        obj.GetComponent<States>().m_Hp += Level * 2;
     }
 
-    public void StatesUpBoss(GameObject obj, int Cnt)
+    public void StatesUpBoss(GameObject obj, int Level)
     {
-        obj.GetComponent<States>().m_Attack += Cnt * 2;
-        obj.GetComponent<States>().m_Hp += Cnt * 10;
+        //攻撃力
+        obj.GetComponent<States>().m_Attack += Level;
+        //体力
+        obj.GetComponent<States>().m_Hp += Level * 10;
     }
 
     public void setLineHit(bool f)

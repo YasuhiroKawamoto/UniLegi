@@ -28,7 +28,6 @@ public class EnemyAttack : MonoBehaviour
     {
 
 
-
         states = this.gameObject.transform.parent.GetComponent<States>();
 
         this.gameObject.transform.position = new Vector3(this.gameObject.transform.parent.position.x,
@@ -73,10 +72,13 @@ public class EnemyAttack : MonoBehaviour
                     }
                     else if (target.gameObject.tag == "DangerZone")//接触オブジェクトタグがDangerZone
                     {
-                        target.GetComponent<DangerZone>().SetHp(target.GetComponent<DangerZone>().GetHp() - states.getAttack());//ダメージ判定
+                        if (gameObject.transform.parent.GetComponent<States>().GetAbilityType() != 2)
+                        {
+                            target.GetComponent<DangerZone>().SetHp(target.GetComponent<DangerZone>().GetHp() - states.getAttack());//ダメージ判定
 
 
-                        effect.transform.position = new Vector3(this.gameObject.transform.position.x, target.transform.position.y);//エフェクト位置設定
+                            effect.transform.position = new Vector3(this.gameObject.transform.position.x, target.transform.position.y);//エフェクト位置設定
+                        }
                     }
 
 
@@ -116,10 +118,13 @@ public class EnemyAttack : MonoBehaviour
 
         if (col.gameObject.tag == "DangerZone")//接触オブジェクトがDangerZone
         {
-            AttackFlag = true;//攻撃フラグON
-            Debug.Log("拠点接敵");
-            target = col.gameObject;//接触オブジェクトを攻撃対象に指定
-            this.transform.parent.GetComponent<Mover>().setMoveFlag(false);//移動を止める
+            if (gameObject.transform.parent.GetComponent<States>().GetAbilityType() != 2)
+            {
+                AttackFlag = true;//攻撃フラグON
+                Debug.Log("拠点接敵");
+                target = col.gameObject;//接触オブジェクトを攻撃対象に指定
+                this.transform.parent.GetComponent<Mover>().setMoveFlag(false);//移動を止める
+            }
         }
 
         if (col.gameObject.tag == "HavingPlayer")//接触オブジェクトタグがHavingPlayer
@@ -133,9 +138,13 @@ public class EnemyAttack : MonoBehaviour
 
         if (col.gameObject.tag == "DangerZone")//接触オブジェクトタグがPlayer
         {
-            AttackFlag = true;//攻撃フラグON
-            target = col.gameObject;//接触オブジェクトを攻撃対象に指定
-            this.transform.parent.GetComponent<Mover>().setMoveFlag(false);//移動を止める
+            if (gameObject.transform.parent.GetComponent<States>().GetAbilityType() != 2)
+            {
+                AttackFlag = true;//攻撃フラグON
+
+                target = col.gameObject;//接触オブジェクトを攻撃対象に指定
+                this.transform.parent.GetComponent<Mover>().setMoveFlag(false);//移動を止める
+            }
         }
 
 
@@ -153,8 +162,11 @@ public class EnemyAttack : MonoBehaviour
 
         if (col.gameObject.tag == "DangerZone")
         {
-            AttackFlag = false;//攻撃フラグOFF
-            this.transform.parent.GetComponent<Mover>().setMoveFlag(true);//移動を開始
+            if (gameObject.transform.parent.GetComponent<States>().GetAbilityType() != 2)
+            {
+                AttackFlag = false;//攻撃フラグOFF
+                this.transform.parent.GetComponent<Mover>().setMoveFlag(true);//移動を開始
+            }
         }
 
     }

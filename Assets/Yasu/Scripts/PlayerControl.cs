@@ -15,7 +15,6 @@ enum TAP_STATE
 public class PlayerControl : MonoBehaviour
 {
 
-    [SerializeField]
     public GameObject newUnit;
 
     private GameObject InstantiateUnit;
@@ -123,12 +122,10 @@ public class PlayerControl : MonoBehaviour
         SpriteRenderer sprPreOp = predictionOption.GetComponent<SpriteRenderer>();
 
         bool canUnion_ = canUnion;
-
-
-
-        // dangerzone 以下は出現しない
-        if (touch_pos1.y <= manager.GetDangerZone().gameObject.transform.position.y || touch_pos2.y <= manager.GetDangerZone().gameObject.transform.position.y)
-        {
+        // dangerzone 以下 グリッド以上　 は出現しない
+        if ((touch_pos1.y <= manager.GetDangerZone().gameObject.transform.position.y || touch_pos2.y <= manager.GetDangerZone().gameObject.transform.position.y)
+             && touch_pos1.y >= 0.5 || touch_pos2.y >= 0.5f)
+        { 
             canUnion_ = false;
             hand1.transform.position = new Vector3(-300, -300, -300);
             hand2.transform.position = new Vector3(-300, -300, -300);
@@ -222,7 +219,7 @@ public class PlayerControl : MonoBehaviour
                         if (unionCoolTime <= 0)
                         {
                             // オバロゲージ増大
-                            overload += 0.2f;
+                            overload += 0.1f;
 
                             //　でっかい手を出す
                             Vector2 handScale = Lerp(hand1.transform.localScale, new Vector2(-1.5f, 2.0f), 1.5f, TimeStep);
@@ -235,19 +232,20 @@ public class PlayerControl : MonoBehaviour
                             hand1.transform.position = handPos1;
                             hand2.transform.position = handPos2;
 
-                            foreach (GameObject union in unions)
-                            {
-                                union.tag = "Player";
-                            }
-                            unions = GameObject.FindGameObjectsWithTag("Player");
                             int totalATK = 0;
                             int totalHP = 0;
                             int diff = 0;
-
-                            foreach (GameObject union in unions)
+                            if (overload >= MAX_OVERLOAD)
                             {
-                                if (overload >= MAX_OVERLOAD)
+                                foreach (GameObject union in unions)
                                 {
+                                    union.tag = "Player";
+                                }
+                                unions = GameObject.FindGameObjectsWithTag("Player");
+
+                                foreach (GameObject union in unions)
+                                {
+
                                     // 全ユニットの値を抽出
                                     totalATK += union.GetComponent<States>().getAttack();
                                     totalHP += union.GetComponent<States>().getHp();
@@ -255,9 +253,8 @@ public class PlayerControl : MonoBehaviour
                                     // 全ユニットをはさまれた状態に
                                     union.tag = "isPinched";
                                 }
+                                diff = totalHP / 7 - totalATK;
                             }
-                            diff = totalHP / 10 - totalATK;
-
 
                             InstantiateUnit = newUnit;
 
@@ -470,7 +467,9 @@ public class PlayerControl : MonoBehaviour
         // ユニット生成
         if (isWaiting)
         {
-            delay--;
+            canUnion_ = false; canUnion = false;   
+
+             delay--;
             if (delay < 20)
             {
                 hand1.transform.position = new Vector3(-300, -300, -300);
@@ -484,18 +483,20 @@ public class PlayerControl : MonoBehaviour
         if (delay < 0)
         {
             delay = 50;
+            // ユニット生成
             Instantiate(InstantiateUnit);
             InstantiateUnit.tag = "Player";
             //
             isCreated = true;
             isWaiting = false;
             blackFlag = true;
-         
+            canUnion_ = true;
+
         }
 
         if (unionCoolTime > 0 && !isSummon)
         {
-            unionCoolTime -= Time.deltaTime * 100;
+            unionCoolTime -= Time.deltaTime * 2;
 
         }
 
@@ -695,4 +696,8 @@ public class PlayerControl : MonoBehaviour
         return blackFlag;
     }
 
+    public int GetPinchNum()
+    {
+        return pinch_num;
+    }
 }

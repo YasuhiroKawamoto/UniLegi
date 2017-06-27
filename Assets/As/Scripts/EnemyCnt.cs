@@ -22,7 +22,7 @@ public class EnemyCnt : MonoBehaviour {
         {
             if (flag == false)
             {
-                Singleton<SceneData>.instance.setEnemyCnt(1);
+                Singleton<SceneData>.instance.setEnemyCnt(Singleton<SceneData>.instance.getEnemyCnt()+1);
                 flag = true;
             }
         }
