@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TitleManager : MonoBehaviour {
 
@@ -10,10 +11,13 @@ public class TitleManager : MonoBehaviour {
     [SerializeField]
     GameObject hand2;
 
+    [SerializeField]
+    GameObject Area;
+
     // Use this for initialization
     void Start () {
-		
-	}
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -21,14 +25,38 @@ public class TitleManager : MonoBehaviour {
         {
             if (Input.touchCount == 2)
             {
-                Vector2 pos1 = hand1.transform.position;
-                pos1.x = Input.touches[0].position.x;
-                hand1.transform.position = Camera.main.ScreenToWorldPoint(pos1);
+                Area.transform.position = new Vector3(0, -2, 0);
 
-                Vector2 pos2 = hand2.transform.position;
-                pos2.x = Input.touches[1].position.x;
-                hand2.transform.position = Camera.main.ScreenToWorldPoint(pos2);
+                Vector3 pos1 = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
+                pos1.y = -2;
+                pos1.z = 0;
+
+                Vector3 pos2 = Camera.main.ScreenToWorldPoint(Input.touches[1].position);
+                pos2.y = -2;
+                pos2.z = 0;
+
+
+                Area.GetComponent<BoxCollider2D>().size = new Vector2(Mathf.Abs(pos1.x - pos2.x), 1);
+                pos1 = new Vector2(Area.transform.position.x - Area.GetComponent<BoxCollider2D>().size.x / 2, -2);
+                hand1.transform.position = pos1;
+
+                pos2 = new Vector2(Area.transform.position.x + Area.GetComponent<BoxCollider2D>().size.x / 2, -2);
+                hand2.transform.position = pos2;
+
+                // シーン繊維
+                if(Area.GetComponent<BoxCollider2D>().size.x <= 2)
+                {
+                    SceneManager.LoadScene("SelectScene");
+                }
             }
+            
         }
-	}
+        else
+        {
+            hand1.transform.position = new Vector2(-3.45f, -2);
+            hand2.transform.position = new Vector2(3.45f, -2);
+
+
+        }
+    }
 }
