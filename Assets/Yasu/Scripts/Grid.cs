@@ -56,6 +56,7 @@ public class Grid : MonoBehaviour {
             if (checkPlayer)//プレイヤーが乗っていたら
             {
                 square.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);//不可視（中枠）
+                putEffect.transform.GetComponent<SpriteRenderer>().enabled = false;
                 isExisting = true;//ユニット配置不可
             }
             else
@@ -69,7 +70,7 @@ public class Grid : MonoBehaviour {
                 if (generator.GetComponent<spawn>().getIsPut() == true)//generatorに触れている場合
                 {
                     putEffect.transform.GetComponent<SpriteRenderer>().enabled = true;
-                    //square.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, transform.parent.GetComponent<GridManager>().getCnt());//点滅   
+                      
                 }
                 else
                 {

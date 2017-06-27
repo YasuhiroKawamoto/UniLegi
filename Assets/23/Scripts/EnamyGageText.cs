@@ -15,8 +15,16 @@ public class EnamyGageText : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        GetComponent<Text>().text ="ENEMY"+ UIManager.GetComponent<UIManager>().getEnemyMax().ToString()
-                                     + "/" + Singleton<SceneData>.instance.getEnemyCnt().ToString();
+
+        if (Singleton<SceneData>.instance.getStageNumber() == 3)
+        {
+            GetComponent<Text>().text = "ENEMY" + (Singleton<SceneData>.instance.getEnemyCnt() / 20).ToString() + "LEVEL";
+        }
+        else
+        {
+            GetComponent<Text>().text = "ENEMY" + UIManager.GetComponent<UIManager>().getEnemyMax().ToString()
+                                        + "/" + Singleton<SceneData>.instance.getEnemyCnt().ToString();
+        }
 
     }
 }
