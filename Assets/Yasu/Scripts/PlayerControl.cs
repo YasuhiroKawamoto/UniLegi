@@ -82,6 +82,11 @@ public class PlayerControl : MonoBehaviour
     bool isSummon;
     //
 
+   
+    //暗くするための画像
+    //画面が明るいか暗いか
+    bool blackFlag = false;
+
     // Use this for initialization
     void Start()
     {
@@ -100,7 +105,7 @@ public class PlayerControl : MonoBehaviour
 
         predictionUnit = GameObject.Find("Prediction/Unit");
         predictionOption = GameObject.Find("Prediction/Option");
-
+        
         deleteSpr = Resources.Load<Sprite>("delete");
         InstantiateUnit = newUnit;
     }
@@ -110,6 +115,8 @@ public class PlayerControl : MonoBehaviour
     {
         // タップ数などを判定
         TapSearch();
+
+
 
         GameObject[] unions = GameObject.FindGameObjectsWithTag("isPinched");
 
@@ -211,6 +218,7 @@ public class PlayerControl : MonoBehaviour
                     }
                     else if (pinch_num >= 2)
                     {
+                        InstantiateUnit = newUnit;
                         if (unionCoolTime <= 0)
                         {
                             // オバロゲージ増大
@@ -249,12 +257,7 @@ public class PlayerControl : MonoBehaviour
                                     union.tag = "isPinched";
                                 }
                                 diff = totalHP / 7 - totalATK;
-                            }
-
-                            InstantiateUnit = newUnit;
-
-                            if (overload >= MAX_OVERLOAD)
-                            {
+ 
                                 // 移動済み
                                 Area.transform.position = new Vector3(0, 0, 0);
 
@@ -284,6 +287,7 @@ public class PlayerControl : MonoBehaviour
 
                                 // エフェクトの差し替え
                             }
+
                             // 予測の差し替え
                             sprPre.sprite = InstantiateUnit.GetComponent<SpriteRenderer>().sprite;
                         }
@@ -484,8 +488,8 @@ public class PlayerControl : MonoBehaviour
             //
             isCreated = true;
             isWaiting = false;
+            blackFlag = true;
             canUnion_ = true;
-            canUnion = true;
 
         }
 
@@ -508,6 +512,7 @@ public class PlayerControl : MonoBehaviour
         if (unionCoolTime <= 0)
         {
             unionCoolTime = 0;
+            blackFlag = false;
         }
 
         pinch_num = 0;
@@ -683,6 +688,11 @@ public class PlayerControl : MonoBehaviour
     public bool IsSummon()
     {
         return isSummon;
+    }
+
+    public bool getFlag()
+    {
+        return blackFlag;
     }
 
     public int GetPinchNum()
