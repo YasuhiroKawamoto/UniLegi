@@ -145,6 +145,10 @@ public class Firing : MonoBehaviour {
     {
         this.bullet = bullet;
     }
+    public GameObject GetBullet()
+    {
+        return bullet;
+    }
 
     public bool GetFlag()
     {

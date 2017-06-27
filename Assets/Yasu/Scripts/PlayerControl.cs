@@ -15,7 +15,6 @@ enum TAP_STATE
 public class PlayerControl : MonoBehaviour
 {
 
-    [SerializeField]
     public GameObject newUnit;
 
     private GameObject InstantiateUnit;
@@ -254,7 +253,6 @@ public class PlayerControl : MonoBehaviour
                                 diff = totalHP / 10 - totalATK;
                             }
 
-
                             InstantiateUnit = newUnit;
 
                             if (overload >= MAX_OVERLOAD)
@@ -466,6 +464,8 @@ public class PlayerControl : MonoBehaviour
         // ユニット生成
         if (isWaiting)
         {
+            canUnion_ = false;
+
             delay--;
             if (delay < 20)
             {
@@ -480,11 +480,13 @@ public class PlayerControl : MonoBehaviour
         if (delay < 0)
         {
             delay = 50;
+            // ユニット生成
             Instantiate(InstantiateUnit);
             InstantiateUnit.tag = "Player";
             //
             isCreated = true;
             isWaiting = false;
+            canUnion_ = true;
 
         }
 
