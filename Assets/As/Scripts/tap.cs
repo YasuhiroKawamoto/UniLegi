@@ -172,7 +172,6 @@ public class Tap : MonoBehaviour
                         this.gameObject.tag = "Player";
                         //this.gameObject.layer = 0;
                         //if (m_Cnt < 0.5f)
-
                         //this.transform.localScale = m_saveScale;
                         m_moveFlag = false;
                         gameObject.transform.position = m_savePos;
