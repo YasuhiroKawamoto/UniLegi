@@ -34,14 +34,14 @@ public class Black : MonoBehaviour {
 
         m_flag = playerControl.getFlag();
 
-        if (m_flag == true)
+        if (m_flag == false)
         {
             if (color >= 0.0f)
             {
                 color -= Time.deltaTime;
             }
         }
-        else if(m_flag==false)
+        else if(m_flag==true)
         {
             if(color<1.0f)
             {
