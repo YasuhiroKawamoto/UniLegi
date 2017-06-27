@@ -25,12 +25,13 @@ public class UnionSkil : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        Vector3 pos = AttackPrefab.transform.position;
+        Vector3 pos = new Vector3(0,0,0);
         pos.y = frontLine.transform.position.y;
 
         ParentObj.transform.position = pos;
-        Instantiate(ParentObj);
-        Instantiate(AttackPrefab.transform);
+        Instantiate(AttackPrefab, Instantiate(ParentObj).transform);
+
+
         Instantiate(CutIn, canvas.transform);
 
     }
