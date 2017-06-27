@@ -80,8 +80,6 @@ public class Tap : MonoBehaviour
             //タッチ開始時
             if (touch.phase == TouchPhase.Began)
             {
-
-
                 if (objState != null)
                 {
                     Destroy(objState);
@@ -120,7 +118,7 @@ public class Tap : MonoBehaviour
 
             }
             //離したとき
-            else if ((touch.phase == TouchPhase.Ended))
+            else if (touch.phase == TouchPhase.Ended && m_moveFlag)
             {
                 Debug.Log("TouchPhase.Ended");
 
