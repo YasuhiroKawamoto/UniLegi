@@ -116,6 +116,8 @@ public class PlayerControl : MonoBehaviour
         // タップ数などを判定
         TapSearch();
 
+
+
         GameObject[] unions = GameObject.FindGameObjectsWithTag("isPinched");
 
         SpriteRenderer sprPre = predictionUnit.GetComponent<SpriteRenderer>();
@@ -216,6 +218,7 @@ public class PlayerControl : MonoBehaviour
                     }
                     else if (pinch_num >= 2)
                     {
+                        InstantiateUnit = newUnit;
                         if (unionCoolTime <= 0)
                         {
                             // オバロゲージ増大
@@ -254,12 +257,7 @@ public class PlayerControl : MonoBehaviour
                                     union.tag = "isPinched";
                                 }
                                 diff = totalHP / 7 - totalATK;
-                            }
-
-                            InstantiateUnit = newUnit;
-
-                            if (overload >= MAX_OVERLOAD)
-                            {
+ 
                                 // 移動済み
                                 Area.transform.position = new Vector3(0, 0, 0);
 
@@ -289,6 +287,7 @@ public class PlayerControl : MonoBehaviour
 
                                 // エフェクトの差し替え
                             }
+
                             // 予測の差し替え
                             sprPre.sprite = InstantiateUnit.GetComponent<SpriteRenderer>().sprite;
                         }
