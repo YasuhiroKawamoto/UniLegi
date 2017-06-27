@@ -157,7 +157,15 @@ public class GameManager : MonoBehaviour
 
         if(m_WaitFade <= 0)
         {
-            SceneManager.LoadScene("SelectScene");
+            if (Singleton<SceneData>.instance.getStageNumber() == 3)
+            {
+                SceneManager.LoadScene("ResultScene");
+            }
+            else
+            {
+                SceneManager.LoadScene("SelectScene");
+            }
+           
 
         }
 

@@ -73,13 +73,14 @@ public class random : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Level = 0;//レベルの初期化
+        Level = 1;//レベルの初期化
         IsExistence = false;
+        BossCnt = 0;
     }
 
     void Update()
     {
-        Level = Singleton<SceneData>.instance.getEnemyCnt() / 20;//敵20対撃破ごとにレベルアップ
+        Level = Singleton<SceneData>.instance.getEnemyCnt() / 10;//敵20対撃破ごとにレベルアップ
 
         cnt += Time.deltaTime;
 
@@ -116,7 +117,13 @@ public class random : MonoBehaviour
                 }
                 else
                 {
+                    
                     SetBoss(BossCnt);
+                    BossCnt++;
+                    if (BossCnt > 1)
+                    {
+                        BossCnt = 0;
+                    }
 
                 }
                 cnt = 0;
@@ -220,12 +227,7 @@ public class random : MonoBehaviour
                 break;
         }
 
-        BossCnt++;
-
-        if (BossCnt < 1)
-        {
-            BossCnt = 0;
-        }
+        
 
 
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnamyGageText : MonoBehaviour {
+public class EnemyGageText : MonoBehaviour {
 
     GameObject UIManager;
 
@@ -18,7 +18,7 @@ public class EnamyGageText : MonoBehaviour {
 
         if (Singleton<SceneData>.instance.getStageNumber() == 3)
         {
-            GetComponent<Text>().text = "ENEMY" + (Singleton<SceneData>.instance.getEnemyCnt() / 20).ToString() + "LEVEL";
+            GetComponent<Text>().text = "LEVEL"+((Singleton<SceneData>.instance.getEnemyCnt() / 10 + 1).ToString());
         }
         else
         {

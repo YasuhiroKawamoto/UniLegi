@@ -58,10 +58,12 @@ public class UIManager : MonoBehaviour {
         switch (Singleton<SceneData>.instance.getStageNumber())
         {
             case 1://ノーマル
-                EnemyMax = 116.0f;
+                EnemyMax = 109.0f;
                 break;
 
-
+            //case 2://ハード
+            //    EnemyMax = 109.0f;
+            //    break;
 
 
             case 3://インフィニティモード
