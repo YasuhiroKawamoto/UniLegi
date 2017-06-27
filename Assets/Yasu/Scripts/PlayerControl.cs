@@ -83,6 +83,11 @@ public class PlayerControl : MonoBehaviour
     bool isSummon;
     //
 
+   
+    //暗くするための画像
+    //画面が明るいか暗いか
+    bool blackFlag = false;
+
     // Use this for initialization
     void Start()
     {
@@ -101,7 +106,7 @@ public class PlayerControl : MonoBehaviour
 
         predictionUnit = GameObject.Find("Prediction/Unit");
         predictionOption = GameObject.Find("Prediction/Option");
-
+        
         deleteSpr = Resources.Load<Sprite>("delete");
         InstantiateUnit = newUnit;
     }
@@ -484,7 +489,8 @@ public class PlayerControl : MonoBehaviour
             //
             isCreated = true;
             isWaiting = false;
-
+            blackFlag = true;
+         
         }
 
         if (unionCoolTime > 0 && !isSummon)
@@ -506,6 +512,7 @@ public class PlayerControl : MonoBehaviour
         if (unionCoolTime <= 0)
         {
             unionCoolTime = 0;
+            blackFlag = false;
         }
 
         pinch_num = 0;
@@ -682,4 +689,10 @@ public class PlayerControl : MonoBehaviour
     {
         return isSummon;
     }
+
+    public bool getFlag()
+    {
+        return blackFlag;
+    }
+
 }
