@@ -97,7 +97,7 @@ public class FlontLineMove : MonoBehaviour
                 moveFlag = false;
             }
             col.gameObject.GetComponent<States>().setLineHit(true);
-            Debug.Log("前線停止");
+            //Debug.Log("前線停止");
         }
 
 
@@ -144,7 +144,7 @@ public class FlontLineMove : MonoBehaviour
 
         if (col.gameObject.tag == "Enemy")
         {
-            Debug.Log("上昇");
+            //Debug.Log("上昇");
             changeCnt = 0;
             backFlag = true;
         }

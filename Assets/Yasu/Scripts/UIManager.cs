@@ -49,14 +49,23 @@ public class UIManager : MonoBehaviour {
 
     float EnemyMax;
 
+    public int getEnemyMax() { return (int)EnemyMax; }
+
     // Use this for initialization
     void Start () {
         m_autoMoveTime = Time.time;
 
         switch (Singleton<SceneData>.instance.getStageNumber())
         {
-            case 1:
+            case 1://ノーマル
                 EnemyMax = 116.0f;
+                break;
+
+
+
+
+            case 3://インフィニティモード
+                EnemyMax = 100.0f;
                 break;
             default:
                 EnemyMax = 100.0f;
@@ -85,6 +94,18 @@ public class UIManager : MonoBehaviour {
 
         {
             hpRed.GetComponent<Image>().fillAmount = rate;
+        }
+
+
+        //インフィニティモード専用ゲージ処理
+        if (Singleton<SceneData>.instance.getStageNumber() == 3)
+            {
+
+            if (EnemyMax - Singleton<SceneData>.instance.getEnemyCnt() <=0)
+            {
+                EnemyMax += 100;//最大値を増加（100体毎に）
+            }
+
         }
 
         // ===================================================================================
