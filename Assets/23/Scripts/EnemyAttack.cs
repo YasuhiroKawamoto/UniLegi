@@ -63,37 +63,39 @@ public class EnemyAttack : MonoBehaviour
 
                 if (rate <= cnt)//攻撃間隔にカウントが到達
                 {
-
-                    if (target.gameObject.tag == "Player" || target.gameObject.tag == "isPinched")//接触オブジェクトタグがPlayer
+                    if (target != null)
                     {
-                        target.GetComponent<States>().setDamege(states.getAttack());//ダメージ判定
-
-                        effect.transform.position = target.transform.position;//エフェクトの位置を設定
-                    }
-                    else if (target.gameObject.tag == "DangerZone")//接触オブジェクトタグがDangerZone
-                    {
-                        if (gameObject.transform.parent.GetComponent<States>().GetAbilityType() != 2)
+                        if (target.gameObject.tag == "Player" || target.gameObject.tag == "isPinched")//接触オブジェクトタグがPlayer
                         {
-                            target.GetComponent<DangerZone>().SetHp(target.GetComponent<DangerZone>().GetHp() - states.getAttack());//ダメージ判定
+                            target.GetComponent<States>().setDamege(states.getAttack());//ダメージ判定
 
-
-                            effect.transform.position = new Vector3(this.gameObject.transform.position.x, target.transform.position.y);//エフェクト位置設定
+                            effect.transform.position = target.transform.position;//エフェクトの位置を設定
                         }
-                    }
-
-
-                    if (effect != null)//エフェクトスロットに設定してある場合
-                    {
-                        if (Singleton<SoundManager>.instance.getIsMute() == false)
+                        else if (target.gameObject.tag == "DangerZone")//接触オブジェクトタグがDangerZone
                         {
-                            Singleton<SoundManager>.instance.playSE("se001");
+                            if (gameObject.transform.parent.GetComponent<States>().GetAbilityType() != 2)
+                            {
+                                target.GetComponent<DangerZone>().SetHp(target.GetComponent<DangerZone>().GetHp() - states.getAttack());//ダメージ判定
+
+
+                                effect.transform.position = new Vector3(this.gameObject.transform.position.x, target.transform.position.y);//エフェクト位置設定
+                            }
                         }
 
-                        Instantiate(effect);//エフェクト生成
-                    }
 
-                    Debug.Log("攻撃");
-                    cnt = 0;//カウントリセット
+                        if (effect != null)//エフェクトスロットに設定してある場合
+                        {
+                            if (Singleton<SoundManager>.instance.getIsMute() == false)
+                            {
+                                Singleton<SoundManager>.instance.playSE("se001");
+                            }
+
+                            Instantiate(effect);//エフェクト生成
+                        }
+
+                        Debug.Log("攻撃");
+                        cnt = 0;//カウントリセット
+                    }
                 }
             }
         }

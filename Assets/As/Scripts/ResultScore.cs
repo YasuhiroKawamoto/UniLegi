@@ -7,29 +7,35 @@ public class ResultScore : MonoBehaviour {
 
     //タイム
     [SerializeField]
-    private float m_time = 0.0f;
+    private float m_time;
+
+    //敵撃破数
+    [SerializeField]
+    private float m_killEnemy;
 
     [SerializeField]
     private Text result;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
 
         m_time = Singleton<SceneData>.instance.getTime();
 
+        m_killEnemy = Singleton<SceneData>.instance.getEnemyCnt();
 
-        if (m_time <= 120)
+        if (Singleton<SceneData>.instance.getStageNumber() == 3)//インフィニモードのリザルト処理
         {
-            result.GetComponent<Text>().text = " CLEAR TIME\n" + m_time.ToString("F2") + "\n " +  "Rank A" ;
+            ResultInfinity();
         }
-        else if (m_time >= 121 && m_time <= 180)
+        else//通常モードのリザルト処理
         {
-            result.GetComponent<Text>().text = " CLEAR TIME\n" + m_time.ToString("F2") + "\n " + "   Rank B";
+            ResultNormal();
         }
-        else if (m_time >= 181 && m_time <= 240)
-        {
-            result.GetComponent<Text>().text = " CLEAR TIME\n" + m_time.ToString("F2") + "\n " + "   Rank C";
-        }
+
+        
+
+
+        
 
     }
 	
@@ -38,8 +44,50 @@ public class ResultScore : MonoBehaviour {
 
        
 
-       
-
-
 	}
+
+
+    void ResultInfinity()
+    {
+        if (m_killEnemy < 30)
+        {
+            result.GetComponent<Text>().text = " KILL COUNT\n" + m_killEnemy.ToString("F0") + "\n " + "Rank F";
+        }
+        else if (m_killEnemy > 30)
+        {
+            result.GetComponent<Text>().text = " KILL COUNT\n" + m_killEnemy.ToString("F0") + "\n " + "Rank E";
+        }
+        else if (m_killEnemy > 50)
+        {
+            result.GetComponent<Text>().text = " KILL COUNT\n" + m_killEnemy.ToString("F0") + "\n " + "Rank D";
+        }
+        if (m_killEnemy > 80)
+        {
+            result.GetComponent<Text>().text = " KILL COUNT\n" + m_killEnemy.ToString("F0") + "\n " + "Rank C";
+        }
+        if (m_killEnemy >120)
+        {
+            result.GetComponent<Text>().text = " KILL COUNT\n" + m_killEnemy.ToString("F0") + "\n " + "Rank B";
+        }
+        if (m_killEnemy > 150)
+        {
+            result.GetComponent<Text>().text = " KILL COUNT\n" + m_killEnemy.ToString("F0") + "\n " + "Rank A";
+        }
+        else
+        {
+            result.GetComponent<Text>().text = " KILL COUNT\n" + m_killEnemy.ToString("F0") + "\n " + "Rank S";
+        }
+    }
+
+
+
+
+    void ResultNormal()
+    {
+
+
+
+
+    }
+
 }
