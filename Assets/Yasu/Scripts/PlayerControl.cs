@@ -27,6 +27,8 @@ public class PlayerControl : MonoBehaviour
 
     [SerializeField]
     GameObject effect;
+    [SerializeField]
+    GameObject effect2;
 
     [SerializeField]
     private GameObject Area;
@@ -283,9 +285,6 @@ public class PlayerControl : MonoBehaviour
                                     InstantiateUnit = Resources.Load<GameObject>("Prefabs/SuperKraken");
                                 }
 
-
-
-                                // エフェクトの差し替え
                             }
 
                             // 予測の差し替え
@@ -330,11 +329,11 @@ public class PlayerControl : MonoBehaviour
                                     //newUnit.tag = "isPinched";
 
                                     // エフェクト設定
-                                    effect.transform.position = new Vector3(0.0f, start_pos.y + size.y / 2.0f, 0.0f);
-                                    effect.transform.localScale = new Vector3(1, 1, 1);
+                                    effect2.transform.position = new Vector3(0.0f, start_pos.y + size.y / 2.0f, 0.0f);
+                                    effect2.transform.localScale = new Vector3(1, 1, 1);
 
                                     // エフェクト発生
-                                    Instantiate(effect);
+                                    Instantiate(effect2);
                                     Singleton<SoundManager>.instance.playSE("se002");
 
                                     delay = 50;
