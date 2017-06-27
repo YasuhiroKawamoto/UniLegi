@@ -303,7 +303,7 @@ public class spawn : MonoBehaviour
             if (waitTime < 0)
             {
                 Instantiate(AsPrefab);//ユニット生成
-                AsPrefab.GetComponent<Tap>().SetRow(currentGrid.GetComponent<Grid>().GetRow());
+
 
                 IsWaiting = false;//エフェクト待機解除
                 waitTime = 30;//待機カウントリセット

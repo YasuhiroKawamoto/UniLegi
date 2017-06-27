@@ -6,6 +6,8 @@ public class Union : MonoBehaviour
 {
 
     GameObject newUnit;
+    PlayerControl player;
+
     static public Sprite tmpSprite;
 
     bool isattached = false;
@@ -13,7 +15,11 @@ public class Union : MonoBehaviour
 
     GameObject newBullet;
 
-    int UnitFlagBit = 0;        // 0b0000
+    int UnitBit = 0;        // 0b0000
+    int UnitBitOld = 0;     // 0b0000
+
+    // 進化フラグ
+    bool canEvolve = false;
     const int Evolved = 8;      // 0b1000
 
     const int GOHST = 1;        // 0b0001
@@ -22,7 +28,7 @@ public class Union : MonoBehaviour
     const int GOLEM = 4;        // 0b0100
     const int SUCCUBUS = 5;     // 0b0101
     const int HARPY = 6;        // 0b0110
-    const int DUMMY = 7;        // 0b0111
+    const int MINIDRAGON = 7;    // 0b0111
 
     const int GOHST2 = 9;       // 0b1001
     const int KERBEROS2 = 10;   // 0b1010
@@ -30,7 +36,7 @@ public class Union : MonoBehaviour
     const int GOLEM2 = 12;      // 0b1100
     const int SUCCUBUS2 = 13;   // 0b1101
     const int HARPY2 = 14;      // 0b1110
-    const int DUMMY2 = 15;        // 0b1111
+    const int MINIDRAGON2s = 15;  // 0b1111
 
 
 
@@ -40,9 +46,9 @@ public class Union : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        UnitFlagBit = 0;
-        newUnit = GameObject.Find("Player").GetComponent<PlayerControl>().newUnit;
-
+        UnitBit = 0;
+        player = GameObject.Find("Player").GetComponent<PlayerControl>();
+        newUnit = player.newUnit;
     }
 
     // Update is called once per frame
@@ -64,7 +70,7 @@ public class Union : MonoBehaviour
 
 
             // Idをset
-            newState.SetTypeId(CalcId(unions));
+            newState.SetTypePoint(CalcPrefabId(unions));
 
             // Hpをset    
             newState.SetHp(CalcHp(unions));
@@ -72,73 +78,89 @@ public class Union : MonoBehaviour
             // Attakをset
             newState.SetAtk(CalcAtk(unions));
 
-            // スプライトを設定
-            tmpSprite = newUnit.GetComponent<SpriteRenderer>().sprite = GetSpr();
+            // prefabを設定
+            newUnit = GetPrefab();
+            player.newUnit.GetComponent<SpriteRenderer>().sprite = GetPrefab().GetComponent<SpriteRenderer>().sprite;
+            player.newUnit.GetComponent<Firing>().SetBullet(GetPrefab().GetComponent<Firing>().GetBullet());
 
-            // 弾の設定
-            SelectBullet();
-            newUnit.GetComponent<Firing>().SetBullet(newBullet);
-
+            // 予測ユニット設定
+            tmpSprite = GetPrefab().GetComponent<SpriteRenderer>().sprite;
         }
     }
 
-    private int CalcId(GameObject[] unions)
+    private int CalcPrefabId(GameObject[] unions)
     {
-        List<int> typeIDs = new List<int>();
+        List<int> typePoints = new List<int>();
         int returnID = 0;
 
-        UnitFlagBit = 0;
+        UnitBit = 0;
+        UnitBitOld = 0;
+        canEvolve = true;
+        // 範囲内ユニットを探索
         foreach (GameObject union in unions)
         {
             States state = union.GetComponent<States>();
 
-            UnitFlagBit = UnitFlagBit | state.GetTypePoint();
+            // 一つ前のビット状態を持つ
+            UnitBitOld = UnitBit;
 
-            typeIDs.Add(state.GetTypeId());
+            // ユニットのビット和を算出
+            UnitBit = UnitBit | state.GetTypePoint();
+
+            // 「全て同じユニット」　という条件を満たせなかったとき進化フラグをへし折る
+            if(UnitBitOld != 0 && (UnitBitOld ^ UnitBit) != 0)
+            {
+                canEvolve = false;
+            }
+
+
+            typePoints.Add(state.GetTypePoint());
         }
 
 
-        // 進化後であるかどうか
-        if (((UnitFlagBit & Evolved) & Evolved) == 1)
+        // 進化前であるかどうか
+        if (((UnitBit & Evolved) & Evolved) == 0)
         {
-            // 進化後だった時の処理
+            // 進化フラグが立っているとき
+            if (canEvolve)
+            {
+                UnitBit = UnitBit | Evolved;
+            }
+            // 進化前だった時の処理
+            returnID = UnitBit;
 
         }
-        // 最頻値が0のとき(最頻値が複数ある時)
-       else if (Mode(typeIDs) == 0)
+        // 進化後ユニットを含んでいるとき
+        else
+
+       // 最頻値が0のとき(最頻値が複数ある時)
+       if (Mode(typePoints) == 0)
         {
             // 異種混合合体→IDが最大値
-            returnID = Max(typeIDs);
+            returnID = Max(typePoints);
         }
-
         // 最頻値が確定された
         else
         {
-            if (Mode(typeIDs) % 2 == 0)
-            {
-                // 合体後同士合体後のまま
-                returnID = Mode(typeIDs);
-            }
-            else
-            {
-                // 合体前→合体させる
-                returnID = Mode(typeIDs) + 1;
-            }
-
+            // 合体後同士合体後のまま
+            returnID = Mode(typePoints);
         }
-
-
-
         return returnID;
     }
-    private Sprite GetSpr()
+    private GameObject GetPrefab()
     {
-        string[] unionNames = { "GD_Slime(Green)", "GD_Slime(Red)", "GD_Kerberos(White)", "GD_Kerberos(Purple)", "GD_Golem", "GD_Golem(Ice)", "GD_Bahamut(Silver)" };
+        string Units = "Prefabs\\Units\\Unit";
+        string[] unionPrefabs = { "Ghost", "Kerberos", "Salamander", "Golem", "Succubus", "Harpy", "MiniDragon", "",
+       "Ghost2", "Kerberos2", "Salamander2", "Golem2", "Succubus2", "Harpy2", "MiniDragon2" };
 
-        Sprite sprite;
+        GameObject prefab;
 
-        sprite = Resources.Load<Sprite>(unionNames[newUnit.GetComponent<States>().GetTypeId() - 1]);
-        return sprite;
+        // 文字列を合成
+        string InstantiatePrefab = Units + unionPrefabs[newUnit.GetComponent<States>().GetTypePoint() - 1];
+
+        // 合成した文字列からprefabを参照
+        prefab = Resources.Load<GameObject>(InstantiatePrefab);
+        return prefab;
 
     }
     private int CalcHp(GameObject[] unions)
@@ -188,90 +210,7 @@ public class Union : MonoBehaviour
         return sum;
     }
 
-    void SelectBullet()
-    {
-        // 弾データの設定  
-        int typeId = newUnit.GetComponent<States>().GetTypeId();
-
-        // 緑スライム
-        if (typeId == 1)
-        {
-            newBullet = Resources.Load<GameObject>("Prefabs/PlayerBullet");
-            Angle cmp = newUnit.GetComponent<Angle>();
-            cmp.enabled = false;
-        }
-
-        //赤スライム
-        if(typeId == 2)
-        {
-            newBullet =Resources.Load<GameObject>("Prefabs/PlayerBullet");
-            newUnit.GetComponent<States>().SetFireRate(4);
-            newUnit.GetComponent<States>().SetCoolTime(3);
-            newUnit.GetComponent<States>().SetAmmo(5);
-            newUnit.GetComponent<States>().SetTypePoint(1);
-            Angle cmp = newUnit.GetComponent<Angle>();
-            cmp.enabled = false;
-        }
-
-        // 白ケル
-        if (typeId == 3)
-        {
-            newBullet = Resources.Load<GameObject>("Prefabs/PlayerBullet2");
-            Angle cmp = newUnit.GetComponent<Angle>();
-            cmp.enabled = false;
-        }
-
-        // 紫ケル
-        if (typeId == 4)
-        {
-            newBullet = Resources.Load<GameObject>("Prefabs/PlayerBullet3");
-            newUnit.GetComponent<States>().SetFireRate(7);
-            newUnit.GetComponent<States>().SetTypePoint(2);
-            Angle cmp = newUnit.GetComponent<Angle>();
-            cmp.enabled = false;
-
-        }
-
-        // ゴーレム
-        if (typeId == 5)
-        {
-            newBullet = Resources.Load<GameObject>("Prefabs/PlayerBullet7");
-            newUnit.GetComponent<States>().SetFireRate(7);
-            Angle cmp = newUnit.GetComponent<Angle>();
-            cmp.enabled = false;
-        }
-
-        // 氷ゴーレム
-        if (typeId == 6)
-        {
-            newBullet = Resources.Load<GameObject>("Prefabs/PlayerBullet8");
-            newUnit.GetComponent<States>().SetFireRate(15);
-            newUnit.GetComponent<States>().SetCoolTime(1);
-            newUnit.GetComponent<States>().SetAmmo(3);
-            newUnit.GetComponent<States>().SetTypePoint(4);
-            Angle cmp = newUnit.GetComponent<Angle>();
-            cmp.enabled = false;
-        }
-
-        //ドラゴン
-        if (typeId == 7)
-        {
-            newBullet = Resources.Load<GameObject>("Prefabs/PlayerBullet6");
-            newUnit.GetComponent<States>().SetFireRate(1);
-            newUnit.GetComponent<States>().SetCoolTime(5);
-            newUnit.GetComponent<States>().SetAmmo(15);
-            newUnit.GetComponent<States>().SetTypePoint(7);
-
-
-
-            Angle cmp = newUnit.GetComponent<Angle>();
-            cmp.enabled = true;
-            cmp.SetDir(30.0f);
-            cmp.SetAng(150.0f);
-            cmp.SetSpd(3.0f);
-            cmp.SetBullet(newBullet);
-        }
-    }
+   
 
     int Mode(List<int> intList)
     {
@@ -311,7 +250,7 @@ public class Union : MonoBehaviour
         return max; 
     }
 
-    public GameObject GetNewUnit()
+   public GameObject GetNewUnit()
     {
         return newUnit;
     } 

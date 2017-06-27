@@ -85,6 +85,10 @@ public class Grid : MonoBehaviour {
         {
             checkPlayer = true;
         }
+        if (collision.gameObject.tag == "isPinched")
+        {
+            checkPlayer = false;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)

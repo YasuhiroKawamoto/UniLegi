@@ -15,7 +15,6 @@ enum TAP_STATE
 public class PlayerControl : MonoBehaviour
 {
 
-    [SerializeField]
     public GameObject newUnit;
 
     private GameObject InstantiateUnit;
@@ -118,12 +117,10 @@ public class PlayerControl : MonoBehaviour
         SpriteRenderer sprPreOp = predictionOption.GetComponent<SpriteRenderer>();
 
         bool canUnion_ = canUnion;
-
-
-
-        // dangerzone 以下は出現しない
-        if (touch_pos1.y <= manager.GetDangerZone().gameObject.transform.position.y || touch_pos2.y <= manager.GetDangerZone().gameObject.transform.position.y)
-        {
+        // dangerzone 以下 グリッド以上　 は出現しない
+        if ((touch_pos1.y <= manager.GetDangerZone().gameObject.transform.position.y || touch_pos2.y <= manager.GetDangerZone().gameObject.transform.position.y)
+             && touch_pos1.y >= 0.5 || touch_pos2.y >= 0.5f)
+        { 
             canUnion_ = false;
             hand1.transform.position = new Vector3(-300, -300, -300);
             hand2.transform.position = new Vector3(-300, -300, -300);
@@ -251,9 +248,8 @@ public class PlayerControl : MonoBehaviour
                                     // 全ユニットをはさまれた状態に
                                     union.tag = "isPinched";
                                 }
-                                diff = totalHP / 10 - totalATK;
+                                diff = totalHP / 7 - totalATK;
                             }
-
 
                             InstantiateUnit = newUnit;
 
@@ -466,7 +462,9 @@ public class PlayerControl : MonoBehaviour
         // ユニット生成
         if (isWaiting)
         {
-            delay--;
+            canUnion_ = false; canUnion = false;   
+
+             delay--;
             if (delay < 20)
             {
                 hand1.transform.position = new Vector3(-300, -300, -300);
@@ -480,11 +478,14 @@ public class PlayerControl : MonoBehaviour
         if (delay < 0)
         {
             delay = 50;
+            // ユニット生成
             Instantiate(InstantiateUnit);
             InstantiateUnit.tag = "Player";
             //
             isCreated = true;
             isWaiting = false;
+            canUnion_ = true;
+            canUnion = true;
 
         }
 
@@ -682,5 +683,10 @@ public class PlayerControl : MonoBehaviour
     public bool IsSummon()
     {
         return isSummon;
+    }
+
+    public int GetPinchNum()
+    {
+        return pinch_num;
     }
 }

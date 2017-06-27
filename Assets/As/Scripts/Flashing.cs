@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class Flashing : MonoBehaviour {
 
-    float delta;
-	// Use this for initialization
-	void Start () {
+    static float delta;
+    PlayerControl player;
+    // Use this for initialization
+    void Start()
+    {
         delta = 0;
-
+        player = GameObject.Find("Player").GetComponent<PlayerControl>();
     }
 	
 	// Update is called once per frame
 	void Update () {
 
-        delta += 0.75f;
-		if(gameObject.tag == "isPinched")
+        if (player.GetPinchNum() != 0)
+            delta += 1.0f / player.GetPinchNum();
+
+        if (gameObject.tag == "isPinched")
         {
             gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, Mathf.Sin(delta) + 1);
         }
@@ -24,4 +28,5 @@ public class Flashing : MonoBehaviour {
             gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1,1);
         }
 	}
+
 }
