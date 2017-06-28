@@ -50,6 +50,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     private GameManager manager;
 
+    GameObject FrontLine;
 
     private int pinch_num;
     private int unionCost;
@@ -114,7 +115,8 @@ public class PlayerControl : MonoBehaviour
 
         predictionUnit = GameObject.Find("Prediction/Unit");
         predictionOption = GameObject.Find("Prediction/Option");
-        
+        FrontLine = GameObject.Find("FrontLine");
+
         deleteSpr = Resources.Load<Sprite>("delete");
         InstantiateUnit = newUnit;
     }
@@ -135,7 +137,7 @@ public class PlayerControl : MonoBehaviour
         bool canUnion_ = canUnion;
         // dangerzone 以下 グリッド以上　 は出現しない
         if ((touch_pos1.y <= manager.GetDangerZone().gameObject.transform.position.y || touch_pos2.y <= manager.GetDangerZone().gameObject.transform.position.y)
-             && touch_pos1.y >= 0.5 || touch_pos2.y >= 0.5f)
+             && touch_pos1.y >= FrontLine.transform.position.y || touch_pos2.y >= FrontLine.transform.position.y)
         { 
             canUnion_ = false;
             hand1.transform.position = new Vector3(-300, -300, -300);
