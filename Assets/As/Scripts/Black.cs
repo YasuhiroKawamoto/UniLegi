@@ -25,7 +25,7 @@ public class Black : MonoBehaviour {
 
         black = GetComponent<SpriteRenderer>();
 
-        black.color = new Color(1.0f, 1.0f, 1.0f, color);
+        black.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 
     }
 	
@@ -41,9 +41,9 @@ public class Black : MonoBehaviour {
                 color -= Time.deltaTime;
             }
         }
-        else if(m_flag==false)
+        else
         {
-            if(color<1.0f)
+            if(color < 1.0f)
             {
                 color += Time.deltaTime;
             }

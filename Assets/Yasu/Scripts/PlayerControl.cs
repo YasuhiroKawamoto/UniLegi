@@ -87,7 +87,7 @@ public class PlayerControl : MonoBehaviour
    
     //暗くするための画像
     //画面が明るいか暗いか
-    bool blackFlag = false;
+    bool blackFlag = true;
 
     // Use this for initialization
     void Start()
