@@ -47,7 +47,7 @@ public class FlontLineMove : MonoBehaviour
 
                     if (changeCnt > 0.5f)
                     {
-                        RB.velocity = new Vector2(0, 3);//上方に戻る
+                        RB.velocity = new Vector2(0, 2);//上方に戻る
                     }
 
 
