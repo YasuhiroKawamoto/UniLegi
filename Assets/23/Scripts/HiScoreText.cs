@@ -15,7 +15,7 @@ public class HiScoreText : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        GetComponent<Text>().text = "HISCORE  \n"+Singleton<Score>.instance.GetHiScore().ToString()+"  KILL";
+        GetComponent<Text>().text = "HISCORE  \n"+Singleton<Score>.instance.GetHiScoreInfinity().ToString()+"  KILL";
 		
 	}
 }

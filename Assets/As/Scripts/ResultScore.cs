@@ -60,9 +60,9 @@ public class ResultScore : MonoBehaviour {
     void ResultInfinity()
     {
 
-        if (Singleton<Score>.instance.GetHiScore() < m_killEnemy)
+        if (Singleton<Score>.instance.GetHiScoreInfinity() < m_killEnemy)
         {
-            Singleton<Score>.instance.SaveScore(m_killEnemy);
+            Singleton<Score>.instance.SaveScoreInfinity(m_killEnemy);
             HiScore.text = "HISCORE!!";
         }
         else
@@ -107,7 +107,66 @@ public class ResultScore : MonoBehaviour {
 
     void ResultNormal()
     {
+        //最速タイムよりも早ければ
+        switch (Singleton<SceneData>.instance.getStageNumber())
+        {
+            case 1:
+                if (Singleton<Score>.instance.GetHiScoreNormal() > m_time)
+                {
+                    Singleton<Score>.instance.SaveScoreNormal(m_time);
+                    HiScore.text = "BESTTIME!!";
+                }
+                else
+                {
+                    HiScore.text = "";
+                }
+                break;
+            case 2:
 
+                if (Singleton<Score>.instance.GetHiScoreHard() > m_time)
+                {
+                    Singleton<Score>.instance.SaveScoreHard(m_time);
+                    HiScore.text = "BESTTIME!!";
+                }
+                else
+                {
+                    HiScore.text = "";
+                }
+
+                break;
+
+        }
+
+        
+
+        if (m_time > 240.0f)
+        {
+            result.GetComponent<Text>().text = " CLEAR TIME\n" + m_time.ToString("F2") + "\n " + "Rank F";
+        }
+        else if (m_time > 220.0f)
+        {
+            result.GetComponent<Text>().text = " CLEAR TIME\n" + m_time.ToString("F2") + "\n " + "Rank E";
+        }
+        else if (m_time > 210.0f)
+        {
+            result.GetComponent<Text>().text = " CLEAR TIME\n" + m_time.ToString("F2") + "\n " + "Rank D";
+        }
+        else if (m_time > 200.0f)
+        {
+            result.GetComponent<Text>().text = " CLEAR TIME\n" + m_time.ToString("F2") + "\n " + "Rank C";
+        }
+        else if (m_time > 185.0f)
+        {
+            result.GetComponent<Text>().text = " CLEAR TIME\n" + m_time.ToString("F2") + "\n " + "Rank B";
+        }
+        else if (m_time > 170.0f)
+        {
+            result.GetComponent<Text>().text = " CLEAR TIME\n" + m_time.ToString("F2") + "\n " + "Rank A";
+        }
+        else if (m_time > 150.0f)
+        {
+            result.GetComponent<Text>().text = " CLEAR TIME\n" + m_time.ToString("F2") + "\n " + "Rank S";
+        }
 
 
 

@@ -4,42 +4,82 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Score {
-
+    /// <summary>
+    /// ハイスコア管理用のスクリプト
+    /// 
+    /// </summary>
    
     string key = "SaveScore";
     //********** 終了 **********// 
-    float HiScore;
-    
- 
+    float NorHiScore;//ノーマルscore
+
+    float HarHiScore;//ハードscore
+
+    float InfHiScore;//インフィニscore
     //********** 開始 **********// 
     void Start()
     {
         //保存キー「Saved」で保存されたint型のデータがあればそれを、
         //無ければブランクを取得
-        HiScore = PlayerPrefs.GetFloat("SaveScore");
-        //********** 終了 **********// 
+        NorHiScore = PlayerPrefs.GetFloat("SaveScoreNormal");
+
+        HarHiScore = PlayerPrefs.GetFloat("SaveScoreHard");
+
+        InfHiScore = PlayerPrefs.GetFloat("SaveScoreInfinity");
+     
     }
 
-    public void SaveScore(float score)
+    public void SaveScoreNormal(float score)
     {
-        HiScore = score;
-        //********** 開始 **********//
-        //保存キー「SavedText」で入力文字を保存
-        PlayerPrefs.SetFloat("SaveScore", HiScore);
+        NorHiScore = score;//値を代入
+
+        //保存キー「SaveScoreNormal」で入力文字を保存
+        PlayerPrefs.SetFloat("SaveScoreNormal", NorHiScore);
         PlayerPrefs.Save();
-        //********** 終了 **********// 
-     
        
     }
 
-    public float GetHiScore()
+    public float GetHiScoreNormal()
     {
-        return PlayerPrefs.GetFloat("SaveScore");
+        return PlayerPrefs.GetFloat("SaveScoreNormal");
+    }
+
+    public void SaveScoreHard(float score)
+    {
+        HarHiScore = score;//値を代入
+
+        //保存キー「SaveScoreHard」で入力文字を保存
+        PlayerPrefs.SetFloat("SaveScoreHard", HarHiScore);
+        PlayerPrefs.Save();
+    }
+
+    public float GetHiScoreHard()
+    {
+        return PlayerPrefs.GetFloat("SaveScoreHard");
+    }
+
+
+    public void SaveScoreInfinity(float score)
+    {
+        InfHiScore = score;//値を代入
+
+        //保存キー「SaveScoreInfinity」で入力文字を保存
+        PlayerPrefs.SetFloat("SaveScoreInfinity", InfHiScore);
+        PlayerPrefs.Save();
+     
+    }
+
+    public float GetHiScoreInfinity()
+    {
+        return PlayerPrefs.GetFloat("SaveScoreInfinity");
     }
 
     public void ResetScore()
     {
         PlayerPrefs.DeleteAll();
+        SaveScoreNormal(9999.99f);//時間リセット
+        SaveScoreHard(9999.99f);//時間リセット
+        SaveScoreInfinity(0);//撃破数リセット
 
     }
 

@@ -7,7 +7,7 @@ public class TimeAttack : MonoBehaviour {
 
 
     //タイムカウント
-    private int m_timeCount = 0;
+    private float m_timeCount = 0;
 
     private int enemyNum;
 
@@ -18,6 +18,8 @@ public class TimeAttack : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        m_timeCount += Time.deltaTime;
 
         enemyNum = Singleton<SceneData>.instance.getEnemyCnt();
         //倒した敵の数を表示
