@@ -8,7 +8,7 @@ public class Black : MonoBehaviour {
     [SerializeField]
     float color = 0.0f;
 
-    bool m_flag = false;
+    bool m_flag = true;
 
     SpriteRenderer black;
 
@@ -34,14 +34,14 @@ public class Black : MonoBehaviour {
 
         m_flag = playerControl.getFlag();
 
-        if (m_flag == false)
+        if (m_flag == true)
         {
             if (color >= 0.0f)
             {
                 color -= Time.deltaTime;
             }
         }
-        else if(m_flag==true)
+        else if(m_flag==false)
         {
             if(color<1.0f)
             {
@@ -50,8 +50,6 @@ public class Black : MonoBehaviour {
         }
 
         black.color = new Color(1.0f, 1.0f, 1.0f, color);
-
-        Debug.Log("color");
 
 	}
 
