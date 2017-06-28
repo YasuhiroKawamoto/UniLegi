@@ -18,12 +18,12 @@ public class EnemyGageText : MonoBehaviour {
 
         if (Singleton<SceneData>.instance.getStageNumber() == 3)
         {
-            GetComponent<Text>().text = "LEVEL"+((Singleton<SceneData>.instance.getEnemyCnt() / 10 + 1).ToString());
+            GetComponent<Text>().text = "LEVEL "+((Singleton<SceneData>.instance.getEnemyCnt() / 10 + 1).ToString());
         }
         else
         {
-            GetComponent<Text>().text = "ENEMY" + UIManager.GetComponent<UIManager>().getEnemyMax().ToString()
-                                        + "/" + Singleton<SceneData>.instance.getEnemyCnt().ToString();
+            GetComponent<Text>().text = "ENEMY " + Singleton<SceneData>.instance.getEnemyCnt().ToString()
+                                        + "/" + UIManager.GetComponent<UIManager>().getEnemyMax().ToString();
         }
 
     }

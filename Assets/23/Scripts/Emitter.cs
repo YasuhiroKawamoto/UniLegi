@@ -12,8 +12,7 @@ public class Emitter : MonoBehaviour {
     public GameObject[] stage1;
     [SerializeField]
     public GameObject[] stage2;
-    [SerializeField]
-    public GameObject[] stage3;
+   
     [SerializeField]
     private Canvas canvas;
     [SerializeField]
@@ -31,7 +30,7 @@ public class Emitter : MonoBehaviour {
     private void Awake()
     {
             
-        Waves = new GameObject[][] { stage1, stage2, stage3};
+        Waves = new GameObject[][] { stage1, stage2};
        
     }
 
