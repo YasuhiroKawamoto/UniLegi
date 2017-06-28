@@ -23,7 +23,16 @@ public class TimeAttack : MonoBehaviour {
 
         enemyNum = Singleton<SceneData>.instance.getEnemyCnt();
         //倒した敵の数を表示
-        GetComponent<Text>().text = enemyNum.ToString()+" Kill";
+        if (Singleton<SceneData>.instance.getStageNumber() == 3)
+        {
+            GetComponent<Text>().text = "Kill  " + enemyNum.ToString();
+        }
+        else
+        {
+            GetComponent<Text>().text = "Time  " + m_timeCount.ToString("F2");
+        }
+
+
      
 	}
 
