@@ -73,32 +73,39 @@ public class ResultScore : MonoBehaviour {
 
         if (m_killEnemy < 30)
         {
-            
             result.GetComponent<Text>().text = " KILL COUNT\n" + m_killEnemy.ToString("F0") + "\n " + "Rank F";
         }
-        else if (m_killEnemy > 30)
+        else if (m_killEnemy >= 30 && m_killEnemy <= 49)
         {
             result.GetComponent<Text>().text = " KILL COUNT\n" + m_killEnemy.ToString("F0") + "\n " + "Rank E";
         }
-        else if (m_killEnemy > 50)
+        else if (m_killEnemy >= 50 && m_killEnemy <= 79)
         {
             result.GetComponent<Text>().text = " KILL COUNT\n" + m_killEnemy.ToString("F0") + "\n " + "Rank D";
         }
-        else if(m_killEnemy > 80)
+        else if (m_killEnemy >= 80 && m_killEnemy <= 129)
         {
             result.GetComponent<Text>().text = " KILL COUNT\n" + m_killEnemy.ToString("F0") + "\n " + "Rank C";
         }
-        else if(m_killEnemy >120)
+        else if (m_killEnemy >= 130 && m_killEnemy <= 149)
         {
             result.GetComponent<Text>().text = " KILL COUNT\n" + m_killEnemy.ToString("F0") + "\n " + "Rank B";
         }
-        else if(m_killEnemy > 150)
+        else if (m_killEnemy >= 150 && m_killEnemy <= 199)
         {
             result.GetComponent<Text>().text = " KILL COUNT\n" + m_killEnemy.ToString("F0") + "\n " + "Rank A";
         }
-        else if (m_killEnemy > 200)
+        else if (m_killEnemy >= 200 && m_killEnemy <= 299)
         {
             result.GetComponent<Text>().text = " KILL COUNT\n" + m_killEnemy.ToString("F0") + "\n " + "Rank S";
+        }
+        else if (m_killEnemy >= 300 && m_killEnemy <= 500)
+        {
+            result.GetComponent<Text>().text = " KILL COUNT\n" + m_killEnemy.ToString("F0") + "\n " + "Rank SS";
+        }
+        else
+        {
+            result.GetComponent<Text>().text = " KILL COUNT\n" + m_killEnemy.ToString("F0") + "\n " + "Rank SSS";
         }
     }
 
@@ -159,7 +166,7 @@ public class ResultScore : MonoBehaviour {
         {
             result.GetComponent<Text>().text = " CLEAR TIME\n" + m_time.ToString("F2") + "\n " + "Rank B";
         }
-        else if (m_time > 170.0f)
+        else if (m_time > 150.0f)
         {
             result.GetComponent<Text>().text = " CLEAR TIME\n" + m_time.ToString("F2") + "\n " + "Rank A";
         }
