@@ -90,7 +90,7 @@ public class TitleManager : MonoBehaviour
         }
         else
         {
-            fade2.SetAlpha(alpha += 0.05f);
+            fade2.SetAlpha(alpha += Time.deltaTime * 0.5f);
             if (alpha >= 1)
             {
                 phase = 0;

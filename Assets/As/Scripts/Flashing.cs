@@ -17,7 +17,7 @@ public class Flashing : MonoBehaviour {
 	void Update () {
 
         if (player.GetPinchNum() != 0)
-            delta += 1.0f / player.GetPinchNum();
+            delta += Time.deltaTime * 5.0f / player.GetPinchNum();
 
         if (gameObject.tag == "isPinched")
         {
