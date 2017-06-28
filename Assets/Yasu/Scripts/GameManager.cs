@@ -30,6 +30,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private int m_cost;
 
+    [SerializeField]
+    private int m_costSpeed;
+
     private float m_cnt;
 
     [SerializeField]
@@ -78,7 +81,7 @@ public class GameManager : MonoBehaviour
 
         // コストが最大値以下ならコスト回復
         m_cnt++;
-        if (m_cnt > 8)
+        if (m_cnt > m_costSpeed)
         {
             if (m_cost < m_maxCost)
             {

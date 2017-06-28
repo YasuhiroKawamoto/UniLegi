@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SimpleRotation : MonoBehaviour {
+public class SimpleScale : MonoBehaviour {
 
     [SerializeField]
-    Vector3 rotate;
+    Vector3 scale;
 	// Use this for initialization
 	void Start () {
 		
@@ -13,6 +13,6 @@ public class SimpleRotation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        gameObject.transform.Rotate(rotate);
+        gameObject.transform.localScale += scale;
 	}
 }

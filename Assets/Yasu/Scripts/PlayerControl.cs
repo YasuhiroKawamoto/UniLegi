@@ -147,6 +147,12 @@ public class PlayerControl : MonoBehaviour
             canUnion_ = false;
         }
 
+        if(Time.timeScale == 0)
+        {
+            canUnion_ = false;
+        }
+           
+
         if (canUnion_)
         {
             isCreated = false;
@@ -183,8 +189,8 @@ public class PlayerControl : MonoBehaviour
                             Vector3 hpos1 = new Vector3(pos.x - size.x / 2.0f, pos.y, 0);
                             Vector3 hpos2 = new Vector3(pos.x + size.x / 2.0f, pos.y, 0);
 
-                            hpos1.x = Mathf.Clamp(hpos1.x, -2.7f, 2.7f);
-                            hpos2.x = Mathf.Clamp(hpos2.x, -2.7f, 2.7f);
+                            //hpos1.x = Mathf.Clamp(hpos1.x, -2.7f, 2.7f);
+                            //hpos2.x = Mathf.Clamp(hpos2.x, -2.7f, 2.7f);
 
                             // マスオブジェクトを検出
                             grids = GameObject.FindGameObjectsWithTag("Grid");
@@ -220,9 +226,12 @@ public class PlayerControl : MonoBehaviour
                     }
                     else if (pinch_num >= 2)
                     {
+                        sprPreOp.sprite = null;
+
                         InstantiateUnit = newUnit;
                         if (unionCoolTime <= 0)
                         {
+
                             // オバロゲージ増大
                             overload += 0.1f;
 
@@ -293,7 +302,7 @@ public class PlayerControl : MonoBehaviour
                     }
                     else
                     {
-                        sprPreOp.sprite = null;
+                       
                     }
 
 
@@ -387,6 +396,7 @@ public class PlayerControl : MonoBehaviour
                                     Instantiate(effect);
                                     Singleton<SoundManager>.instance.playSE("se002");
 
+                                    overload = 0;
                                     delay = 50;
                                     pinch_num = 0;
 
@@ -484,11 +494,13 @@ public class PlayerControl : MonoBehaviour
             // ユニット生成
             Instantiate(InstantiateUnit);
             InstantiateUnit.tag = "Player";
-            //
+            overload = 0;
+
             isCreated = true;
             isWaiting = false;
             blackFlag = true;
             canUnion_ = true;
+            canUnion = true;
 
         }
 
@@ -547,7 +559,6 @@ public class PlayerControl : MonoBehaviour
 
                 pinch_num = 0;
                 superUnion = false;
-                overload = 0;
 
             }
 
