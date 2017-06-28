@@ -71,11 +71,14 @@ public class WideRangeAttack : MonoBehaviour
                                 case 1://ぱららん
                                     effect.transform.position = BC.transform.position;//エフェクトの位置を設定
                                     Instantiate(effect);//エフェクト生成
+                                    //
+                                    Singleton<SoundManager>.instance.playSE("se018");//パラ攻撃音
                                     break;
 
                                 case 2://倉健
                                     effect.transform.position = obj.transform.position;//エフェクトの位置を設定
                                     Instantiate(effect);//エフェクト生成
+                                    Singleton<SoundManager>.instance.playSE("se019");//イカ攻撃音
                                     break;
 
                             }
