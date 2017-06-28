@@ -51,6 +51,14 @@ public class spawn : MonoBehaviour
     GameObject[] grids;
     Grid currentGrid;
 
+    float min = 0.7f;
+
+    float max = 1.0f;
+
+    float alpha = 0.0f;
+
+    float time = 0;
+
     // Use this for initialization
     void Start()
     {
@@ -80,6 +88,24 @@ public class spawn : MonoBehaviour
         if (Time.timeScale != 0)
         {
 
+            time += 1.0f * Time.deltaTime;
+
+
+            alpha = Mathf.Lerp(min, max, time);
+
+          
+              
+
+
+                if (time > 1.0f)
+                {
+                    float temp = max;
+                    max = min;
+                    min = temp;
+                    time = 0.0f;
+                }
+            
+            
             if (CanInstantiate())
             {
                 // 色を明るく
@@ -94,7 +120,9 @@ public class spawn : MonoBehaviour
                 //    arrowObj.transform.position = pos;
                 //    m_arrowFlag = true;
                 //}
-                sr.color = Color.white;
+                //sr.color = Color.white;
+
+                sr.color = new Color(1, 1, 1, alpha);
                 if (Input.touchCount > 0)
                 {
                  

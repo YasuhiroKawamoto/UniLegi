@@ -32,16 +32,20 @@ public class SetBGM : MonoBehaviour
         //メイン（戦闘）
         if (SceneManager.GetActiveScene().name == "MainScene")
         {
-            if (Singleton<SceneData>.instance.getStageNumber() == 1)
+            if (Singleton<SceneData>.instance.getStageNumber() == 1)//ノーマル
             {
                 Singleton<SoundManager>.instance.playBGM("BGM003", 0.0f);
             }
-            if (Singleton<SceneData>.instance.getStageNumber() == 2)
+            if (Singleton<SceneData>.instance.getStageNumber() == 2)//ハード
+            {
+                Singleton<SoundManager>.instance.playBGM("BGM001", 0.0f);
+            }
+            if (Singleton<SceneData>.instance.getStageNumber() == 3)//インフィニモード
             {
                 Singleton<SoundManager>.instance.playBGM("BGM001", 0.0f);
             }
 
-            if (Singleton<SceneData>.instance.getStageNumber() == 4)
+            if (Singleton<SceneData>.instance.getStageNumber() == 4)//チュートリアル
             {
                 Singleton<SoundManager>.instance.playBGM("BGM005", 0.0f);
             }
