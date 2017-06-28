@@ -62,7 +62,7 @@ public class UIManager : MonoBehaviour {
                 break;
 
             case 2://ハード
-                EnemyMax = 146.0f;
+                EnemyMax = 167.0f;
                 break;
 
 

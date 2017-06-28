@@ -38,8 +38,8 @@ public class Emitter : MonoBehaviour {
     {
         stageNum = Singleton<SceneData>.instance.getStageNumber()-1;
 
-        Debug.Log("currentWave" + currentWave);
-        Debug.Log("Waves.Length" + Waves[stageNum].Length);
+        //Debug.Log("currentWave" + currentWave);
+        //Debug.Log("Waves.Length" + Waves[stageNum].Length);
 
         Manager = GameObject.Find("GameManager");
 

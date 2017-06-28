@@ -33,24 +33,31 @@ public class SoundManager
     {
 
         //SEの登録
-        audioClips.Add("se001", new AudioClipInfo("hit", "se001"));
-        audioClips.Add("se002", new AudioClipInfo("Sammon", "se002"));
-        audioClips.Add("se003", new AudioClipInfo("Dead", "se003"));
-        audioClips.Add("se004", new AudioClipInfo("Button", "se004"));
-        audioClips.Add("se005", new AudioClipInfo("Fanfare", "se005"));
-        audioClips.Add("se006", new AudioClipInfo("Lose", "se006"));
-        audioClips.Add("se007", new AudioClipInfo("Pick", "se007"));
-        audioClips.Add("se008", new AudioClipInfo("GaugeMax", "se008"));
-        audioClips.Add("se009", new AudioClipInfo("Guard", "se009"));
-        audioClips.Add("se010", new AudioClipInfo("AlartSE", "se010"));
+        audioClips.Add("se001", new AudioClipInfo("hit", "se001"));//被弾音SE
+        audioClips.Add("se002", new AudioClipInfo("Sammon", "se002"));//召喚音SE
+        audioClips.Add("se003", new AudioClipInfo("Dead", "se003"));//死亡音SE
+        audioClips.Add("se004", new AudioClipInfo("Button", "se004"));//ボタンSE
+        audioClips.Add("se005", new AudioClipInfo("Fanfare", "se005"));//勝利時SE
+        audioClips.Add("se006", new AudioClipInfo("Lose", "se006"));//敗北時SE
+        audioClips.Add("se007", new AudioClipInfo("Pick", "se007"));//持ち上げSE
+        audioClips.Add("se008", new AudioClipInfo("GaugeMax", "se008"));//ユニオンゲージMAX音SE
+        audioClips.Add("se009", new AudioClipInfo("Guard", "se009"));//ガード音SE
+        audioClips.Add("se010", new AudioClipInfo("AlartSE", "se010"));//アラートオンSE
+        audioClips.Add("se011", new AudioClipInfo("Dragon", "se011"));//ドラゴンSE
+        audioClips.Add("se012", new AudioClipInfo("LilithSpear", "se012"));//リリスSE
+        audioClips.Add("se013", new AudioClipInfo("PatadinSlash", "se013"));//パラディンSE
+        audioClips.Add("se014", new AudioClipInfo("Thunder", "se014"));//リッチSE
+        audioClips.Add("se015", new AudioClipInfo("Water", "se015"));//クラケンSE
+        audioClips.Add("se016", new AudioClipInfo("Gage", "se016"));//オバロゲージSE
+        audioClips.Add("se017", new AudioClipInfo("SuperUnion", "se017"));//超合体SE
 
 
         //BGMの登録
-        audioClips.Add("BGM001", new AudioClipInfo("TitleBGM", "BGM001"));
-        audioClips.Add("BGM002", new AudioClipInfo("SelectBGM", "BGM002"));
-        audioClips.Add("BGM003", new AudioClipInfo("BattleBGM2", "BGM003"));
-        audioClips.Add("BGM004", new AudioClipInfo("TutorialBGM", "BGM004"));
-        audioClips.Add("BGM005", new AudioClipInfo("Infinity", "BGM005"));
+        audioClips.Add("BGM001", new AudioClipInfo("TitleBGM", "BGM001"));//タイトルBGM
+        audioClips.Add("BGM002", new AudioClipInfo("SelectBGM", "BGM002"));//セレクトシーンBGM
+        audioClips.Add("BGM003", new AudioClipInfo("BattleBGM2", "BGM003"));//ノーマルBGM
+        audioClips.Add("BGM004", new AudioClipInfo("TutorialBGM", "BGM004"));//ハードBGM
+        audioClips.Add("BGM005", new AudioClipInfo("Infinity", "BGM005"));//インフィニBGM
         //audioClips.Add("BGM006", new AudioClipInfo("", ""));
         //audioClips.Add("BGM007", new AudioClipInfo("", ""));
 

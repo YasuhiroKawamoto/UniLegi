@@ -89,9 +89,16 @@ public class PlayerControl : MonoBehaviour
     //画面が明るいか暗いか
     bool blackFlag = true;
 
+
+    bool IsSound;
+
+    bool IsSound2;
+
     // Use this for initialization
     void Start()
     {
+        IsSound = false;
+        IsSound2 = false;
 
         start_size = new Vector2(0.0f, 0.0f);
         canInstantiate = true;
@@ -343,7 +350,7 @@ public class PlayerControl : MonoBehaviour
 
                                     // エフェクト発生
                                     Instantiate(effect2);
-                                    Singleton<SoundManager>.instance.playSE("se002");
+                                    Singleton<SoundManager>.instance.playSE("se017");
 
                                     delay = 50;
 
@@ -483,8 +490,6 @@ public class PlayerControl : MonoBehaviour
                 hand1.transform.position = new Vector3(-300, -300, -300);
                 hand2.transform.position = new Vector3(-300, -300, -300);
                 Prediction.transform.position = new Vector3(-300, -300, -300);
-
-
             }
         }
 
@@ -524,6 +529,35 @@ public class PlayerControl : MonoBehaviour
         {
             unionCoolTime = 0;
             blackFlag = false;
+        }
+
+      
+
+        if (unionCoolTime == 0 && IsSound == false)//ユニオンゲージがMAXになたあ
+        {
+            IsSound = true;
+            Singleton<SoundManager>.instance.playSE("se008");
+        }
+
+   
+
+        if (overload >= MAX_OVERLOAD && IsSound2 == false)//オバロゲージマックスになったら
+        {
+            IsSound2 = true;
+            Singleton<SoundManager>.instance.playSE("se016");//オバロゲージ
+        }
+
+        if (overload <= 0)
+        {
+            IsSound2 = false;
+        }
+
+        if (unionCoolTime >= 100)
+        {
+            IsSound = false;
+
+            IsSound2 = false;
+
         }
 
         pinch_num = 0;
@@ -601,7 +635,6 @@ public class PlayerControl : MonoBehaviour
                 if (Input.touchCount == 1)
                 {
                     touch_pos1 = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
-
                     tap_state = TAP_STATE.SINGLE;
                 }
 
@@ -609,7 +642,6 @@ public class PlayerControl : MonoBehaviour
                 else if (Input.touchCount == 2)
                 {
                     touch_pos1 = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
-
                     touch_pos2 = Camera.main.ScreenToWorldPoint(Input.touches[1].position);
                     tap_state = TAP_STATE.DOUBLE;
                 }

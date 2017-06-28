@@ -38,13 +38,14 @@ public class SceneButton : UIBehaviour
 
     void OnClick()
     {
+        
         Singleton<SceneData>.instance.setStageNumber(stageNumber);
         Singleton<SoundManager>.instance.playSE("se004");
-        time = Time.time;
+        time = 0;
         flag = true;
         MyFade fade_ = Resources.Load<MyFade>("Prefabs/MyFade");
         fade = Instantiate(fade_, GameObject.Find("Canvas").transform);
-
+   
         Singleton<SceneData>.instance.setEnemyCnt(0);//敵撃破数初期化
     }
 
@@ -52,13 +53,16 @@ public class SceneButton : UIBehaviour
     private void Update()
     {
         if (flag)
-
         {
-            fade.SetAlpha(alpha += 0.05f);
-            if (Time.time - time > 1)
+            Time.timeScale = 1;
 
+            time += Time.deltaTime;
+            fade.SetAlpha(alpha += 0.05f);
+            if (time > 1)
+            {
                 // 「GameScene」シーンに遷移する
                 SceneManager.LoadScene(seneName);
+            }
         }
     }
 }

@@ -22,13 +22,6 @@ public class random : MonoBehaviour
     private GameObject Enemy6;//読み込み用敵
 
 
-
-    //ボスプレハブ
-    [SerializeField]
-    private GameObject BOSS1;
-    [SerializeField]
-    private GameObject BOSS2;
-
     //重複回避用リスト
     private List<int> list = new List<int>();
     private int EC = 0;
@@ -43,9 +36,6 @@ public class random : MonoBehaviour
     //敵の種類
     [SerializeField]
     private int enemyNum = 0;
-
-    private int BossCnt = 0;
-
 
     private int Level = 0;//現在のレベル
 
@@ -66,8 +56,7 @@ public class random : MonoBehaviour
 
 
 
-    //ボスのポジション
-    private Vector3 BossPos = new Vector3(0, 5, 1.0f);
+    
 
 
     // Use this for initialization
@@ -75,7 +64,7 @@ public class random : MonoBehaviour
     {
         Level = 1;//レベルの初期化
         IsExistence = false;
-        BossCnt = 0;
+
     }
 
     void Update()
@@ -91,8 +80,7 @@ public class random : MonoBehaviour
 
             if (IsExistence == false)//エリア内に敵が存在しなければ
             {
-                if ((enemyNum + 1) % 10 != 0)//10の倍数以外では雑魚出現
-                {
+              
                     if (Level < 5)//レベル５以下
                     {
                         SetEnemy(2);
@@ -114,18 +102,9 @@ public class random : MonoBehaviour
                         SetEnemy(6);
                     }
 
-                }
-                else
-                {
-                    
-                    SetBoss(BossCnt);
-                    BossCnt++;
-                    if (BossCnt > 1)
-                    {
-                        BossCnt = 0;
-                    }
+            
+                
 
-                }
                 cnt = 0;
                 enemyNum++;
             }
@@ -202,35 +181,8 @@ public class random : MonoBehaviour
 
         }
 
-
-
-
     }
-    /// <summary>
-    /// ボスを出現させる
-    /// </summary>
-    /// <param name="BossCnt"></param>
-    void SetBoss(int BossCnt)
-    {
-
-        GameObject SetBoss;
-
-        switch (BossCnt)
-        {
-            case 0:
-                SetBoss = Instantiate(BOSS1, BossPos, Quaternion.identity);//召喚
-                SetBoss.GetComponent<States>().StatesUpBoss(SetBoss, Level);//能力向上
-                break;
-            case 1:
-                SetBoss = Instantiate(BOSS2, BossPos, Quaternion.identity);//召喚
-                SetBoss.GetComponent<States>().StatesUpBoss(SetBoss, Level);//能力向上     
-                break;
-        }
-
-        
-
-
-    }
+   
 
 
     private void OnTriggerStay2D(Collider2D collision)

@@ -26,6 +26,7 @@ public class button : UIBehaviour {
 
     void onClick()
     {
+        Singleton<SoundManager>.instance.playSE("se004");//ボタン音
         flag = true;
     }
 

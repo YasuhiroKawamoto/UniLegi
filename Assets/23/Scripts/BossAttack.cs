@@ -60,22 +60,25 @@ public class BossAttack : MonoBehaviour {
 
                 if (rate <= cnt)//攻撃間隔にカウントが到達
                 {
-                    foreach (GameObject obj in target)//範囲内ユニットに対して
+                    if(target != null)
                     {
 
-                        if (obj.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
+                        foreach (GameObject obj in target)//範囲内ユニットに対して
                         {
-                            obj.GetComponent<States>().setDamege(states.getAttack());//ダメージ判定
 
-                            effect.transform.position = obj.transform.position;//エフェクトの位置を設定
-                            if (effect != null)//エフェクトスロットに設定してある場合
+                            if (obj.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
                             {
-                                Instantiate(effect);//エフェクト生成
+                                obj.GetComponent<States>().setDamege(states.getAttack());//ダメージ判定
+
+                                effect.transform.position = obj.transform.position;//エフェクトの位置を設定
+                                if (effect != null)//エフェクトスロットに設定してある場合
+                                {
+                                    Instantiate(effect);//エフェクト生成
+                                }
+
                             }
 
                         }
-                      
-
                     }
 
                     Debug.Log("攻撃");

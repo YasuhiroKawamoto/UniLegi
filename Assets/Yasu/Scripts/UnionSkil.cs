@@ -31,6 +31,25 @@ public class UnionSkil : MonoBehaviour {
         ParentObj.transform.position = pos;
         Instantiate(AttackPrefab, Instantiate(ParentObj).transform);
 
+        switch (this.gameObject.GetComponent<States>().GetTypeId())
+        {
+            case 1://ドラゴン
+                Singleton<SoundManager>.instance.playSE("se011");
+                break;
+            case 2://クラーケン
+                Singleton<SoundManager>.instance.playSE("se015");
+                break;
+            case 3://リッチ
+                Singleton<SoundManager>.instance.playSE("se014");
+                break;
+            case 4://リリス
+                Singleton<SoundManager>.instance.playSE("se012");
+                break;
+            case 5://パラディン
+                Singleton<SoundManager>.instance.playSE("se013");
+                break;
+        }
+      
 
         Instantiate(CutIn, canvas.transform);
 

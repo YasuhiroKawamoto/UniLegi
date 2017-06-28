@@ -129,6 +129,7 @@ public class States : MonoBehaviour
 
                 if(this.gameObject.tag=="Enemy")
                 {
+                    Singleton<SoundManager>.instance.playSE("se003");//敵死亡音
                     Singleton<SceneData>.instance.setEnemyCnt(Singleton<SceneData>.instance.getEnemyCnt()+1);
                 }
 

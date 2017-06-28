@@ -86,6 +86,11 @@ public class TitleManager : MonoBehaviour
             fade2 = Instantiate(fade2, canvas.transform);
 
             phase = 2;
+            Singleton<SoundManager>.instance.pauseBGM();
+
+            
+
+            Singleton<SoundManager>.instance.playSE("se017");//超合体音
 
         }
         else
