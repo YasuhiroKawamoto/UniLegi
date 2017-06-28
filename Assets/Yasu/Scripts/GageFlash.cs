@@ -16,7 +16,7 @@ public class GageFlash : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(player.GetUnionCoolTime() <= 0)
+        if((player.GetUnionCoolTime() <= 0 && player.GetOverload() == 0) || player.GetOverload() >= player.GetOverMAX())
         {
             gameObject.GetComponent<Image>().enabled = true;
         }
