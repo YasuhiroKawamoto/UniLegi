@@ -16,6 +16,9 @@ public class Flash : MonoBehaviour {
     SpriteOrImage sprOrImg;
 
     [SerializeField]
+    float MaxAlpha;
+
+    [SerializeField]
     float delta;
 
 
@@ -29,20 +32,20 @@ public class Flash : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        alpha += delta;
+        alpha += delta*Time.deltaTime   ;
 
 
         if (sprOrImg == SpriteOrImage.SpriteRenderer)
         {
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, Mathf.Sin(alpha) + 1);
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, Mathf.Sin(alpha)* MaxAlpha + 0.5f);
         }
         if (sprOrImg == SpriteOrImage.Image)
         {
-            gameObject.GetComponent<Image>().color = new Color(1, 1, 1, Mathf.Sin(alpha) + 1);
+            gameObject.GetComponent<Image>().color = new Color(1, 1, 1, Mathf.Sin(alpha) * MaxAlpha + 0.5f);
         }
         if (sprOrImg == SpriteOrImage.Text)
         {
-            gameObject.GetComponent<Text>().color = new Color(1, 1, 1, Mathf.Sin(alpha) + 1);
+            gameObject.GetComponent<Text>().color = new Color(1, 1, 1, Mathf.Sin(alpha) * MaxAlpha + 0.5f);
         }
 
 
