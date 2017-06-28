@@ -62,6 +62,7 @@ public class EnemyHeal : MonoBehaviour {
                 {
                     if (target != null)
                     {
+                        
                         foreach (GameObject obj in target)//範囲内ユニットに対して
                         {
                             if (obj.gameObject.GetComponent<States>().GetLockOn() == true)
@@ -69,6 +70,7 @@ public class EnemyHeal : MonoBehaviour {
                                 if (obj.gameObject.GetComponent<States>().getHp() < obj.gameObject.GetComponent<States>().getMaxHp())
                                 {
                                     obj.GetComponent<States>().setDamege(-states.getAttack());//回復判定
+                                   
                                     Debug.Log("回復");
                                     effect.transform.position = obj.transform.position;//エフェクトの位置を設定
                                     if (effect != null)//エフェクトスロットに設定してある場合
@@ -76,10 +78,12 @@ public class EnemyHeal : MonoBehaviour {
                                         Instantiate(effect);//エフェクト生成
                                     }
                                 }
+
                                 obj.gameObject.GetComponent<States>().SetLockOn(false);
                             }
 
                         }
+                        Singleton<SoundManager>.instance.playSE("se020");
                     }
                   
                     cnt = 0;//カウントリセット

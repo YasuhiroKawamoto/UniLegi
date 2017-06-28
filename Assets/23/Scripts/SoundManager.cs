@@ -52,8 +52,9 @@ public class SoundManager
         audioClips.Add("se017", new AudioClipInfo("SuperUnion", "se017"));//超合体SE
         audioClips.Add("se018", new AudioClipInfo("ParaNormal", "se018"));//パラ攻撃
         audioClips.Add("se019", new AudioClipInfo("IkaNormal", "se019"));//イカ攻撃
+        audioClips.Add("se020", new AudioClipInfo("Heal", "se020"));//回復
 
-
+        
         //BGMの登録
         audioClips.Add("BGM001", new AudioClipInfo("TitleBGM", "BGM001"));//タイトルBGM
         audioClips.Add("BGM002", new AudioClipInfo("SelectBGM", "BGM002"));//セレクトシーンBGM

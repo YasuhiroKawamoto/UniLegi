@@ -77,11 +77,13 @@ public class BossAttack : MonoBehaviour {
                                 }
 
                             }
+                            obj.gameObject.GetComponent<States>().SetLockOn(false);
 
                         }
                     }
 
                     Debug.Log("攻撃");
+                    target.Clear();
                     cnt = 0;//カウントリセット
                 }
             }
@@ -92,27 +94,37 @@ public class BossAttack : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D col)
     {
 
-            if (col.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
+        if (col.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
+        {
+            if (col.gameObject.GetComponent<States>().GetLockOn() == false)
             {
-            target.Add(col.gameObject);
-
-            AttackFlag = true;//攻撃フラグON
-
-            col.gameObject.GetComponent<States>().SetLockOn(true);
-                Debug.Log("接敵");
-
+              
+                    target.Add(col.transform.gameObject);
+                    col.gameObject.GetComponent<States>().SetLockOn(true);
+                
             }
+            AttackFlag = true;
+        }
 
-            
 
-           
-       
-    }
+
+
+        }
 
     void OnTriggerStay2D(Collider2D col)
     {
+        if (col.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
+        {
+            if (col.gameObject.GetComponent<States>().GetLockOn() == false)
+            {
 
-       
+                target.Add(col.transform.gameObject);
+                col.gameObject.GetComponent<States>().SetLockOn(true);
+
+            }
+            AttackFlag = true;
+        }
+
 
     }
 

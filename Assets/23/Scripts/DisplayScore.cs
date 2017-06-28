@@ -29,11 +29,11 @@ public class DisplayScore : MonoBehaviour {
 	void Update () {
 
 
-        NomalScore.text = "CLEARTIME\n" + Singleton<Score>.instance.GetHiScoreNormal().ToString("F2");
+        NomalScore.text ="TIME  " +Singleton<Score>.instance.GetHiScoreNormal().ToString("F2");
 
-        HardScore.text = "CLEARTIME\n" + Singleton<Score>.instance.GetHiScoreHard().ToString("F2");
+        HardScore.text = "TIME  " + Singleton<Score>.instance.GetHiScoreHard().ToString("F2");
 
-        InfinityScore.text = Singleton<Score>.instance.GetHiScoreInfinity().ToString() + "  KILL";
+        InfinityScore.text = "KILL  " + Singleton<Score>.instance.GetHiScoreInfinity().ToString() ;
 
 
     }
