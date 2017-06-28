@@ -79,7 +79,6 @@ public class Union : MonoBehaviour
             newState.SetAtk(CalcAtk(unions));
 
             // prefabを設定
-            newUnit = GetPrefab();
             player.newUnit.GetComponent<SpriteRenderer>().sprite = GetPrefab().GetComponent<SpriteRenderer>().sprite;
             player.newUnit.GetComponent<Firing>().SetBullet(GetPrefab().GetComponent<Firing>().GetBullet());
 
@@ -92,6 +91,7 @@ public class Union : MonoBehaviour
     {
         List<int> typePoints = new List<int>();
         int returnID = 0;
+        int cnt = 0;
 
         UnitBit = 0;
         UnitBitOld = 0;
@@ -115,6 +115,12 @@ public class Union : MonoBehaviour
 
 
             typePoints.Add(state.GetTypePoint());
+            cnt++;
+        }
+        // 1体のみの時　進化フラグをへし折る
+        if (cnt == 1)
+        {
+            canEvolve = false;
         }
 
 
@@ -126,7 +132,7 @@ public class Union : MonoBehaviour
             {
                 UnitBit = UnitBit | Evolved;
             }
-            // 進化前だった時の処理
+
             returnID = UnitBit;
 
         }

@@ -6,7 +6,8 @@ using UnityEngine.EventSystems;
 
 public class Mute: MonoBehaviour
 {
-
+    [SerializeField]
+    Text MuteText;
     void Start()
     {
         GetComponent<Button>().onClick.AddListener(IsMute);//ボタンプッシュでミュート切り替え
@@ -23,6 +24,8 @@ public class Mute: MonoBehaviour
             {
                 Singleton<SoundManager>.instance.setIsMute(false);//ミュートフラグをオフ
                 Singleton<SoundManager>.instance.playBGM();//BGMを再生
+                MuteText.text = "♪";
+
 
             }
             else
@@ -30,7 +33,9 @@ public class Mute: MonoBehaviour
 
                 Singleton<SoundManager>.instance.setIsMute(true);//ミュートフラグをオン
                 Singleton<SoundManager>.instance.pauseBGM();//BGMを一時停止
-                
+                MuteText.text = "♪×";
+
+
             }
         }
     }
