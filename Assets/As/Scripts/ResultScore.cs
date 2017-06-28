@@ -163,7 +163,7 @@ public class ResultScore : MonoBehaviour {
         {
             result.GetComponent<Text>().text = " CLEAR TIME\n" + m_time.ToString("F2") + "\n " + "Rank A";
         }
-        else if (m_time > 150.0f)
+        else
         {
             result.GetComponent<Text>().text = " CLEAR TIME\n" + m_time.ToString("F2") + "\n " + "Rank S";
         }

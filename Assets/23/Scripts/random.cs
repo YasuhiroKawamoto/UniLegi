@@ -69,7 +69,10 @@ public class random : MonoBehaviour
 
     void Update()
     {
-        Level = Singleton<SceneData>.instance.getEnemyCnt() / 10;//敵20対撃破ごとにレベルアップ
+
+        GetComponent<Rigidbody2D>().WakeUp();
+
+        Level = Singleton<SceneData>.instance.getEnemyCnt() / 10;//敵10対撃破ごとにレベルアップ
 
         cnt += Time.deltaTime;
 
@@ -105,9 +108,10 @@ public class random : MonoBehaviour
             
                 
 
-                cnt = 0;
+              
                 enemyNum++;
             }
+            cnt = 0;
             IsExistence = false;
         }
 

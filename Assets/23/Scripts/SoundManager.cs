@@ -50,6 +50,8 @@ public class SoundManager
         audioClips.Add("se015", new AudioClipInfo("Water", "se015"));//クラケンSE
         audioClips.Add("se016", new AudioClipInfo("Gage", "se016"));//オバロゲージSE
         audioClips.Add("se017", new AudioClipInfo("SuperUnion", "se017"));//超合体SE
+        audioClips.Add("se018", new AudioClipInfo("ParaNormal", "se018"));//パラ攻撃
+        audioClips.Add("se019", new AudioClipInfo("IkaNormal", "se019"));//イカ攻撃
 
 
         //BGMの登録
