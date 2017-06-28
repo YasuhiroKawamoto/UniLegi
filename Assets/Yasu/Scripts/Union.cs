@@ -81,6 +81,14 @@ public class Union : MonoBehaviour
             // prefabを設定
             player.newUnit.GetComponent<SpriteRenderer>().sprite = GetPrefab().GetComponent<SpriteRenderer>().sprite;
             player.newUnit.GetComponent<Firing>().SetBullet(GetPrefab().GetComponent<Firing>().GetBullet());
+            // 一回の弾数
+            player.newUnit.GetComponent<States>().SetAmmo(GetPrefab().GetComponent<States>().GetAmmo());
+            // 一回の発射間隔
+            player.newUnit.GetComponent<States>().SetFireRate(GetPrefab().GetComponent<States>().getrate());
+            // クールタイム
+            player.newUnit.GetComponent<States>().SetCoolTime(GetPrefab().GetComponent<States>().GetCoolTime());
+
+
 
             // 予測ユニット設定
             tmpSprite = GetPrefab().GetComponent<SpriteRenderer>().sprite;
