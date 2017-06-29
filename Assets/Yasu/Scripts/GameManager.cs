@@ -85,7 +85,15 @@ public class GameManager : MonoBehaviour
         {
             if (m_cost < m_maxCost)
             {
-                m_cost += 1;
+                if (Singleton<SceneData>.instance.getStageNumber() == 3)
+                {
+                    m_cost += 2;
+                }
+                else
+                {
+                    m_cost += 1;
+                }
+               
             }
             m_cnt = 0;
         }
