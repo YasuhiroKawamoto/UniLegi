@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
                 Singleton<SoundManager>.instance.playSE("se006");
             
 
-            Instantiate(Lose);
+            Instantiate(Lose,canvas.transform);
         }
 
 
