@@ -25,11 +25,11 @@ public class TimeAttack : MonoBehaviour {
         //倒した敵の数を表示
         if (Singleton<SceneData>.instance.getStageNumber() == 3)
         {
-            GetComponent<Text>().text = "Kill  " + enemyNum.ToString();
+            GetComponent<Text>().text = "KILL  " + enemyNum.ToString();
         }
         else
         {
-            GetComponent<Text>().text = "Time  " + m_timeCount.ToString("F2");
+            GetComponent<Text>().text = "TIME  " + m_timeCount.ToString("F2");
         }
 
 

@@ -83,7 +83,7 @@ public class EnemyHeal : MonoBehaviour {
                             }
 
                         }
-                        Singleton<SoundManager>.instance.playSE("se020");
+                        //Singleton<SoundManager>.instance.playSE("se020");
                     }
                   
                     cnt = 0;//カウントリセット
@@ -105,9 +105,11 @@ public class EnemyHeal : MonoBehaviour {
                 {
                     target.Add(col.transform.gameObject);
                     col.gameObject.GetComponent<States>().SetLockOn(true);
+                    HealFlag = true;//攻撃フラグON
                 }
+
             }
-            HealFlag = true;//攻撃フラグON
+            
             Debug.Log("接敵");
         }
     }
@@ -124,9 +126,10 @@ public class EnemyHeal : MonoBehaviour {
                 {
                     target.Add(col.transform.gameObject);
                     col.gameObject.GetComponent<States>().SetLockOn(true);
+                    HealFlag = true;//攻撃フラグON
                 }
             }
-            HealFlag = true;//攻撃フラグON
+           
             //Debug.Log("接敵");
             //this.transform.parent.GetComponent<Mover>().setMoveFlag(false);//移動を止める
         }

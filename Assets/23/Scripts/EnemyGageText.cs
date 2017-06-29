@@ -18,7 +18,7 @@ public class EnemyGageText : MonoBehaviour {
 
         if (Singleton<SceneData>.instance.getStageNumber() == 3)
         {
-            GetComponent<Text>().text = "LEVEL "+((Singleton<SceneData>.instance.getEnemyCnt() / 10 + 1).ToString());
+            GetComponent<Text>().text = "LEVEL "+((Singleton<SceneData>.instance.getEnemyCnt() / 5 + 1).ToString());
         }
         else
         {

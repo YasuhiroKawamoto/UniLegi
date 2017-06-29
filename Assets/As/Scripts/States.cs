@@ -82,7 +82,14 @@ public class States : MonoBehaviour
         manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         if (DeadAction == null)
             DeadAction = (GameObject)Resources.Load("Prefabs/DeadA");
-        LockOnCursor = (GameObject)Resources.Load("Prefabs/LockOnCursor");
+        if (this.gameObject.tag == "Player")
+        {
+            LockOnCursor = (GameObject)Resources.Load("Prefabs/LockOnCursor");
+        }
+        else if (this.gameObject.tag == "Enemy")
+         {
+            LockOnCursor = (GameObject)Resources.Load("Prefabs/LockOnCursorEnemy");
+        }
         Player = GameObject.Find("Player");
 
         m_MaxHp = m_Hp;

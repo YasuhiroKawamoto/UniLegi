@@ -59,7 +59,7 @@ public class SoundManager
         audioClips.Add("BGM001", new AudioClipInfo("TitleBGM", "BGM001"));//タイトルBGM
         audioClips.Add("BGM002", new AudioClipInfo("SelectBGM", "BGM002"));//セレクトシーンBGM
         audioClips.Add("BGM003", new AudioClipInfo("BattleBGM2", "BGM003"));//ノーマルBGM
-        audioClips.Add("BGM004", new AudioClipInfo("TutorialBGM", "BGM004"));//ハードBGM
+        audioClips.Add("BGM004", new AudioClipInfo("Hard", "BGM004"));//ハードBGM
         audioClips.Add("BGM005", new AudioClipInfo("Infinity", "BGM005"));//インフィニBGM
         //audioClips.Add("BGM006", new AudioClipInfo("", ""));
         //audioClips.Add("BGM007", new AudioClipInfo("", ""));

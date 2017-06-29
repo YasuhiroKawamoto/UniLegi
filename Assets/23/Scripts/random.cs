@@ -72,7 +72,7 @@ public class random : MonoBehaviour
 
         GetComponent<Rigidbody2D>().WakeUp();
 
-        Level = Singleton<SceneData>.instance.getEnemyCnt() / 10;//敵10対撃破ごとにレベルアップ
+        Level = Singleton<SceneData>.instance.getEnemyCnt() / 5;//敵5対撃破ごとにレベルアップ
 
         cnt += Time.deltaTime;
 
