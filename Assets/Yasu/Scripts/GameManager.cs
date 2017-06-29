@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     private bool LoseFlag;
 
-    [SerializeField]
+   
     private GameObject Lose;
 
     [SerializeField]
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
         //fade = GameObject.Find("SceneData").GetComponent<SceneDataManager>().GetFade();
         m_WaitFade = 1.0f;
 
-
+        Lose = (GameObject)Resources.Load("GameOver");
         Line = GameObject.Find("FrontLine");
     }
 
