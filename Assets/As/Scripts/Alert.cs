@@ -53,8 +53,8 @@ public class Alert : MonoBehaviour {
         m_lastWave = emitter.GetWaveSize();//最後のウェーブ取得
 
         start = (GameObject)Resources.Load("Start");
-        Next = (GameObject)Resources.Load("Resources/Next");
-        Last = (GameObject)Resources.Load("Resources/Warning");
+        Next = (GameObject)Resources.Load("Next");
+        Last = (GameObject)Resources.Load("Warning");
 
     }
 	
