@@ -52,9 +52,9 @@ public class Alert : MonoBehaviour {
         m_gameManager = gameManager.GetComponent<GameManager>();
         m_lastWave = emitter.GetWaveSize();//最後のウェーブ取得
 
-        start = (GameObject)Resources.Load("Prefabs/start");
-        Next = (GameObject)Resources.Load("Prefabs/next");
-        Last = (GameObject)Resources.Load("Prefabs/warning");
+        start = (GameObject)Resources.Load("Start");
+        Next = (GameObject)Resources.Load("Resources/Next");
+        Last = (GameObject)Resources.Load("Resources/Warning");
 
     }
 	
@@ -75,7 +75,7 @@ public class Alert : MonoBehaviour {
                 if (m_lastWave == CurrentWave && m_lastFlag==false)
                 {
                    
-                    Instantiate(Last);
+                    Instantiate(Last,canvas.transform);
                     m_startFlag = false;
                     m_lastFlag = true;
                     Singleton<SoundManager>.instance.playSE("SE010");//ボスアラート音再生
@@ -88,7 +88,7 @@ public class Alert : MonoBehaviour {
                 {
                     //wave.text = "WAVE " + CurrentWave.ToString();
                    
-                    Instantiate(Next);
+                    Instantiate(Next,canvas.transform);
                     m_startFlag = false;
                     m_cnt = CurrentWave;
                     m_flag = true;
@@ -96,7 +96,7 @@ public class Alert : MonoBehaviour {
                 }
                 else if (CurrentWave != m_cnt  && m_cnt == 0)
                 {
-                    Instantiate(start);
+                    Instantiate(start,canvas.transform);
                     m_startFlag = false;
                     m_cnt = CurrentWave;
 
