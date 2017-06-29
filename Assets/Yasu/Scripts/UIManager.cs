@@ -86,7 +86,13 @@ public class UIManager : MonoBehaviour {
 
         // ===================================================================================
         // 移動終点(現在の値)
-        targetRate = hpGreen.GetComponent<Image>().fillAmount = (EnemyMax -Singleton<SceneData>.instance.getEnemyCnt()) / EnemyMax;
+        if (Singleton<SceneData>.instance.getStageNumber() != 3)
+        {
+            targetRate = hpGreen.GetComponent<Image>().fillAmount = (EnemyMax - Singleton<SceneData>.instance.getEnemyCnt()) / EnemyMax;
+        }
+        else {
+            targetRate = hpGreen.GetComponent<Image>().fillAmount = 1;
+        }
 
         // 移動始点(古い値)
         startRate = hpRed.GetComponent<Image>().fillAmount;

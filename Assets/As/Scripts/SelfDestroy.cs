@@ -14,19 +14,26 @@ public class SelfDestroy : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
+        m_cnt = m_limitTime;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        m_cnt += Time.deltaTime;
+        m_cnt -= Time.deltaTime;
 		
-        if(m_limitTime < m_cnt)
+        if(m_cnt <= 0)
         {
             Debug.Log("破壊");
             Destroy(this.gameObject);
         }
 
 	}
+
+
+
+    public float GetLimitCnt()
+    {
+        return m_cnt;
+    }
 }

@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
         {
             if (m_cost < m_maxCost)
             {
-                m_cost += (int)Time.timeScale;
+                m_cost += Singleton<SceneData>.instance.getStageNumber();
             }
             m_cnt = 0;
         }

@@ -7,13 +7,13 @@ public class DieSoon : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        player = GameObject.Find("Player").GetComponent<PlayerControl>();
+      
 
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if(player.GetUnionCoolTime() >= 80)
+        if(GetComponent<SelfDestroy>().GetLimitCnt() <= 3)
         {
             GetComponent<Flash>().enabled = true;
         }
