@@ -10,8 +10,8 @@ public class BossAttack : MonoBehaviour {
 
    
     private List<GameObject> target;
-       
 
+    BoxCollider2D BC;
    
     [SerializeField]
     GameObject effect;
@@ -32,7 +32,7 @@ public class BossAttack : MonoBehaviour {
         this.gameObject.transform.position = new Vector3(this.gameObject.transform.parent.position.x,
             (this.gameObject.transform.parent.position.y - 0.2f), this.gameObject.transform.parent.position.z);
 
-       
+        BC = this.GetComponent<BoxCollider2D>();
 
         rate = states.getrate();
 
@@ -73,6 +73,23 @@ public class BossAttack : MonoBehaviour {
                                 effect.transform.position = obj.transform.position;//エフェクトの位置を設定
                                 if (effect != null)//エフェクトスロットに設定してある場合
                                 {
+
+                                    switch (states.GetAbilityType())//スーパーユニットの攻撃タイプは浴びタイプで判定
+                                    {
+                                        case 1://ぱららん
+                                            effect.transform.position = BC.transform.position;//エフェクトの位置を設定
+                                            Instantiate(effect);//エフェクト生成
+                                                                //
+                                            Singleton<SoundManager>.instance.playSE("se018");//パラ攻撃音
+                                            break;
+
+                                        case 2://倉健
+                                            effect.transform.position = obj.transform.position;//エフェクトの位置を設定
+                                            Instantiate(effect);//エフェクト生成
+                                            Singleton<SoundManager>.instance.playSE("se019");//イカ攻撃音
+                                            break;
+
+                                    }
                                     Instantiate(effect);//エフェクト生成
                                 }
 
