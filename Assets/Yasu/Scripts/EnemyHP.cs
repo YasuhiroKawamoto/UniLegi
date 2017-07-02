@@ -26,8 +26,7 @@ public class EnemyHP : MonoBehaviour
     // 補完終点
     float targetRate;
 
-    // 最大HP
-    int maxHp;
+    
 
     GameObject hpGreen = null;
     GameObject hpRed = null;
@@ -35,7 +34,7 @@ public class EnemyHP : MonoBehaviour
     private void Awake()
     {
         // 生成時のHPを最大値として設定
-        maxHp = gameObject.GetComponent<States>().getHp();
+
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
 
 
@@ -50,11 +49,11 @@ public class EnemyHP : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+		
         if (hpGreen != null && hpRed != null)
         {
             // 移動終点(現在の値)
-            targetRate = hpGreen.GetComponent<Image>().fillAmount = (float)gameObject.GetComponent<States>().getHp() / maxHp;
+				targetRate = hpGreen.GetComponent<Image>().fillAmount = (float)gameObject.GetComponent<States>().getHp() / gameObject.GetComponent<States>().getMaxHp();
 
             // 移動始点(古い値)
             startRate = hpRed.GetComponent<Image>().fillAmount;

@@ -82,7 +82,7 @@ public class States : MonoBehaviour
         manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         if (DeadAction == null)
             DeadAction = (GameObject)Resources.Load("Prefabs/DeadA");
-        if (this.gameObject.tag == "Player")
+		if (this.gameObject.tag == "Player"||this.gameObject.tag == "SPlayer")
         {
             LockOnCursor = (GameObject)Resources.Load("Prefabs/LockOnCursor");
         }

@@ -82,7 +82,7 @@ public class Grid : MonoBehaviour {
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+		if (collision.gameObject.tag == "Player"||collision.gameObject.tag == "SPlayer")
         {
             checkPlayer = true;
         }
@@ -94,7 +94,7 @@ public class Grid : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player"||collision.gameObject.tag == "HavingPlayer" || collision.gameObject.tag == "isPinched")
+		if (collision.gameObject.tag == "Player"||collision.gameObject.tag == "SPlayer"||collision.gameObject.tag == "HavingPlayer" || collision.gameObject.tag == "isPinched")
         {
             checkPlayer = false;
         }

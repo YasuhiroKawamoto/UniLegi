@@ -19,9 +19,19 @@ public class DisplayScore : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
+    void Start () 
+	{
+		if (Singleton<Score>.instance.GetHiScoreNormal() == 0) 
+		{
+		
+			Singleton<Score>.instance.SaveScoreNormal(300.0f);
+		
+		}
+		if (Singleton<Score>.instance.GetHiScoreHard() == 0) {
 
-       
+			Singleton<Score>.instance.SaveScoreHard(300.0f);
+
+		}
 
     }
 	

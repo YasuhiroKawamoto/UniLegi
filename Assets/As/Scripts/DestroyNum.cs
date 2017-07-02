@@ -66,7 +66,7 @@ public class DestroyNum : MonoBehaviour
                 if (cnt > 9)
                 {
                     text.text = cnt.ToString() + "Kills";
-                    Instantiate(text, canvas.transform);
+					Instantiate(text,new Vector3(0f,1.7f,0f),new Quaternion(0,0,0,0), canvas.transform);
                     Instantiate(gameObject);
                 }
                

@@ -62,36 +62,43 @@ public class Union : MonoBehaviour
     {
         if (collision.gameObject.tag == "Collider")
         {
-
-            this.gameObject.tag = "isPinched";
-
-            GameObject[] unions = GameObject.FindGameObjectsWithTag("isPinched");
-            States newState = newUnit.GetComponent<States>();
-
-
-            // Idをset
-            newState.SetTypePoint(CalcPrefabId(unions));
-
-            // Hpをset    
-            newState.SetHp(CalcHp(unions));
-
-            // Attakをset
-            newState.SetAtk(CalcAtk(unions));
-
-            // prefabを設定
-            player.newUnit.GetComponent<SpriteRenderer>().sprite = GetPrefab().GetComponent<SpriteRenderer>().sprite;
-            player.newUnit.GetComponent<Firing>().SetBullet(GetPrefab().GetComponent<Firing>().GetBullet());
-            // 一回の弾数
-            player.newUnit.GetComponent<States>().SetAmmo(GetPrefab().GetComponent<States>().GetAmmo());
-            // 一回の発射間隔
-            player.newUnit.GetComponent<States>().SetFireRate(GetPrefab().GetComponent<States>().getrate());
-            // クールタイム
-            player.newUnit.GetComponent<States>().SetCoolTime(GetPrefab().GetComponent<States>().GetCoolTime());
+			if (this.gameObject.tag != "SPlayer") {
+				this.gameObject.tag = "isPinched";
+			} else {
+				player.GetComponent<PlayerControl> ().SetCanUnion (false);
+			}
 
 
+			if (player.GetComponent<PlayerControl> ().GetCanUnion () == true) {
 
-            // 予測ユニット設定
-            tmpSprite = GetPrefab().GetComponent<SpriteRenderer>().sprite;
+				GameObject[] unions = GameObject.FindGameObjectsWithTag ("isPinched");
+				States newState = newUnit.GetComponent<States> ();
+
+
+				// Idをset
+				newState.SetTypePoint (CalcPrefabId (unions));
+
+				// Hpをset    
+				newState.SetHp (CalcHp (unions));
+
+				// Attakをset
+				newState.SetAtk (CalcAtk (unions));
+
+				// prefabを設定
+				player.newUnit.GetComponent<SpriteRenderer> ().sprite = GetPrefab ().GetComponent<SpriteRenderer> ().sprite;
+				player.newUnit.GetComponent<Firing> ().SetBullet (GetPrefab ().GetComponent<Firing> ().GetBullet ());
+				// 一回の弾数
+				player.newUnit.GetComponent<States> ().SetAmmo (GetPrefab ().GetComponent<States> ().GetAmmo ());
+				// 一回の発射間隔
+				player.newUnit.GetComponent<States> ().SetFireRate (GetPrefab ().GetComponent<States> ().getrate ());
+				// クールタイム
+				player.newUnit.GetComponent<States> ().SetCoolTime (GetPrefab ().GetComponent<States> ().GetCoolTime ());
+
+
+
+				// 予測ユニット設定
+				tmpSprite = GetPrefab ().GetComponent<SpriteRenderer> ().sprite;
+			}
         }
     }
 
@@ -133,32 +140,29 @@ public class Union : MonoBehaviour
 
 
         // 進化前であるかどうか
-        if (((UnitBit & Evolved) & Evolved) == 0)
-        {
-            // 進化フラグが立っているとき
-            if (canEvolve)
-            {
-                UnitBit = UnitBit | Evolved;
-            }
+		if (((UnitBit & Evolved) & Evolved) == 0) {
+			// 進化フラグが立っているとき
+			if (canEvolve) {
+				UnitBit = UnitBit | Evolved;
+			}
 
-            returnID = UnitBit;
+			returnID = UnitBit;
 
-        }
+		}
         // 進化後ユニットを含んでいるとき
-        else
+        else {
 
-       // 最頻値が0のとき(最頻値が複数ある時)
-       if (Mode(typePoints) == 0)
-        {
-            // 異種混合合体→IDが最大値
-            returnID = Max(typePoints);
-        }
+			// 最頻値が0のとき(最頻値が複数ある時)
+			if (Mode (typePoints) == 0) {
+				// 異種混合合体→IDが最大値
+				returnID = Max (typePoints);
+			}
         // 最頻値が確定された
-        else
-        {
-            // 合体後同士合体後のまま
-            returnID = Mode(typePoints);
-        }
+        else {
+				// 合体後同士合体後のまま
+				returnID = Mode (typePoints);
+			}
+		}
         return returnID;
     }
     private GameObject GetPrefab()

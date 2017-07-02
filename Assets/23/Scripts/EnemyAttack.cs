@@ -65,7 +65,7 @@ public class EnemyAttack : MonoBehaviour
                 {
                     if (target != null)
                     {
-                        if (target.gameObject.tag == "Player" || target.gameObject.tag == "isPinched")//接触オブジェクトタグがPlayer
+						if (target.gameObject.tag == "SPlayer"||target.gameObject.tag == "Player" || target.gameObject.tag == "isPinched")//接触オブジェクトタグがPlayer
                         {
                             target.GetComponent<States>().setDamege(states.getAttack());//ダメージ判定
 
@@ -109,7 +109,7 @@ public class EnemyAttack : MonoBehaviour
 
 
 
-        if (col.gameObject.tag == "Player" || col.gameObject.tag == "isPinched")//接触オブジェクトタグがPlayer
+		if (col.gameObject.tag == "SPlayer"||col.gameObject.tag == "Player" || col.gameObject.tag == "isPinched")//接触オブジェクトタグがPlayer
         {
             AttackFlag = true;//攻撃フラグON
             Debug.Log("接敵");
@@ -154,7 +154,7 @@ public class EnemyAttack : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Player" || col.gameObject.tag == "HavingPlayer")
+		if (col.gameObject.tag == "SPlayer"||col.gameObject.tag == "Player" || col.gameObject.tag == "HavingPlayer")
         {
             AttackFlag = false;//攻撃フラグOFF
             this.transform.parent.GetComponent<Mover>().setMoveFlag(true);//移動を開始

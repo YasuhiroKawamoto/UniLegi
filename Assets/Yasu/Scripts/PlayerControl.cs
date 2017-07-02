@@ -168,64 +168,61 @@ public class PlayerControl : MonoBehaviour
             switch (tap_state)
             {
 
-                case TAP_STATE.DOUBLE:
+			case TAP_STATE.DOUBLE:
                     // コライダの大きさを設定
-                    Vector2 size = new Vector2(Mathf.Abs(touch_pos1.x - touch_pos2.x), 0.4f);
+				Vector2 size = new Vector2 (Mathf.Abs (touch_pos1.x - touch_pos2.x), 0.4f);
 
-                    if (start_size.x > 0.0f)
-                    {
-                        size.x = Mathf.Clamp(size.x, 0.0f, start_size.x);
-                    }
+				if (start_size.x > 0.0f) {
+					size.x = Mathf.Clamp (size.x, 0.0f, start_size.x);
+				}
 
-                    Area.transform.localScale = size - new Vector2(0.6f, 0);
+				Area.transform.localScale = size - new Vector2 (0.6f, 0);
 
 
 
                     // コライダの位置を設定
-                    float min_x = Mathf.Min(touch_pos1.x, touch_pos2.x);
-                    float min_y = Mathf.Min(touch_pos1.y, touch_pos2.y);
+				float min_x = Mathf.Min (touch_pos1.x, touch_pos2.x);
+				float min_y = Mathf.Min (touch_pos1.y, touch_pos2.y);
 
 
-                    Vector2 pos = new Vector2(min_x + size.x / 2.0f, min_y);
+				Vector2 pos = new Vector2 (min_x + size.x / 2.0f, min_y);
 
 
                     // コライダ生成
-                    if (isTrigger == false)
-                    {
-                        if (size.x > 1)
-                        {
-                            // 手が出現
-                            Vector3 hpos1 = new Vector3(pos.x - size.x / 2.0f, pos.y, 0);
-                            Vector3 hpos2 = new Vector3(pos.x + size.x / 2.0f, pos.y, 0);
+				if (isTrigger == false) {
+					if (size.x > 1) {
+						// 手が出現
+						Vector3 hpos1 = new Vector3 (pos.x - size.x / 2.0f, pos.y, 0);
+						Vector3 hpos2 = new Vector3 (pos.x + size.x / 2.0f, pos.y, 0);
 
-                            //hpos1.x = Mathf.Clamp(hpos1.x, -2.7f, 2.7f);
-                            //hpos2.x = Mathf.Clamp(hpos2.x, -2.7f, 2.7f);
+						//hpos1.x = Mathf.Clamp(hpos1.x, -2.7f, 2.7f);
+						//hpos2.x = Mathf.Clamp(hpos2.x, -2.7f, 2.7f);
 
-                            // マスオブジェクトを検出
-                            grids = GameObject.FindGameObjectsWithTag("Grid");
+						// マスオブジェクトを検出
+						grids = GameObject.FindGameObjectsWithTag ("Grid");
 
-                            hand1.transform.position = hpos1;
-                            hand2.transform.position = hpos2;
-                            Prediction.transform.position = new Vector3(-300, -300, -300);
+						hand1.transform.position = hpos1;
+						hand2.transform.position = hpos2;
+						Prediction.transform.position = new Vector3 (-300, -300, -300);
 
-                        }
+					}
 
-                        // ピンチエリア移動
-                        start_size = size;
-                        start_pos = pos;
+					// ピンチエリア移動
+					start_size = size;
+					start_pos = pos;
 
 
-                        Area.transform.position = pos;
+					Area.transform.position = pos;
 
-                        // 予測ユニット表示
-                        Vector3 pos2 = pos + new Vector2(0, 1.5f);
-                        Prediction.transform.position = pos2;
+					// 予測ユニット表示
+					Vector3 pos2 = pos + new Vector2 (0, 1.5f);
+					Prediction.transform.position = pos2;
 
-                        isTrigger = true;
-                    }
+					isTrigger = true;
+				}
 
 
-                    sprPre.sprite = Union.tmpSprite;
+				sprPre.sprite = Union.tmpSprite;
 
 
 
@@ -235,7 +232,10 @@ public class PlayerControl : MonoBehaviour
                     }
                     else if (pinch_num >= 2)
                     {
-                        sprPreOp.sprite = null;
+                        
+
+
+						sprPreOp.sprite = null;
 
                         InstantiateUnit = newUnit;
                         if (unionCoolTime <= 0)
@@ -307,6 +307,10 @@ public class PlayerControl : MonoBehaviour
 
                             // 予測の差し替え
                             sprPre.sprite = InstantiateUnit.GetComponent<SpriteRenderer>().sprite;
+
+
+
+
                         }
                     }
                     else
@@ -500,7 +504,11 @@ public class PlayerControl : MonoBehaviour
             delay = 50;
             // ユニット生成
             Instantiate(InstantiateUnit);
-            InstantiateUnit.tag = "Player";
+			if (InstantiateUnit.tag != "SPlayer") {
+				InstantiateUnit.tag = "Player";
+			} else {
+				InstantiateUnit.tag = "SPlayer";
+			}
             overload = 0;
 
             isCreated = true;
@@ -659,6 +667,7 @@ public class PlayerControl : MonoBehaviour
         else
         {
             tap_state = TAP_STATE.NONE;
+			canUnion = true;
         }
     }
 
@@ -743,4 +752,17 @@ public class PlayerControl : MonoBehaviour
     {
         return pinch_num;
     }
+
+
+	public bool GetCanUnion()
+	{
+		return canUnion;
+
+	}
+
+	public void SetCanUnion(bool f)
+	{
+		canUnion = f;
+
+	}
 }

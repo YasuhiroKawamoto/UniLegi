@@ -66,7 +66,7 @@ public class BossAttack : MonoBehaviour {
                         foreach (GameObject obj in target)//範囲内ユニットに対して
                         {
 
-                            if (obj.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
+							if (obj.gameObject.tag == "SPlayer"||obj.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
                             {
                                 obj.GetComponent<States>().setDamege(states.getAttack());//ダメージ判定
 
@@ -111,7 +111,7 @@ public class BossAttack : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D col)
     {
 
-        if (col.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
+		if (col.gameObject.tag == "SPlayer"||col.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
         {
             if (col.gameObject.GetComponent<States>().GetLockOn() == false)
             {
@@ -130,7 +130,7 @@ public class BossAttack : MonoBehaviour {
 
     void OnTriggerStay2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
+		if (col.gameObject.tag == "SPlayer"||col.gameObject.tag == "Player")//接触オブジェクトタグがPlayer
         {
             if (col.gameObject.GetComponent<States>().GetLockOn() == false)
             {
@@ -147,7 +147,7 @@ public class BossAttack : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D col)
     {
-        if(col.gameObject.tag == "Player" || col.gameObject.tag == "HavingPlayer")
+		if(col.gameObject.tag == "SPlayer"||col.gameObject.tag == "Player" || col.gameObject.tag == "HavingPlayer")
         {
             target.Clear();
             col.gameObject.GetComponent<States>().SetLockOn(false);

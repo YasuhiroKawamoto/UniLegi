@@ -125,7 +125,7 @@ public class Firing : MonoBehaviour {
         //リロードに入ったらカウントを数える
         if (m_Reload == true)
         {
-            if (gameObject.tag == "Player")
+			if (gameObject.tag == "Player"||gameObject.tag == "SPlayer")
             {
 
                 m_LoadTime += Time.deltaTime;
