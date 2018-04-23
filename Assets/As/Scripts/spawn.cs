@@ -26,7 +26,7 @@ public class spawn : MonoBehaviour
     //触ったフラグ
     private int m_flag;
     //タッチ
-    Touch touch;
+    TouchInfo touch;
     //タッチ座標
     private Vector2 m_worldPoint;
     //生成するオブジェクト
@@ -46,6 +46,9 @@ public class spawn : MonoBehaviour
 
     private Vector3 savePos;
     Vector3 tmpPos;
+
+    [SerializeField]
+    GameObject TmpObj;
 
     //マス
     GameObject[] grids;
@@ -93,11 +96,11 @@ public class spawn : MonoBehaviour
 
             alpha = Mathf.Lerp(min, max, time);
 
-          
-              
 
 
-                if (time > 1.0f)
+            touch = AppUtil.GetTouch();
+
+            if (time > 1.0f)
                 {
                     float temp = max;
                     max = min;
@@ -122,18 +125,23 @@ public class spawn : MonoBehaviour
                 //}
                 //sr.color = Color.white;
 
+
+
                 sr.color = new Color(1, 1, 1, alpha);
-                if (Input.touchCount > 0)
+
+
+               
+                if (touch != TouchInfo.None)
                 {
                  
 
-                    touch = Input.GetTouch(0);
+                    
 
-                    m_worldPoint = Camera.main.ScreenToWorldPoint(touch.position);
+                    m_worldPoint = Camera.main.ScreenToWorldPoint(AppUtil.GetTouchPosition());
 
 
                     //タッチ開始時
-                    if (touch.phase == TouchPhase.Began)
+                    if (touch == TouchInfo.Began)
                     {
                         // マスオブジェクトを検出
                         grids = GameObject.FindGameObjectsWithTag("Grid");
@@ -158,7 +166,7 @@ public class spawn : MonoBehaviour
 
                     }
 
-                    if (touch.phase == TouchPhase.Moved)
+                    if (touch == TouchInfo.Moved)
                     {
                         // マスオブジェクトを検出
                         grids = GameObject.FindGameObjectsWithTag("Grid");
@@ -191,7 +199,7 @@ public class spawn : MonoBehaviour
 
                     }
                     //離したとき
-                    else if (touch.phase == TouchPhase.Ended)
+                    else if (touch == TouchInfo.Ended)
                     {
                         //putEffect.transform.position = new Vector3(-300, -300, -300);
                         IsPut = false;
@@ -254,7 +262,7 @@ public class spawn : MonoBehaviour
                                         if (effect != null)//エフェクトスロットに設定してある場合
                                         {
                                             Singleton<SoundManager>.instance.playSE("se002");
-                                            Instantiate(effect);//エフェクト生成
+                                            Instantiate(effect, TmpObj.transform);//エフェクト生成
 
 
                                         }
@@ -330,7 +338,7 @@ public class spawn : MonoBehaviour
             }
             if (waitTime < 0)
             {
-                Instantiate(AsPrefab);//ユニット生成
+                Instantiate(AsPrefab, TmpObj.transform);//ユニット生成
 
 
                 IsWaiting = false;//エフェクト待機解除

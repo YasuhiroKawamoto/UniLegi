@@ -12,13 +12,13 @@ public class Tap : MonoBehaviour
     //スケールの倍数
     const float rate = 1.5f;
     //範囲
-    Vector3 zone;
+    private Vector3 zone;
     //元の大きさを保存
     private Vector3 m_saveScale;
     //反転してるかどうか
     private bool m_Invert = false;
     //タッチ
-    Touch touch;
+    TouchInfo touch;
     //タッチ座標
     private Vector2 m_worldPoint;
     //オブジェクトを触っている時間
@@ -56,7 +56,7 @@ public class Tap : MonoBehaviour
         canvas = GameObject.Find("Canvas");
         unitStates = gameObject.GetComponent<States>();
         stateUI = state.GetComponent<StateUI>();
-
+       
         //フラグは立たない
         m_moveFlag = false;
         //大きさを保存
@@ -68,18 +68,21 @@ public class Tap : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        touch = AppUtil.GetTouch();
+
         //タッチされたら
-        if (Input.touchCount > 0)
+        if (touch !=TouchInfo.None)
         {
             // マスオブジェクトを検出
             grids = GameObject.FindGameObjectsWithTag("Grid");
-            touch = Input.GetTouch(0);
 
-            m_worldPoint = Camera.main.ScreenToWorldPoint(touch.position);
+            Debug.Log("wawawa");
+            m_worldPoint = Camera.main.ScreenToWorldPoint(AppUtil.GetTouchPosition());
 
             //タッチ開始時
-            if (touch.phase == TouchPhase.Began)
+            if (touch == TouchInfo.Began)
             {
+               
                 if (objState != null)
                 {
                     Destroy(objState);
@@ -91,8 +94,8 @@ public class Tap : MonoBehaviour
                 //オブジェクトにあたっていたら
                 if (hit)
                 {
-                    if (Input.touchCount == 1)
-                    {
+                    //if (Input.touchCount == 1)
+                    //{
                         if (hit.collider.gameObject == this.gameObject)
                         {
                             StateUI.HP = unitStates.getHp();
@@ -113,12 +116,12 @@ public class Tap : MonoBehaviour
                             objState = Instantiate(state, canvas.transform);
 
                         }
-                    }
+                   // }
                 }
 
             }
             //離したとき
-            else if (touch.phase == TouchPhase.Ended && m_moveFlag)
+            else if (touch == TouchInfo.Ended && m_moveFlag)
             {
                 Debug.Log("TouchPhase.Ended");
 

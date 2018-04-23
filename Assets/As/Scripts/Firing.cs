@@ -35,8 +35,12 @@ public class Firing : MonoBehaviour {
     //Aimフラグ
     private bool m_AimFlag;
 
+    [SerializeField]
+    static GameObject TmpObj;
+
     private void Awake()
     {
+        TmpObj = GameObject.Find("TmpBullet");
         // 初期化
         m_LoadTime = 0.0f;
         m_LoadFinish = 0;
@@ -80,12 +84,12 @@ public class Firing : MonoBehaviour {
         //照準マークを作成
         if (m_AimFlag == false && m_Flag == false)
         {
-            Instantiate(aim, transform.position + m_aim, transform.rotation);
+            Instantiate(aim, transform.position + m_aim, transform.rotation, TmpObj.transform);
             m_AimFlag = true;
         }
         else if (m_AimFlag == true && m_Flag == true)
         {
-            Instantiate(aim, transform.position - m_aim, transform.rotation);
+            Instantiate(aim, transform.position - m_aim, transform.rotation, TmpObj.transform);
             m_AimFlag = false;
         }
 
@@ -107,7 +111,7 @@ public class Firing : MonoBehaviour {
                 {
 
                     //弾をプレイヤーと同じ位置に設定
-                    Instantiate(bullet, transform.position, transform.rotation);
+                    Instantiate(bullet, transform.position, transform.rotation, TmpObj.transform);
                     //弾を数える
                     m_Cartridge++;
                     //リセット
