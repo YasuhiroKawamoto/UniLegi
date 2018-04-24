@@ -5,7 +5,8 @@ using UnityEngine;
 
 public static class AppUtil
 {
-    private static Vector3 _touchPosition = Vector3.zero;
+    //マルチタップ時の指の位置（4本までを想定）
+    private static Vector3[] _touchPositions = new Vector3[4];
 
     /// <summary>
     /// Androidフラグ
@@ -19,6 +20,9 @@ public static class AppUtil
     /// エディタフラグ
     /// </summary> 
     static readonly bool IsEditor = !_isAndroid && !_isIOS;
+
+    
+
 
     /// <summary>
     /// タッチ情報を取得(エディタと実機を考慮)
@@ -46,24 +50,37 @@ public static class AppUtil
     /// タッチポジションを取得(エディタと実機を考慮)
     /// </summary>
     /// <returns>タッチポジション。タッチされていない場合は (0, 0, 0)</returns>
-    public static Vector3 GetTouchPosition()
+    public static Vector3[] GetTouchPosition()
     {
         if (Application.isEditor)
         {
             TouchInfo touch = AppUtil.GetTouch();
-            if (touch != TouchInfo.None) { return Input.mousePosition; }
+            if (touch != TouchInfo.None)
+            {
+                _touchPositions[0] = Input.mousePosition;
+                return _touchPositions;
+            }
         }
         else
         {
             if (Input.touchCount > 0)
             {
-                Touch touch = Input.GetTouch(0);
-                _touchPosition.x = touch.position.x;
-                _touchPosition.y = touch.position.y;
-                return _touchPosition;
+                for (int i = 0; i < Input.touchCount; i++)
+                {
+
+                    Touch touch = Input.GetTouch(i);
+                    _touchPositions[i].x = touch.position.x;
+                    _touchPositions[i].y = touch.position.y;
+
+                }
+                
+                return _touchPositions;
             }
         }
-        return Vector3.zero;
+
+        _touchPositions[0] = Vector3.zero;
+
+        return _touchPositions;
     }
 
     /// <summary>
@@ -73,7 +90,7 @@ public static class AppUtil
     /// <returns>タッチワールドポジション。タッチされていない場合は (0, 0, 0)</returns>
     public static Vector3 GetTouchWorldPosition(Camera camera)
     {
-        return camera.ScreenToWorldPoint(GetTouchPosition());
+        return camera.ScreenToWorldPoint(GetTouchPosition()[0]);
     }
 }
 
